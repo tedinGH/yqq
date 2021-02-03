@@ -1,0 +1,5 @@
+export const SET_LANG = 'SET_LANG'
+
+export const SET_LAYOUT = 'SET_LAYOUT'
+
+export const SET_SELECTIONCODEKEY = 'SET_SELECTIONCODEKEY'

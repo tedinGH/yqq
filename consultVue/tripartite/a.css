@@ -1,0 +1,33 @@
+@charset "utf-8";
+body {
+  --foo:#58bc58;
+  --urls: url(https://d3by3xf7fqf07v.cloudfront.net/original/2021/01/23/vWzvz5AcUfxz5yUeZQZ.GIF) no-repeat center
+  }
+/* .box{
+  background:#6A96EA;position:fixed;right:0;top:calc(50vh - 26px); width:52px;height:52px;border-radius:10px;cursor:pointer;
+}
+
+.link{
+  width:52px;height:52px; background: url(https://kefu.bcirclepay.com/test/img/2-01.png) no-repeat center
+} */
+
+
+.button-box{
+  background:var(--foo);position:fixed; right:10px;top:calc(50vh - 26px); width:182px; height:52px;border-radius:10px;cursor:pointer;
+}
+
+.link{
+  position: relative;
+  width:52px;height:52px;
+  background: var(--urls)
+}
+.link::after{
+  content: "contact serve";
+  position: absolute;
+  width: 130px;
+  top: 50%;
+  color: #fff;
+  font-size: 18px;
+  margin-left: 52px;
+  margin-top: -12px;
+}

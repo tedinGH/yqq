@@ -1,0 +1,132 @@
+.wraper {
+    position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 460px;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  border-top: 10px solid rgba(255, 179, 88, 1);
+    box-shadow: 0 5px 15px #e6e6e6;
+    font-size:16px;
+    color: #65666A; 
+    background: #fff;
+    .title {
+      position: relative;
+      font-size: 32px;
+      padding: 18px 20px 0 20px;
+      color: #3B3C41;
+  }
+  .codeBox{
+    position: relative;
+    height: 226px;
+    width: 226px;
+    margin: 49px auto 0;
+    canvas{
+      display: block;
+      height: 100% !important;
+      width: 100% !important;
+    }
+    .wraps{
+      position: absolute;
+      top: 0;
+      height: 100% !important;
+      width: 100% !important;
+      background: rgba($color: #fff, $alpha: 0.9);
+    }
+    &.acitve{
+      
+      i.acitve{
+        display: none;
+      }
+      img{
+        display: block;
+        cursor: pointer;
+      }
+    }
+    i{
+      display: none;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      height: 50px;
+      width: 50px;
+      margin-top: -25px;
+      margin-left: -25px;
+      background-image: url(../../assets/images/logo/logo.png);
+      background-size: 100% 100%;
+      &.acitve{
+        display: block;
+      }
+    }
+    img{
+      display: none;
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .userInfo{
+    margin: 30px 15px;
+    text-align: center;
+    img{
+      width: 130px;
+      height: 130px;
+      margin: 30px 0;
+      border-radius: 50%;
+    }
+    .backCode{
+      margin: 100px 0 50px;
+      color: #46B4AA;
+      cursor: pointer;
+    }
+  }
+  .explain{
+    margin-top: 18px;
+    text-align: center;
+    color: #919191;
+    a{
+      color:#46B4AA;
+    }
+  }
+  .goLogin{
+    display: block;
+    margin: 70px auto 50px;
+    padding: 0 10px;
+    text-align: center;
+    a{
+      color: #FF8F0A;
+    }
+  }
+  .footer{
+      button{
+      display: block;
+      width:382px;
+      height:42px;
+      border-radius:5px;
+      background: #FFB358;
+      font-size: 16px;
+      color:#fff;
+      margin: 30px auto 0;
+    }
+    .switch-btn{
+      margin-bottom: 50px;
+      background-color: #fff;
+      color: #FF8F0A;
+      border: 1px solid #FF8F0A;
+    }
+      .item-help{
+      padding: 0 40px 30px 40px;
+      line-height:40px;
+      text-align: right;
+          a{
+        color: #0099FF;
+        &.forget{
+            float: left;
+            color: #0099FF;
+        }
+          }
+    }
+    .logout{
+      margin: 90px auto 50px;
+    }
+  }
+}

@@ -1,0 +1,107 @@
+$color-theme: #8099e3;
+
+$color-theme-active: #8bcdff;
+
+$color-green: #52e0e2;
+
+$color-grey: #999999;
+
+$color-red: #ff4e4e;
+
+$color-white: #ffffff;
+
+$backgroup-color: #f0f2f7;
+
+$border-color: #dce0e7;
+
+$active-color: #dfe3ea;
+
+body {
+  .menu_body {
+    .menu_item__available {
+      padding: 0 28px;
+      text-align: center;
+      &:hover {
+        background: #fff;
+        color: $color-theme;
+        background: #f0f4f8;
+      }
+
+      .menu_item_label {
+        font-size: 14px;
+        &:hover {
+          color: $color-theme;
+        }
+      }
+      .menu_item_expand_icon {
+        margin-left: 0;
+        width: 0;
+      }
+    }
+  }
+  .el-picker-panel {
+    margin-left: 207px;
+    .el-picker-panel__sidebar {
+      width: 146px;
+    }
+    .el-picker-panel__body {
+      margin-left: 146px;
+      .available {
+        &.today {
+          span {
+            color: $color-theme;
+          }
+        }
+        &.start-date {
+          span {
+            color: #fff;
+            background: $color-theme;
+          }
+        }
+        &.end-date {
+          span {
+            color: #fff;
+            background: $color-theme;
+          }
+        }
+      }
+      .el-time-panel__btn {
+        &.confirm {
+          color: $color-theme;
+        }
+      }
+    }
+    .el-picker-panel__sidebar {
+      .el-picker-panel__shortcut:hover {
+        color: $color-theme;
+      }
+    }
+    .el-picker-panel__footer {
+      .is-plain {
+        &:hover {
+          color: $color-theme;
+          border-color: $color-theme;
+        }
+      }
+    }
+  }
+  .history-info-date-picker {
+    &.el-date-range-picker.has-sidebar {
+      width: 646px;
+    }
+    .el-picker-panel__sidebar {
+      width: 100%;
+      position: relative;
+      display: flex;
+      border-bottom: 1px solid $border-color;
+      align-content: space-between;
+      color: $color-theme;
+      .el-picker-panel__shortcut {
+        color: $color-theme;
+      }
+    }
+    .el-picker-panel__body {
+      margin: 0;
+    }
+  }
+}

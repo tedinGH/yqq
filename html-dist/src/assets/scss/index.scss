@@ -1,0 +1,2805 @@
+.wrap {
+  width: 100%;
+  height: 100%;
+}
+
+.index-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+}
+
+.version-wrapper {
+  width: 100%;
+  height: 100%;
+
+  .swiper-container {
+    width: 100%;
+    height: 100%;
+
+    .swiper-wrapper {
+      width: 100%;
+      height: 100%;
+
+      .swiper-slide {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: url(../../assets/images/index/swiper-2.png);
+        background-size: 100% 100%;
+
+        &.first {
+          background: url(../../assets/images/index/swiper-1.png);
+          background-size: 100% 100%;
+        }
+
+        .container {
+          position: relative;
+          top: 50%;
+          margin-top: -250px;
+
+          .content-left {
+            .description {
+              padding-top: 20px;
+              font-size: 20px;
+              line-height: 36px;
+              -webkit-animation: bgFadeIn .8s ease-out forwards;
+              animation: bgFadeIn .8s ease-out forwards;
+
+              &.en {
+                font-size: 18px;
+                padding-top: 33px;
+              }
+            }
+
+            .title {
+              font-size: 56px;
+              padding-top: 25px;
+
+              &.en {
+                font-size: 43px;
+              }
+
+              &.my {
+                font-size: 50px;
+                padding-top: 10px;
+              }
+            }
+
+            .download {
+              padding: 50px 0 30px;
+              font-size: 24px;
+
+              &.en {
+                padding: 55px 0 30px;
+              }
+            }
+
+            .qrcode-box {
+              display: inline-block;
+              min-width: 620px;
+              height: 240px;
+              margin: 20px 0;
+              border-radius: 10px;
+              font-size: 16px;
+              line-height: 48px;
+              text-align: center;
+              background: rgba(255, 255, 255, .5);
+              box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, .35);
+              -webkit-animation: bgFadeIn .8s ease-out forwards;
+              animation: bgFadeIn .8s ease-out forwards;
+              &.my{
+                height: 270px;
+              }
+              ul{
+                display: flex;
+                justify-content: center;
+              }
+              .scan-code {
+                // display: inline-block;
+                width: 190px;
+                line-height: 32px;
+                font-size: 14px;
+              }
+
+              canvas {
+                height: 144px !important;
+                width: 144px !important;
+              }
+
+              &.en {
+                margin: 29px 0;
+              }
+
+              &.my {
+                font-size: 14px;
+              }
+            }
+
+            .download-item {
+              position: relative;
+              display: inline-block;
+              width: 120px;
+              text-align: center;
+              line-height: 52px;
+              font-size: 16px;
+              cursor: pointer;
+
+              a {
+                color: #000;
+              }
+
+              .icon {
+                position: relative;
+                display: block;
+                height: 80px;
+                width: 80px;
+                margin: 0 auto;
+                border-radius: 40px;
+                background-size: 100%;
+                background-image: linear-gradient(234deg, #4CA8FF, #E58B8F);
+
+                &::before {
+                  content: '';
+                  position: absolute;
+                  top: 21px;
+                  left: 21px;
+                  display: block;
+                  width: 38px;
+                  height: 38px;
+                }
+              }
+
+              &:hover .icon,
+              .icon.active {
+                opacity: .8;
+              }
+
+              .line {
+                content: '';
+                position: relative;
+                height: 4px;
+                width: 0px;
+                margin: 10px auto 0;
+                background-image: -webkit-linear-gradient(40deg, rgba(229, 139, 143, 1) 0%, rgba(76, 168, 255, 1) 90%);
+                background-image: -moz-linear-gradient(40deg, rgba(229, 139, 143, 1) 0%, rgba(76, 168, 255, 1) 90%);
+                background-image: -ms-linear-gradient(40deg, rgba(229, 139, 143, 1) 0%, rgba(76, 168, 255, 1) 90%);
+                background-image: -o-linear-gradient(40deg, rgba(229, 139, 143, 1) 0%, rgba(76, 168, 255, 1) 90%);
+                background-image: linear-gradient(40deg, rgba(229, 139, 143, 1) 0%, rgba(76, 168, 255, 1) 90%);
+                transition: width .4s;
+              }
+
+              &:hover {
+                .line {
+                  width: 100%;
+                }
+              }
+
+              .android::before {
+                background: url(../../assets/images/index/download-android.png) center no-repeat;
+              }
+
+              .iphone::before {
+                background: url(../../assets/images/index/download-iphone.png) center no-repeat;
+              }
+
+              .mac::before {
+                width: 45px;
+                height: 39px;
+                left: 17px;
+                background: url(../../assets/images/index/download-mac.png) center no-repeat;
+              }
+
+              .win::before {
+                background: url(../../assets/images/index/download-win.png) center no-repeat;
+              }
+
+              .web::before {
+                background: url(../../assets/images/index/download-web.png) center no-repeat;
+              }
+
+              .en {
+                height: 45px;
+                margin-top: 10px;
+                font-size: 14px;
+                line-height: 20px;
+              }
+
+              .my {
+                height: 52px;
+                margin-top: 10px;
+                font-size: 13px;
+                line-height: 20px;
+                word-break: break-all;
+              }
+            }
+          }
+
+          .content-right {
+            position: absolute;
+            right: 15px;
+            width: 493px;
+            height: 558px;
+            background-size: 100%;
+            background-repeat: no-repeat;
+          }
+        }
+
+        .panel {
+          position: relative;
+          top: 50%;
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+          margin-top: -170px;
+          padding: 0 15px;
+          overflow: auto;
+
+          &.panel2 {
+            margin-top: -236px;
+
+            &.my {
+              margin-top: -300px;
+            }
+          }
+
+          &.panel3 {
+            margin-top: -236px;
+          }
+
+          &.panel4 {
+            margin-top: -236px;
+          }
+
+          &.panel5 {
+            margin-top: -260px;
+          }
+
+          &.panel6 {
+            margin-top: -200px;
+          }
+
+          &.panel7 {
+            margin-top: -340px;
+            //margin-top:-220px;
+            text-align: center;
+
+            &.en {
+              margin-top:-390px;
+              // margin-top: -4.5rem;
+            }
+
+            &.my {
+              margin-top:-390px;
+              // margin-top: -4.5rem;
+            }
+
+            .title {
+              margin-bottom: 45px;
+              //margin-bottom: 80px;
+            }
+
+            .overflow {
+              // padding-bottom:35px;
+              padding-bottom: 10px;
+              overflow: auto;
+
+              &.mt35 {
+                margin-top: 35px;
+              }
+            }
+          }
+
+          .title {
+            font-size: 56px;
+            margin-bottom: 45px;
+          }
+
+          .description {
+            display: inline-block;
+            font-size: 24px;
+            line-height: 42px;
+            color: #666;
+          }
+
+          .title-Communicate {
+            font-size: 56px;
+            // margin-bottom: 45px;
+            height: 150px;
+            // margin: 0 auto;
+            line-height: 150px;
+            margin: 25px 0;
+          }
+
+          .qrcode-box-bottom {
+            position: relative;
+            display: inline-block;
+            min-width: 620px;
+            height: 240px;
+            margin: 25px 0;
+            border-radius: 10px;
+            font-size: 16px;
+            line-height: 48px;
+            text-align: center;
+            background: #FFFFFF;
+            box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, .35);
+            -webkit-animation: bgFadeIn .8s ease-out forwards;
+            animation: bgFadeIn .8s ease-out forwards;
+            ul{
+              display: flex;
+              justify-content:center
+            }
+            .scan-code {
+              display: inline-block;
+              width: 190px;
+              line-height: 32px;
+              font-size: 14px;
+              .my{
+                line-height: 16px;
+              }
+            }
+
+            canvas {
+              height: 144px !important;
+              width: 144px !important;
+            }
+
+            &.en {
+              margin: 29px 0;
+            }
+
+            &.my {
+              font-size: 14px;
+            }
+          }
+
+          .qrcode-box-bottom::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            border: 15px solid transparent;
+            border-bottom: 0;
+            margin: 0 0 -14px -108px;
+            border-style: solid;
+            border-width: 14px;
+            border-color: #FFFFFF #FFFFFF transparent transparent;
+            transform: rotate(135deg);
+            box-shadow: 2px -2px 2px rgba(0, 0, 0, .35);
+
+          }
+
+          .qrcode-box-bottom.active::before {
+            margin: 0 0 -14px -275px;
+          }
+          
+          .panel1-item {
+            float: left;
+            width: 50%;
+
+            &.my {
+              width: 100%;
+            }
+
+            .panel1-img {
+              height: 200px;
+              width: 200px;
+              margin: 40px 20px 0 0;
+            }
+
+            .description {
+              padding-top: 80px;
+              vertical-align: top;
+
+              &.en {
+                font-size: 23px;
+                padding-top: 40px;
+              }
+            }
+          }
+
+          .panel2-item {
+            padding-top: 100px;
+            text-align: right;
+          }
+
+          .panel2-img {
+            width: 443px;
+            height: 476px;
+          }
+
+          .panel3-item {
+            padding-top: 160px;
+
+            &.en {
+              padding-top: 70px;
+
+              .title {
+                line-height: 60px
+              }
+            }
+
+            &.my {
+              padding-top: 80px;
+
+              .title {
+                line-height: 90px
+              }
+            }
+          }
+
+          .panel3-img {
+            width: 600px;
+            height: 468px;
+          }
+
+          .panel4-item {
+            padding-top: 180px;
+            text-align: right;
+
+            &.en {
+              padding-top: 135px;
+            }
+
+            &.my {
+              padding-top: 135px;
+            }
+          }
+
+          .panel4-img {
+            width: 515px;
+            height: 520px;
+          }
+
+          .panel5-item {
+            text-align: left;
+            padding-top: 100px;
+
+            &.my {
+              padding-top: 10px;
+            }
+          }
+
+          .panel5-img {
+            width: 460px;
+            height: 406px;
+          }
+
+          .panel6-list-item {
+            display: inline-block;
+            width: 16%;
+            text-align: center;
+
+            &.en {
+              .item-title {
+                font-size: 17px;
+              }
+            }
+
+            &.my {
+              .item-title {
+                font-size: 17px;
+              }
+            }
+
+            .item-icon {
+              // width: 80px;
+              // height: 80px;
+              width: 60px;
+              height: 60px;
+              margin: 40px auto 0;
+            }
+
+            .item-title {
+              margin-top: 20px;
+              font-size: 22px;
+              text-align: center;
+              color: #666;
+            }
+          }
+
+          .panel6-box-item {
+            position: relative;
+            display: inline-block;
+            height: 150px;
+            width: 150px;
+            text-align: center;
+            margin-left: 30px;
+            border-radius: 8px;
+
+            &:after {
+              content: '';
+              position: absolute;
+              left: -4px;
+              top: -4px;
+              height: 150px;
+              width: 150px;
+              padding: 4px;
+              border-radius: 8px;
+              background-image: -webkit-linear-gradient(40deg, rgba(229, 139, 143, 1) 0%, rgba(76, 168, 255, 1) 90%);
+              background-image: -moz-linear-gradient(40deg, rgba(229, 139, 143, 1) 0%, rgba(76, 168, 255, 1) 90%);
+              background-image: linear-gradient(40deg, rgba(229, 139, 143, 1) 0%, rgba(76, 168, 255, 1) 90%);
+            }
+
+            &.en {
+              .item-title {
+                font-size: 17px;
+              }
+            }
+
+            &.my {
+              .item-title {
+                font-size: 17px;
+              }
+            }
+
+            &:hover {
+              &:after {
+                opacity: .5;
+              }
+
+              .box {
+                i {
+                  opacity: .5;
+                }
+
+                .item-title {
+                  opacity: .5;
+                }
+              }
+            }
+
+            &:active {
+              .box {
+                i {
+                  opacity: 1;
+                }
+
+                .item-title {
+                  opacity: 1;
+                }
+              }
+            }
+
+            &:first-child {
+              margin-left: 0;
+            }
+
+            .box {
+              z-index: 10;
+              position: relative;
+              width: 100%;
+              height: 100%;
+              border-radius: 8px;
+              background: #fff;
+
+              i {
+                display: inline-block;
+                vertical-align: top;
+
+                &.android {
+                  width: 55px;
+                  height: 70px;
+                  margin-top: 15px;
+                  background: url(../../assets/images/index/icon-sprite-download.png) -0 -167px;
+                }
+
+                &.ios {
+                  width: 53px;
+                  height: 65px;
+                  margin-top: 20px;
+                  background: url(../../assets/images/index/icon-sprite-download.png) -0 -102px;
+                }
+
+                &.windows {
+                  width: 51px;
+                  height: 51px;
+                  margin-top: 34px;
+                  background: url(../../assets/images/index/icon-sprite-download.png) -0 -0;
+                }
+
+                &.mac {
+                  width: 59px;
+                  height: 51px;
+                  margin-top: 34px;
+                  background: url(../../assets/images/index/icon-sprite-download.png) -0 -51px;
+                }
+              }
+
+              .item-title {
+                font-size: 22px;
+                margin-top: 15px;
+                text-align: center;
+                color: #666;
+              }
+            }
+          }
+
+          .container {
+            .description {
+              &.en {
+                p {
+                  text-align: left;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.service-layer {
+  z-index: 10;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+
+  .service-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, .3);
+  }
+
+  .service-content {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 526px;
+    width: 838px;
+    margin-top: -263px;
+    margin-left: -419px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+
+    .service-title {
+      position: relative;
+      height: 78px;
+      line-height: 78px;
+      font-size: 28px;
+      padding: 0 27px;
+      background: linear-gradient(left, #85E3F5, #C7FFF5);
+      background: -ms-linear-gradient(left, #85E3F5, #C7FFF5);
+      background: -webkit-linear-gradient(left, #85E3F5, #C7FFF5);
+      background: -moz-linear-gradient(left, #85E3F5, #C7FFF5);
+
+      i {
+        display: inline-block;
+        position: absolute;
+        right: 25px;
+        top: 26px;
+        height: 20px;
+        width: 20px;
+        background-image: url(../../assets/images/index/service-close.png);
+        background-size: 100% 100%;
+        cursor: pointer;
+      }
+    }
+
+    .service-detail {
+      font-size: 24px;
+      text-align: center;
+      padding: 38px 95px 0 95px;
+
+      p {
+        line-height: 26px;
+      }
+
+      .mb {
+        margin-bottom: 26px;
+      }
+    }
+
+    .service-info {
+      margin-top: 59px;
+      font-size: 24px;
+      text-align: center;
+
+      img {
+        height: 69px;
+        width: 96px;
+        margin-bottom: 26px;
+      }
+
+      p {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.service {
+  z-index: 1;
+  position: fixed;
+  right: 24px;
+  bottom: 66px;
+  height: 60px;
+  width: 60px;
+  line-height: 60px;
+  text-align: right;
+  padding-right: 13px;
+  font-size: 18px;
+  color: #33B7D3;
+  background: #fff;
+  border-radius: 35px;
+  overflow: hidden;
+  transition: width .4s;
+  -moz-transition: width .4s;
+  /* Firefox 4 */
+  -webkit-transition: width .4s;
+  /* Safari and Chrome */
+  -o-transition: width .4s;
+
+  /* Opera */
+  span {
+    padding-left: 60px;
+    white-space: nowrap;
+  }
+
+  >i {
+    display: inline-block;
+    position: absolute;
+    left: 12px;
+    top: 17px;
+    height: 26px;
+    width: 36px;
+    background-image: url(../../assets/images/index/icon-service.png);
+    background-size: 100% 100%;
+  }
+
+  &:hover {
+    width: 145px;
+  }
+
+  &.en:hover {
+    width: 158px;
+  }
+
+  &.my:hover {
+    width: 270px;
+  }
+}
+
+.mobi-download {
+  display: none;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1.1rem;
+  color: #fff;
+  background: rgba(0, 0, 0, .8);
+
+  .mobi-logo {
+    display: inline-block;
+    position: absolute;
+    left: .25rem;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+    height: .62rem;
+    width: .62rem;
+    background-image: url(../../assets/images/logo/logo.png);
+    background-size: 100% 100%;
+  }
+
+  .mobi-close {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: -.15rem;
+    height: .35rem;
+    width: .35rem;
+    background-image: url(../../assets/images/index/icon-mobi-close.png);
+    background-size: 100% 100%;
+  }
+
+  .text {
+    margin-left: 1rem;
+    padding: .2rem 0;
+    line-height: .35rem;
+    font-size: .2rem;
+  }
+
+  .download-btn {
+    display: inline-block;
+    position: absolute;
+    right: .5rem;
+    top: .24rem;
+    height: .62rem;
+    line-height: .62rem;
+    width: 1.42rem;
+    font-size: .24rem;
+    text-align: center;
+    color: #fff;
+    background: #6991FF;
+  }
+}
+
+.download-moblie {
+  display: none;
+}
+
+.footer {
+  height: 161px;
+  background: #272686;
+}
+
+.swiper-pagination-bullets {
+  right: 39px;
+}
+
+#parent /deep/ .swiper-pagination-bullet {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  background: none;
+  margin: 16px 0;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background: #000;
+  }
+}
+
+#parent /deep/ .swiper-pagination-bullet-active {
+  background-image: url(../../assets/images/index/swiper-active.png);
+  background-size: 100% 100%;
+
+  &:after {
+    background: transparent;
+  }
+}
+
+
+@media only screen and (min-width: 0) and (max-width: 1020px) {
+  .version-wrapper {
+    .swiper-container {
+      .swiper-wrapper {
+        .swiper-slide {
+          .mobi-download {
+            display: block;
+          }
+
+          position: relative;
+          height: 13.34rem;
+          background: url(../../assets/images/index/banner-bg-mobile.png);
+          background-size: 100% 100%;
+
+          &.first {
+            background: url(../../assets/images/index/banner-bg-mobile.png);
+            background-size: 100% 100%;
+          }
+
+          .container {
+            padding-top: 1.2rem;
+            margin-top: -6.6rem;
+
+            .content-right {
+              position: relative;
+              left: 1.03rem;
+              width: 4.93rem;
+              height: 5.58rem;
+            }
+
+            .content-left {
+              text-align: center;
+
+              .description {
+                margin-top: .4rem;
+                font-size: .28rem;
+                line-height: .54rem;
+
+                &.en {
+                  padding-top: 0;
+                  font-size: .28rem;
+                }
+              }
+
+              .title {
+                padding-top: .6rem;
+                font-size: .64rem;
+
+                &.en {
+                  padding-top: 0;
+                }
+
+                &.my {
+                  font-size: .45rem;
+                }
+              }
+
+              .description {
+                &.my {
+                  p {
+                    font-size: .3rem;
+                  }
+                }
+              }
+
+              .download {
+                display: none;
+              }
+
+              .download-type {
+                display: none;
+              }
+            }
+          }
+
+          .panel {
+            padding: 15px;
+
+            .floatR,
+            .floatL {
+              float: none;
+            }
+
+            .title {
+              margin-bottom: .45rem;
+              text-align: center;
+              font-size: .64rem;
+            }
+
+            .description {
+              display: block;
+              font-size: .28rem;
+              line-height: .54rem;
+              text-align: center;
+              color: #333;
+              &.en{
+                line-height: .36rem;
+              }
+            }
+
+            &.panel2 {
+              margin-top: -5rem;
+
+              &.my {
+                margin-top: -5rem;
+              }
+
+              .panel1-item {
+                margin-top: .5rem;
+                width: 100%;
+
+                .panel1-img {
+                  height: 2rem;
+                  width: 2rem;
+                  padding-top: 0;
+                  margin: .3rem 10px 0 10px;
+                }
+
+                .description {
+                  display: inline-block;
+                  padding-top: .55rem;
+                  vertical-align: top;
+                  font-size: .28rem;
+                  &.my{
+                    width: 4.0rem;
+                    padding-top: 0rem;
+                  }
+                  &.en {
+                    padding-top: .3rem;
+                  }
+                }
+
+                &:nth-child(2) {
+                  .panel1-img {
+                    float: right;
+                    margin: .3rem 10px 0 10px;
+                  }
+
+                  .description {
+                    float: right;
+                  }
+                }
+              }
+            }
+
+            &.panel3 {
+              margin-top: -5rem;
+
+              .panel2-item {
+                padding-top: 0;
+              }
+
+              .panel2-img {
+                display: block;
+                width: 4.43rem;
+                height: 4.76rem;
+                margin: 0.52rem auto 0;
+              }
+            }
+
+            &.panel4 {
+              margin-top: -4.8rem;
+              &.my{
+                margin-top: -6rem;
+              }
+              &.en {
+                margin-top: -6.6rem;
+              }
+
+              .panel3-item {
+                padding-top: .4rem;
+              }
+
+              .panel3-img {
+                display: block;
+                width: 6rem;
+                height: 4.68rem;
+                margin: .8rem auto 1.2rem;
+                &.en{
+                  margin: .45rem auto 1.2rem;
+                }
+              }
+            }
+
+            &.panel5 {
+              margin-top: -4.8rem;
+
+              &.en {
+                margin-top: -5.7rem;
+              }
+
+              .panel4-item {
+                padding-top: 0;
+              }
+
+              .panel4-img {
+                display: block;
+                width: 5.15rem;
+                height: 5.20rem;
+                margin: 0.6rem auto 0;
+              }
+            }
+
+            &.panel6 {
+              margin-top: -6rem;
+
+              .panel5-item {
+                padding-top: 1.2rem;
+              }
+
+              .panel5-img {
+                display: block;
+                width: 4.60rem;
+                height: 4.06rem;
+                margin: 1.2rem auto 0;
+              }
+
+              margin-bottom: 0;
+
+            }
+
+            &.panel7 {
+              margin-top: -4.8rem;
+              &.en{
+                margin-top: -4.5rem;
+              }
+              &.my{
+                margin-top: -5.2rem;
+              }
+
+              .title {
+                margin-bottom: .45rem;
+              }
+
+              .communi {
+                display: none;
+              }
+
+              .panel6-list-item {
+                display: inline-block;
+                width: 30%;
+                vertical-align: middle;
+
+                &.en {
+                  height: 2.3rem;
+                }
+                &.my{
+                  height: 2.8rem;
+                }
+
+                .item-icon {
+                  width: 1.2rem;
+                  height: 1.2rem;
+                  margin: .6rem auto 0;
+                }
+
+                .item-title {
+                  margin-top: 0;
+                  font-size: .22rem;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .service {
+    display: none;
+  }
+
+  .download-moblie {
+    display: block;
+    width: 100%;
+    height: 3.5rem;
+    background: #272686;
+
+    .title {
+      padding: .4rem;
+      text-align: center;
+      font-size: .32rem;
+      color: #fff;
+    }
+
+    .type {
+      text-align: center;
+
+      .btn {
+        position: relative;
+        display: inline-block;
+        width: 2.25rem;
+        height: .72rem;
+        padding-right: .15rem;
+        border-radius: .72rem;
+        font-size: .2rem;
+        line-height: .72rem;
+        text-align: right;
+        color: #fff;
+        background: #6991FF;
+
+        .icon {
+          display: inline-block;
+          position: absolute;
+          left: .25rem;
+          top: .14rem;
+          width: .36rem;
+          height: .44rem;
+          background-size: 100% 100%;
+        }
+
+        .ios {
+          background-image: url(../../assets/images/index/icon-mobi-ios.png);
+        }
+
+        .andriod {
+          background-image: url(../../assets/images/index/icon-mobi-andriod.png);
+        }
+
+        .download {
+          display: inline-block;
+          height: .22rem;
+          width: .22rem;
+          margin-left: .1rem;
+          background-image: url(../../assets/images/index/icon-mobi-download.png);
+          background-size: 100% 100%;
+        }
+      }
+
+      >a:first-child {
+        margin-right: 1.5rem;
+        padding-right: .4rem;
+      }
+    }
+  }
+
+  .swiper-pagination-bullets {
+    right: 0;
+  }
+
+  #parent /deep/ .swiper-pagination-bullet {
+    margin: 0;
+  }
+
+
+
+
+
+}
+
+//ipad横屏
+@media only screen and (device-width: 1024px) and (device-height: 768px) {
+  .version-wrapper {
+    .swiper-container {
+      .swiper-wrapper {
+        .swiper-slide {
+          .mobi-download {
+            display: block;
+          }
+
+          position: relative;
+          height: 13.34rem;
+          background: url(../../assets/images/index/banner-bg-mobile.png);
+          background-size: 100% 100%;
+
+          &.first {
+            background: url(../../assets/images/index/banner-bg-mobile.png);
+            background-size: 100% 100%;
+          }
+
+          .container {
+            padding-top: 1.2rem;
+            margin-top: -6.6rem;
+
+            .content-right {
+              position: relative;
+              left: 3rem;
+              width: 2rem;
+              top: 3.2rem;
+              height: 3.58rem;
+
+              &.my {
+                position: relative;
+                left: 3rem;
+                width: 2rem;
+                top: 3.2rem;
+                height: 5.4rem;
+              }
+            }
+
+            .content-left {
+              text-align: center;
+
+              .description {
+                margin-top: .2rem;
+                font-size: .18rem;
+                line-height: .4rem;
+
+                &.en {
+                  padding-top: 0;
+                  font-size: .18rem;
+                }
+              }
+
+              .title {
+                padding-top: 1.9rem;
+                font-size: .34rem;
+
+                &.en {
+                  padding-top: 2rem;
+                  font-size: .34rem;
+                }
+
+                &.my {
+                  font-size: .28rem;
+                }
+              }
+
+              .description {
+
+                &.my {
+                  p {
+                    font-size: .14rem;
+                  }
+                }
+              }
+
+              .download {
+                display: none;
+              }
+
+              .download-type {
+                display: none;
+              }
+            }
+          }
+
+          .panel {
+            padding: 15px;
+
+            .floatR,
+            .floatL {
+              float: none;
+            }
+
+            .title {
+              margin-bottom: .1rem;
+              text-align: center;
+              font-size: .34rem;
+
+              &.my {
+
+                font-size: .28rem;
+
+              }
+            }
+
+            .description {
+              display: block;
+              font-size: .18rem;
+              line-height: .4rem;
+              text-align: center;
+              color: #333;
+
+              &.my {
+                font-size: .14rem;
+              }
+
+            }
+
+            &.panel2 {
+              margin-top: -2rem;
+
+              &.my {
+                margin-top: -2rem;
+              }
+
+              .panel1-item {
+                // margin-top:.15rem;
+                width: 100%;
+
+                .panel1-img {
+                  height: 1.5rem;
+                  width: 1.5rem;
+                  padding-top: 0;
+                  margin: .3rem 50px 0 60px;
+
+                  &.my {
+
+                    height: 1.5rem;
+                    width: 1.5rem;
+                    padding-top: 0;
+                    margin: .3rem 20px 0 60px;
+
+                  }
+                }
+
+                .description {
+                  display: inline-block;
+                  padding-top: .45rem;
+                  vertical-align: top;
+                  font-size: .18rem;
+
+                  &.en {
+                    padding-top: .3rem;
+                    line-height: .3rem;
+                  }
+
+                  &.my {
+
+                    font-size: .14rem;
+
+                  }
+                }
+
+                &:nth-child(2) {
+                  .panel1-img {
+                    float: right;
+                    margin: .3rem 60px 0 50px;
+                  }
+
+                  .description {
+                    float: right;
+                  }
+                }
+              }
+            }
+
+            &.panel3 {
+              margin-top: -2rem;
+
+              .panel2-item {
+                padding-top: 0;
+              }
+
+              .panel2-img {
+                display: block;
+                width: 1.43rem;
+                height: 1.76rem;
+                margin: 0.3rem auto 0;
+              }
+            }
+
+            &.panel4 {
+              margin-top: -2.4rem;
+
+              &.en {
+                margin-top: -6.6rem;
+              }
+
+              .panel3-item {
+                padding-top: .4rem;
+
+                .description {
+                  line-height: .3rem;
+                }
+
+              }
+
+              .panel3-img {
+                display: block;
+                width: 2rem;
+                height: 1.34rem;
+                margin: .4rem auto 1.2rem;
+              }
+            }
+
+            &.panel5 {
+              margin-top: -2.1rem;
+
+              &.en {
+                margin-top: -2rem;
+              }
+
+              .panel4-item {
+                padding-top: 0;
+
+                .description {
+                  line-height: .3rem;
+                }
+              }
+
+              .panel4-img {
+                display: block;
+                width: 2.25rem;
+                height: 2.40rem;
+                margin: 0.2rem auto 0;
+              }
+            }
+
+            &.panel6 {
+              margin-top: -3.2rem;
+
+              .panel5-item {
+                padding-top: 1.2rem;
+              }
+
+              .panel5-img {
+                display: block;
+                width: 2.40rem;
+                height: 2.06rem;
+                margin: 0.2rem auto 0;
+              }
+
+              margin-bottom: 0;
+
+            }
+
+            &.panel7 {
+              margin-top: -1.8rem;
+
+              &.en {
+                margin-top: -2.2rem;
+              }
+
+              &.my {
+                margin-top: -2.2rem;
+              }
+
+
+              .title {
+                margin-bottom: .25rem;
+              }
+
+              .communi {
+                display: none;
+              }
+
+              .description {
+                &.en {
+                  line-height: .3rem;
+                }
+
+              }
+
+              .panel6-list-item {
+                display: inline-block;
+                width: 30%;
+                vertical-align: middle;
+
+                &.en {
+                  height: 1.3rem;
+                }
+                &.my{
+                  height: 2.3rem;
+                }
+
+                .item-icon {
+                  width: 0.6rem;
+                  height: 0.6rem;
+                  margin: .2rem auto 0;
+                }
+
+                .item-title {
+                  margin-top: 0;
+                  font-size: .22rem;
+
+                  &.my {
+                    font-size: .14rem;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .service {
+    display: none;
+  }
+
+  .download-moblie {
+    display: block;
+    width: 100%;
+    height: 3.5rem;
+    background: #272686;
+
+    .title {
+      padding: .4rem;
+      text-align: center;
+      font-size: .32rem;
+      color: #fff;
+    }
+
+    .type {
+      text-align: center;
+
+      .btn {
+        position: relative;
+        display: inline-block;
+        width: 2.25rem;
+        height: .72rem;
+        padding-right: .15rem;
+        border-radius: .72rem;
+        font-size: .2rem;
+        line-height: .72rem;
+        text-align: right;
+        color: #fff;
+        background: #6991FF;
+
+        .icon {
+          display: inline-block;
+          position: absolute;
+          left: .25rem;
+          top: .14rem;
+          width: .36rem;
+          height: .44rem;
+          background-size: 100% 100%;
+        }
+
+        .ios {
+          background-image: url(../../assets/images/index/icon-mobi-ios.png);
+        }
+
+        .andriod {
+          background-image: url(../../assets/images/index/icon-mobi-andriod.png);
+        }
+
+        .download {
+          display: inline-block;
+          height: .22rem;
+          width: .22rem;
+          margin-left: .1rem;
+          background-image: url(../../assets/images/index/icon-mobi-download.png);
+          background-size: 100% 100%;
+        }
+      }
+
+      >a:first-child {
+        margin-right: 1.5rem;
+        padding-right: .4rem;
+      }
+    }
+  }
+
+  .swiper-pagination-bullets {
+    right: 0;
+  }
+
+  #parent /deep/ .swiper-pagination-bullet {
+    margin: 0;
+  }
+
+  .mobi-download {
+    display: none;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 0.55rem;
+    color: #fff;
+    background: rgba(0, 0, 0, .8);
+
+    .mobi-logo {
+      display: inline-block;
+      position: absolute;
+      left: .125rem;
+      top: 0;
+      bottom: 0;
+      margin: auto 0;
+      height: .31rem;
+      width: .31rem;
+      background-image: url(../../assets/images/logo/logo.png);
+      background-size: 100% 100%;
+    }
+
+    .mobi-close {
+      display: inline-block;
+      position: absolute;
+      right: 0;
+      top: -.15rem;
+      height: .35rem;
+      width: .35rem;
+      background-image: url(../../assets/images/index/icon-mobi-close.png);
+      background-size: 100% 100%;
+    }
+
+    .text {
+      margin-left: 0.5rem;
+      padding: .1rem 0;
+      line-height: .175rem;
+      font-size: .1rem;
+    }
+
+    .download-btn {
+      display: inline-block;
+      position: absolute;
+      right: .5rem;
+      top: .12rem;
+      height: .31rem;
+      line-height: .31rem;
+      width: 0.71rem;
+      font-size: .12rem;
+      text-align: center;
+      color: #fff;
+      background: #6991FF;
+    }
+  }
+}
+
+//ipad竖屏
+
+@media only screen and (device-width: 768px) and (device-height: 1024px) {
+  .version-wrapper {
+    .swiper-container {
+      .swiper-wrapper {
+        .swiper-slide {
+          .mobi-download {
+            display: block;
+          }
+
+          position: relative;
+          height: 13.34rem;
+          background: url(../../assets/images/index/banner-bg-mobile.png);
+          background-size: 100% 100%;
+
+          &.first {
+            background: url(../../assets/images/index/banner-bg-mobile.png);
+            background-size: 100% 100%;
+          }
+
+          .container {
+            padding-top: 1.2rem;
+            margin-top: -6.6rem;
+
+            .content-right {
+              position: relative;
+              left: 2.33rem;
+              width: 2.93rem;
+              top: 1.7rem;
+              height: 5.58rem;
+
+              &.my {
+                position: relative;
+                left: 2.33rem;
+                width: 2.93rem;
+                top: 1.7rem;
+                height: 4.98rem;
+              }
+            }
+
+            .content-left {
+              text-align: center;
+
+              .description {
+                margin-top: .4rem;
+                font-size: .28rem;
+                line-height: .54rem;
+
+                &.en {
+                  padding-top: 0;
+                  font-size: .28rem;
+                }
+              }
+
+              .title {
+                padding-top: .6rem;
+                font-size: .64rem;
+
+                &.en {
+                  padding-top: 0;
+                }
+
+                &.my {
+                  font-size: .35rem;
+                }
+              }
+
+              .description {
+                &.my {
+                  p {
+                    font-size: .18rem;
+                  }
+                }
+              }
+
+              .download {
+                display: none;
+              }
+
+              .download-type {
+                display: none;
+              }
+            }
+          }
+
+          .panel {
+            padding: 15px;
+
+            .floatR,
+            .floatL {
+              float: none;
+            }
+
+            .title {
+              margin-bottom: .45rem;
+              text-align: center;
+              font-size: .44rem;
+            }
+
+            .description {
+              display: block;
+              font-size: .28rem;
+              line-height: .44rem;
+              text-align: center;
+              color: #333;
+
+              &.my {
+                font-size: .18rem;
+              }
+            }
+
+            &.panel2 {
+              margin-top: -4rem;
+
+              &.my {
+                margin-top: -4rem;
+              }
+
+              .panel1-item {
+                margin-top: .5rem;
+                width: 100%;
+
+                .panel1-img {
+                  height: 2rem;
+                  width: 2rem;
+                  padding-top: 0;
+                  margin: .3rem 10px 0 10px;
+
+                  &.my {
+                    height: 1.5rem;
+                    width: 1.5rem;
+                    padding-top: 0;
+                    margin: .3rem 10px 0 10px;
+                  }
+                }
+
+                .description {
+                  display: inline-block;
+                  padding-top: .55rem;
+                  vertical-align: top;
+                  font-size: .28rem;
+
+                  &.en {
+                    padding-top: .3rem;
+                  }
+
+                  &.my {
+                    font-size: .18rem;
+                  }
+                }
+
+                &:nth-child(2) {
+                  .panel1-img {
+                    float: right;
+                    margin: .3rem 10px 0 10px;
+                  }
+
+                  .description {
+                    float: right;
+                  }
+                }
+              }
+            }
+
+            &.panel3 {
+              margin-top: -4rem;
+
+              .panel2-item {
+                padding-top: 0;
+              }
+
+              .panel2-img {
+                display: block;
+                width: 4.43rem;
+                height: 4.76rem;
+                margin: 0.8rem auto 0;
+              }
+            }
+
+            &.panel4 {
+              margin-top: -4rem;
+
+              &.en {
+                margin-top: -6.6rem;
+              }
+
+              .panel3-item {
+                padding-top: .4rem;
+              }
+
+              .panel3-img {
+                display: block;
+                width: 4rem;
+                height: 2.68rem;
+                margin: .8rem auto 1.2rem;
+              }
+            }
+
+            &.panel5 {
+              margin-top: -4rem;
+
+              &.en {
+                margin-top: -4.2rem;
+              }
+
+              .panel4-item {
+                padding-top: 0;
+              }
+
+              .panel4-img {
+                display: block;
+                width: 4.15rem;
+                height: 4.20rem;
+                margin: 0.5rem auto 0;
+              }
+            }
+
+            &.panel6 {
+              margin-top: -5.3rem;
+
+              .panel5-item {
+                padding-top: 1.2rem;
+              }
+
+              .panel5-img {
+                display: block;
+                width: 4.60rem;
+                height: 4.06rem;
+                margin: 0.5rem auto 0;
+              }
+
+              margin-bottom: 0;
+
+            }
+
+            &.panel7 {
+              margin-top: -4rem;
+              &.en{
+                margin-top: -4.5rem;
+              }
+              &.my{
+                margin-top: -5.2rem;
+              }
+
+              .title {
+                margin-bottom: .25rem;
+              }
+
+              .communi {
+                display: none;
+              }
+
+              .panel6-list-item {
+                display: inline-block;
+                width: 30%;
+                vertical-align: middle;
+
+                &.en {
+                  height: 2.3rem;
+                }
+                &.my{
+                  height: 2.8rem;
+                }
+
+                .item-icon {
+                  width: 1.2rem;
+                  height: 1.2rem;
+                  margin: .6rem auto 0;
+                }
+
+                .item-title {
+                  margin-top: 0;
+                  font-size: .22rem;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .service {
+    display: none;
+  }
+
+  .download-moblie {
+    display: block;
+    width: 100%;
+    height: 3.5rem;
+    background: #272686;
+
+    .title {
+      padding: .4rem;
+      text-align: center;
+      font-size: .32rem;
+      color: #fff;
+    }
+
+    .type {
+      text-align: center;
+
+      .btn {
+        position: relative;
+        display: inline-block;
+        width: 2.25rem;
+        height: .72rem;
+        padding-right: .15rem;
+        border-radius: .72rem;
+        font-size: .2rem;
+        line-height: .72rem;
+        text-align: right;
+        color: #fff;
+        background: #6991FF;
+
+        .icon {
+          display: inline-block;
+          position: absolute;
+          left: .25rem;
+          top: .14rem;
+          width: .36rem;
+          height: .44rem;
+          background-size: 100% 100%;
+        }
+
+        .ios {
+          background-image: url(../../assets/images/index/icon-mobi-ios.png);
+        }
+
+        .andriod {
+          background-image: url(../../assets/images/index/icon-mobi-andriod.png);
+        }
+
+        .download {
+          display: inline-block;
+          height: .22rem;
+          width: .22rem;
+          margin-left: .1rem;
+          background-image: url(../../assets/images/index/icon-mobi-download.png);
+          background-size: 100% 100%;
+        }
+      }
+
+      >a:first-child {
+        margin-right: 1.5rem;
+        padding-right: .4rem;
+      }
+    }
+  }
+
+  .swiper-pagination-bullets {
+    right: 0;
+  }
+
+  #parent /deep/ .swiper-pagination-bullet {
+    margin: 0;
+  }
+
+
+}
+
+
+//ipad pro横屏
+@media only screen and (device-width: 1366px) and (device-height: 1024px) {
+  .version-wrapper {
+    .swiper-container {
+      .swiper-wrapper {
+        .swiper-slide {
+          .mobi-download {
+            display: block;
+          }
+
+          position: relative;
+          height: 13.34rem;
+          background: url(../../assets/images/index/banner-bg-mobile.png);
+          background-size: 100% 100%;
+
+          &.first {
+            background: url(../../assets/images/index/banner-bg-mobile.png);
+            background-size: 100% 100%;
+          }
+
+          .container {
+            padding-top: 1.2rem;
+            margin-top: -6.6rem;
+
+            .content-right {
+              position: relative;
+              left: 3rem;
+              width: 2rem;
+              top: 3.2rem;
+              height: 3.58rem;
+
+              &.my {
+                position: relative;
+                left: 3rem;
+                width: 2rem;
+                top: 3.2rem;
+                height: 5.58rem;
+              }
+            }
+
+            .content-left {
+              text-align: center;
+
+              .description {
+                margin-top: .2rem;
+                font-size: .18rem;
+                line-height: .4rem;
+
+                &.en {
+                  padding-top: 0;
+                  font-size: .18rem;
+                }
+              }
+
+              .title {
+                padding-top: 1.9rem;
+                font-size: .34rem;
+
+                &.en {
+                  padding-top: 2rem;
+                  font-size: .34rem;
+                }
+
+                &.my {
+                  font-size: .34rem;
+                }
+              }
+
+              .description {
+                &.my {
+                  p {
+                    font-size: .18rem;
+                  }
+                }
+              }
+
+              .download {
+                display: none;
+              }
+
+              .download-type {
+                display: none;
+              }
+            }
+          }
+
+          .panel {
+            padding: 15px;
+
+            .floatR,
+            .floatL {
+              float: none;
+            }
+
+            .title {
+              margin-bottom: .1rem;
+              text-align: center;
+              font-size: .34rem;
+            }
+
+            .description {
+              display: block;
+              font-size: .18rem;
+              line-height: .4rem;
+              text-align: center;
+              color: #333;
+            }
+
+            &.panel2 {
+              margin-top: -2rem;
+
+              &.my {
+                margin-top: -2rem;
+              }
+
+              .panel1-item {
+                // margin-top:.15rem;
+                width: 100%;
+
+                .panel1-img {
+                  height: 1.5rem;
+                  width: 1.5rem;
+                  padding-top: 0;
+                  margin: .3rem 50px 0 60px;
+                }
+
+                .description {
+                  display: inline-block;
+                  padding-top: .45rem;
+                  vertical-align: top;
+                  font-size: .18rem;
+
+                  &.en {
+                    padding-top: .3rem;
+                  }
+                }
+
+                &:nth-child(2) {
+                  .panel1-img {
+                    float: right;
+                    margin: .3rem 60px 0 50px;
+                  }
+
+                  .description {
+                    float: right;
+                  }
+                }
+              }
+            }
+
+            &.panel3 {
+              margin-top: -2rem;
+
+              .panel2-item {
+                padding-top: 0;
+              }
+
+              .panel2-img {
+                display: block;
+                width: 2.43rem;
+                height: 2.76rem;
+                margin: 0.3rem auto 0;
+              }
+            }
+
+            &.panel4 {
+              margin-top: -2.4rem;
+
+              &.en {
+                margin-top: -6.6rem;
+              }
+
+              .panel3-item {
+                padding-top: .4rem;
+              }
+
+              .panel3-img {
+                display: block;
+                width: 2rem;
+                height: 1.68rem;
+                margin: .4rem auto 1.2rem;
+              }
+            }
+
+            &.panel5 {
+              margin-top: -2.1rem;
+
+              &.en {
+                margin-top: -2.2rem;
+              }
+
+              .panel4-item {
+                padding-top: 0;
+              }
+
+              .panel4-img {
+                display: block;
+                width: 2.25rem;
+                height: 2.40rem;
+                margin: 0.3rem auto 0;
+              }
+            }
+
+            &.panel6 {
+              margin-top: -3.2rem;
+
+              .panel5-item {
+                padding-top: 1.2rem;
+              }
+
+              .panel5-img {
+                display: block;
+                width: 2.40rem;
+                height: 2.06rem;
+                margin: 0.2rem auto 0;
+              }
+
+              margin-bottom: 0;
+
+            }
+
+            &.panel7 {
+              margin-top: -2.1rem;
+
+              .title {
+                margin-bottom: .25rem;
+              }
+
+              .communi {
+                display: none;
+              }
+
+              .panel6-list-item {
+                display: inline-block;
+                width: 30%;
+                vertical-align: middle;
+
+                &.en {
+                  height: 2.3rem;
+                }
+                &.my{
+                  height: 2.8rem;
+                }
+
+                .item-icon {
+                  width: 0.6rem;
+                  height: 0.6rem;
+                  margin: .2rem auto 0;
+                }
+
+                .item-title {
+                  margin-top: 0;
+                  font-size: .22rem;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .service {
+    display: none;
+  }
+
+  .download-moblie {
+    display: block;
+    width: 100%;
+    height: 3.5rem;
+    background: #272686;
+
+    .title {
+      padding: .4rem;
+      text-align: center;
+      font-size: .32rem;
+      color: #fff;
+    }
+
+    .type {
+      text-align: center;
+
+      .btn {
+        position: relative;
+        display: inline-block;
+        width: 2.25rem;
+        height: .72rem;
+        padding-right: .15rem;
+        border-radius: .72rem;
+        font-size: .2rem;
+        line-height: .72rem;
+        text-align: right;
+        color: #fff;
+        background: #6991FF;
+
+        .icon {
+          display: inline-block;
+          position: absolute;
+          left: .25rem;
+          top: .14rem;
+          width: .36rem;
+          height: .44rem;
+          background-size: 100% 100%;
+        }
+
+        .ios {
+          background-image: url(../../assets/images/index/icon-mobi-ios.png);
+        }
+
+        .andriod {
+          background-image: url(../../assets/images/index/icon-mobi-andriod.png);
+        }
+
+        .download {
+          display: inline-block;
+          height: .22rem;
+          width: .22rem;
+          margin-left: .1rem;
+          background-image: url(../../assets/images/index/icon-mobi-download.png);
+          background-size: 100% 100%;
+        }
+      }
+
+      >a:first-child {
+        margin-right: 1.5rem;
+        padding-right: .4rem;
+      }
+    }
+  }
+
+  .swiper-pagination-bullets {
+    right: 0;
+  }
+
+  #parent /deep/ .swiper-pagination-bullet {
+    margin: 0;
+  }
+
+  .mobi-download {
+    display: none;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 0.55rem;
+    color: #fff;
+    background: rgba(0, 0, 0, .8);
+
+    .mobi-logo {
+      display: inline-block;
+      position: absolute;
+      left: .125rem;
+      top: 0;
+      bottom: 0;
+      margin: auto 0;
+      height: .31rem;
+      width: .31rem;
+      background-image: url(../../assets/images/logo/logo.png);
+      background-size: 100% 100%;
+    }
+
+    .mobi-close {
+      display: inline-block;
+      position: absolute;
+      right: 0;
+      top: -.15rem;
+      height: .35rem;
+      width: .35rem;
+      background-image: url(../../assets/images/index/icon-mobi-close.png);
+      background-size: 100% 100%;
+    }
+
+    .text {
+      margin-left: 0.5rem;
+      padding: .1rem 0;
+      line-height: .175rem;
+      font-size: .1rem;
+    }
+
+    .download-btn {
+      display: inline-block;
+      position: absolute;
+      right: .5rem;
+      top: .12rem;
+      height: .31rem;
+      line-height: .31rem;
+      width: 0.71rem;
+      font-size: .12rem;
+      text-align: center;
+      color: #fff;
+      background: #6991FF;
+    }
+  }
+}
+
+//ipad pro竖屏
+
+@media only screen and (device-width: 1024px) and (device-height: 1366px) {
+  .version-wrapper {
+    .swiper-container {
+      .swiper-wrapper {
+        .swiper-slide {
+          .mobi-download {
+            display: block;
+          }
+
+          position: relative;
+          height: 13.34rem;
+          background: url(../../assets/images/index/banner-bg-mobile.png);
+          background-size: 100% 100%;
+
+          &.first {
+            background: url(../../assets/images/index/banner-bg-mobile.png);
+            background-size: 100% 100%;
+          }
+
+          .container {
+            padding-top: 1.2rem;
+            margin-top: -6.6rem;
+
+            .content-right {
+              position: relative;
+              left: 2.33rem;
+              width: 2.93rem;
+              top: 1.7rem;
+              height: 5.58rem;
+
+              &.my {
+                position: relative;
+                left: 2.33rem;
+                width: 2.93rem;
+                top: 1.7rem;
+                height: 5.58rem;
+              }
+
+            }
+
+            .content-left {
+              text-align: center;
+
+              .description {
+                margin-top: .4rem;
+                font-size: .28rem;
+                line-height: .54rem;
+
+                &.en {
+                  padding-top: 0;
+                  font-size: .22rem;
+                }
+
+                &.my {
+                  margin-top: .3rem;
+                  font-size: .22rem;
+                  line-height: .44rem;
+                }
+              }
+
+              .title {
+                padding-top: .6rem;
+                font-size: .64rem;
+
+                &.en {
+                  padding-top: 0;
+                  font-size: .34rem;
+                }
+
+                &.my {
+                  font-size: .45rem;
+                }
+              }
+
+              .description {
+                &.en {}
+
+                &.my {
+                  p {
+                    font-size: .22rem;
+                  }
+                }
+              }
+
+              .download {
+                display: none;
+              }
+
+              .download-type {
+                display: none;
+              }
+            }
+          }
+
+          .panel {
+            padding: 15px;
+
+            .floatR,
+            .floatL {
+              float: none;
+            }
+
+            .title {
+              margin-bottom: .45rem;
+              text-align: center;
+              font-size: .64rem;
+
+              &.en {
+                font-size: .34rem;
+              }
+
+              &.my {
+                font-size: .45rem;
+              }
+            }
+
+            .description {
+              display: block;
+              font-size: .22rem;
+              line-height: .54rem;
+              text-align: center;
+              color: #333;
+            }
+
+            &.panel2 {
+              margin-top: -4rem;
+
+              &.my {
+                margin-top: -4.1rem;
+              }
+
+              .panel1-item {
+                margin-top: .5rem;
+                width: 100%;
+
+                .panel1-img {
+                  height: 2rem;
+                  width: 2rem;
+                  padding-top: 0;
+                  margin: .3rem 10px 0 10px;
+
+                  &.my {
+                    height: 1.5rem;
+                    width: 1.5rem;
+                    padding-top: 0;
+                    margin: .3rem 10px 0 10px;
+                  }
+
+                }
+
+                .description {
+                  display: inline-block;
+                  padding-top: .55rem;
+                  vertical-align: top;
+                  font-size: .22rem;
+
+                  &.en {
+                    padding-top: .3rem;
+                  }
+
+                  &.my {
+                    font-size: .2rem;
+                  }
+                }
+
+                &:nth-child(2) {
+                  .panel1-img {
+                    float: right;
+                    margin: .3rem 10px 0 10px;
+                  }
+
+                  .description {
+                    float: right;
+                  }
+                }
+              }
+            }
+
+            &.panel3 {
+              margin-top: -4rem;
+
+              .panel2-item {
+                padding-top: 0;
+              }
+
+              .panel2-img {
+                display: block;
+                width: 4.43rem;
+                height: 4.76rem;
+                margin: 1.2rem auto 0;
+              }
+            }
+
+            &.panel4 {
+              margin-top: -4rem;
+
+              &.en {
+                margin-top: -6.6rem;
+              }
+
+              .panel3-item {
+                padding-top: .4rem;
+              }
+
+              .panel3-img {
+                display: block;
+                width: 4rem;
+                height: 2.68rem;
+                margin: .8rem auto 1.2rem;
+              }
+            }
+
+            &.panel5 {
+              margin-top: -4rem;
+
+              &.en {
+                margin-top: -3.7rem;
+              }
+
+              .panel4-item {
+                padding-top: 0;
+              }
+
+              .panel4-img {
+                display: block;
+                width: 4.15rem;
+                height: 4.20rem;
+                margin: 0.5rem auto 0;
+              }
+            }
+
+            &.panel6 {
+              margin-top: -5.3rem;
+
+              .panel5-item {
+                padding-top: 1.2rem;
+              }
+
+              .panel5-img {
+                display: block;
+                width: 4.60rem;
+                height: 4.06rem;
+                margin: 0.5rem auto 0;
+              }
+
+              margin-bottom: 0;
+
+            }
+
+            &.panel7 {
+              margin-top: -4rem;
+              &.en{
+                margin-top: -4.5rem;
+              }
+              &.my{
+                margin-top: -5.2rem;
+              }
+
+              .title {
+                margin-bottom: .45rem;
+              }
+
+              .communi {
+                display: none;
+              }
+
+              .panel6-list-item {
+                display: inline-block;
+                width: 30%;
+                vertical-align: middle;
+
+                &.en {
+                  height: 1.15rem;
+                }
+                &.my{
+                  height: 2.8rem;
+                }
+
+                .item-icon {
+                  width: 0.6rem;
+                  height: 0.6rem;
+                  margin: .3rem auto 0;
+                }
+
+                .item-title {
+                  margin-top: 0;
+                  font-size: .22rem;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .service {
+    display: none;
+  }
+
+  .download-moblie {
+    display: block;
+    width: 100%;
+    height: 3.5rem;
+    background: #272686;
+
+    .title {
+      padding: .4rem;
+      text-align: center;
+      font-size: .32rem;
+      color: #fff;
+    }
+
+    .type {
+      text-align: center;
+
+      .btn {
+        position: relative;
+        display: inline-block;
+        width: 2.25rem;
+        height: .72rem;
+        padding-right: .15rem;
+        border-radius: .72rem;
+        font-size: .2rem;
+        line-height: .72rem;
+        text-align: right;
+        color: #fff;
+        background: #6991FF;
+
+        .icon {
+          display: inline-block;
+          position: absolute;
+          left: .25rem;
+          top: .14rem;
+          width: .36rem;
+          height: .44rem;
+          background-size: 100% 100%;
+        }
+
+        .ios {
+          background-image: url(../../assets/images/index/icon-mobi-ios.png);
+        }
+
+        .andriod {
+          background-image: url(../../assets/images/index/icon-mobi-andriod.png);
+        }
+
+        .download {
+          display: inline-block;
+          height: .22rem;
+          width: .22rem;
+          margin-left: .1rem;
+          background-image: url(../../assets/images/index/icon-mobi-download.png);
+          background-size: 100% 100%;
+        }
+      }
+
+      >a:first-child {
+        margin-right: 1.5rem;
+        padding-right: .4rem;
+      }
+    }
+  }
+
+  .swiper-pagination-bullets {
+    right: 0;
+  }
+
+  #parent /deep/ .swiper-pagination-bullet {
+    margin: 0;
+  }
+
+
+}

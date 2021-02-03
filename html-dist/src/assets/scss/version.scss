@@ -1,0 +1,45 @@
+#app{
+  height:100%;
+  color:#000;
+  text-align:center;
+}
+
+.version-wrapper {
+  font-size:32px;
+  .title{
+    font-size:48px; 
+    text-align:center; 
+    background-color:#999;
+    height:100px;
+    line-height:100px;
+  }
+  table
+  {
+      width: 100%;
+      border: solid 1px #999;
+      border-collapse:collapse;
+  }
+  table tr,table td
+  {
+      
+      border: solid 1px #999;
+      border-collapse:collapse;
+      &.color{
+        a{
+          color:blue;
+        }
+        
+      }
+  }
+}
+/*mobile*/
+@media only screen and (min-width: 0px) and (max-width: 900px){
+  .version-wrapper {
+    font-size:1rem;
+    .title{
+      font-size:1.5rem;
+      height:72px;
+      line-height:72px;
+    }
+  }
+}

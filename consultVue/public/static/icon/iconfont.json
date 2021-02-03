@@ -1,0 +1,16 @@
+{
+  "id": "2043786",
+  "name": "1",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "6265235",
+      "name": "发送-实色",
+      "font_class": "send-s",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    }
+  ]
+}

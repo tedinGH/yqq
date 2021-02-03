@@ -1,0 +1,621 @@
+@import "./var";
+
+.qr-code {
+  position: fixed;
+  z-index: 99;
+  width: 150px;
+  height: 150px;
+  border-radius: 5px;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+
+  canvas {
+    display: block;
+    height: 100% !important;
+    width: 100% !important;
+  }
+}
+
+.lg-on .lg-backdrop {
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+.msg-detail {
+  position: relative;
+  float: left;
+  max-width: 482px;
+  min-height: 42px;
+  padding: 6px 10px;
+  border-radius: 22px 22px 22px 0;
+  border: 1px solid $border-color;
+  line-height: 30px;
+  word-break: break-all;
+  background: #fff;
+  &.msg-img {
+    border-radius: 4px;
+  }
+  &.replied {
+    cursor: pointer;
+    .replied-name {
+      color: $color-theme;
+    }
+    .replied-text {
+      height: 30px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: $color-theme;
+    }
+    .img {
+      width: 120px;
+      height: 90px;
+      margin: 5px 0;
+      object-fit: cover;
+    }
+  }
+
+  .img {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    object-fit: cover;
+  }
+  .all {
+    color: #3150f0;
+  }
+  .name {
+    font-size: 14px;
+    color: $color-grey;
+  }
+
+  .icon-badge-none {
+    top: 31px;
+    right: -20px;
+  }
+  &.voice {
+    .voice-pannel {
+      height: 44px;
+      width: 271px;
+
+      .voice-left {
+        float: left;
+        height: 100%;
+        width: 48px;
+
+        .icon-play {
+          display: inline-block;
+          position: relative;
+          width: 32px;
+          height: 32px;
+          margin-top: 4px;
+          border-radius: 50%;
+          background: rgba(#45b4aa, 0.2);
+          cursor: pointer;
+
+          &::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 13px;
+            margin-top: -6px;
+            margin-left: -5px;
+            background: url(./assets/images/chat/voice-open.png);
+            background-size: 100% 100%;
+          }
+
+          &.active {
+            box-shadow: 0px 0px 10px rgba(255, 164, 5, 0.24);
+            &::before {
+              width: 8px;
+              height: 12px;
+              margin-top: -6px;
+              margin-left: -4px;
+              background: url(./assets/images/chat/voice-stop.png);
+            }
+          }
+        }
+      }
+
+      .voice-right {
+        float: left;
+        height: 100%;
+        width: 222px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        .voice-progress {
+          position: relative;
+          top: 0;
+          width: 136px;
+          height: 4px;
+          background: rgba(#6aa494, 0.2);
+          // background-image: url(./assets/images/chat/voice-bg.png);
+          // background-repeat: repeat-x;
+          cursor: pointer;
+
+          .open-progress {
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: #45b4aa;
+            // background-image: url(./assets/images/chat/voice-progress.png);
+            transition: width 0.01s linear;
+          }
+          .poyt {
+            width: 12px;
+            height: 12px;
+            top: -4px;
+            display: inline-block;
+            position: absolute;
+            z-index: 10;
+            // background-image: url(./assets/images/chat/o.png);
+          }
+          // .unread-progress {
+          //   z-index: 10;
+          //   display: inline-block;
+          //   position: absolute;
+          //   top: 0;
+          //   left: 0;
+          //   height: 30px;
+          //   width: 160px;
+          //   background-image: url(./assets/images/chat/voice-unread.png);
+          // }
+        }
+
+        .voice-detail {
+          margin-left: 12px;
+
+          .duration {
+            color: $color-theme;
+          }
+          .time {
+            margin-left: 20px;
+            float: right;
+            font-size: 12px;
+            color: #999;
+          }
+        }
+      }
+
+      .voice-unread {
+        position: absolute;
+        right: -22px;
+        bottom: 22px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: #ff3942;
+      }
+    }
+  }
+  .voice-box {
+    &.msg-status {
+      line-height: 30px;
+    }
+
+    .text {
+      color: #000;
+      margin-right: 10px;
+    }
+
+    .icon-play {
+      position: relative;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: $color-theme-active;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 7px;
+        left: 7px;
+        width: 11px;
+        height: 11px;
+        background: url(./assets/images/chat/voice-icon.png);
+        background-position: -11px 0;
+      }
+    }
+
+    .icon-voice {
+      margin: 0 8px;
+      width: 35px;
+      height: 10px;
+      background-size: 100% 100%;
+      background-image: url(./assets/images/chat/voice-play.png);
+    }
+
+    &.active {
+      .icon-play::before {
+        background-position: 0 0;
+      }
+
+      .icon-voice {
+        background-image: url(./assets/images/chat/voice-play.gif);
+      }
+
+      .voice-progress {
+      }
+    }
+  }
+
+  .reply-video {
+    position: relative;
+    min-height: 90px;
+    display: inline-block;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      margin-top: -12px;
+      left: 50%;
+      margin-left: -12px;
+      width: 24px;
+      height: 24px;
+      background: url(./assets/images/chat/video-play.png);
+      background-size: 100%;
+    }
+  }
+
+  .reply-content {
+    min-width: 160px;
+    border-top: 1px solid $border-color;
+    margin-top: 8px;
+    padding: 10px 0 5px 0;
+    color: #000;
+  }
+
+  .position {
+    min-height: 100px;
+    text-decoration: none;
+    color: #000;
+    .replied-text {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .replied-img {
+      min-height: 36px;
+    }
+
+    .img {
+      width: 120px;
+      height: 90px;
+      margin: 5px 0;
+      -o-object-fit: cover;
+      object-fit: cover;
+      &.img-l {
+        width: 36px;
+        height: 36px;
+      }
+    }
+  }
+
+  &.group-invite {
+    width: 320px;
+    padding: 10px;
+    line-height: 20px;
+    cursor: pointer;
+
+    .img {
+      height: 75px;
+      width: 75px;
+      border-radius: 50%;
+      margin-left: 10px;
+    }
+
+    .title {
+      color: #5e5e5e;
+      font-size: 16px;
+    }
+
+    .text {
+      margin-top: 5px;
+      font-size: 14px;
+      color: #999;
+    }
+
+    .msg-status {
+      margin-top: 6px;
+    }
+  }
+  &.msg-video-err {
+    position: relative;
+    justify-content: space-around;
+    min-width: 100px;
+    min-height: 100px;
+    padding: 0;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 23px;
+    color: #fff;
+    background: none;
+    overflow: hidden;
+    border: none;
+    word-break: keep-all;
+    cursor: pointer;
+  }
+  &.msg-video {
+    position: relative;
+    justify-content: space-around;
+    min-width: 100px;
+    min-height: 100px;
+    padding: 0;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 23px;
+    color: #fff;
+    background: none;
+    overflow: hidden;
+    border: none;
+    word-break: keep-all;
+    cursor: pointer;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      margin-top: -25px;
+      left: 50%;
+      margin-left: -25px;
+      width: 50px;
+      height: 50px;
+      background: url(./assets/images/chat/video-play.png);
+      background-size: 100%;
+      pointer-events: none;
+    }
+
+    .msg-status {
+      position: absolute;
+      right: 3px;
+      bottom: 3px;
+      padding: 0px 6px;
+      line-height: 23px;
+      border-radius: 10px;
+      background-color: rgba(0, 0, 0, 0.45);
+      color: #fff;
+      z-index: 10;
+      &.hide {
+        opacity: 0;
+      }
+    }
+
+    &:hover .msg-status {
+      opacity: 1;
+      color: #fff;
+    }
+
+    &.out-date:after {
+      display: none;
+    }
+  }
+
+  &.msg-img {
+    justify-content: space-around;
+    min-width: 100px;
+    min-height: 100px;
+    padding: 0;
+    text-align: center;
+    line-height: 25px;
+    color: #fff;
+    border: none;
+    background: none;
+    overflow: hidden;
+    word-break: keep-all;
+    cursor: pointer;
+
+    .msg-status {
+      position: absolute;
+      right: 3px;
+      bottom: 3px;
+      padding: 0px 6px;
+      line-height: 23px;
+      border-radius: 10px;
+      background-color: rgba(0, 0, 0, 0.45);
+      color: #fff;
+      z-index: 10;
+      &.hide {
+        opacity: 0;
+      }
+    }
+
+    &:hover .msg-status {
+      opacity: 1;
+    }
+  }
+
+  &.chat-list {
+    width: 273px;
+    cursor: pointer;
+    .title {
+      color: #122030;
+      font-size: 14px;
+      div {
+        max-width: 243px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+    .list {
+      line-height: 18px;
+    }
+    .list-item {
+      font-size: 12px;
+      color: #5f717f;
+      display: inline-block;
+      max-width: 243px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .list-p {
+      color: #5f717f;
+      line-height: 12px;
+    }
+  }
+}
+
+.msg-file {
+  float: left;
+  position: relative;
+  height: auto;
+  width: 298px;
+  min-height: 88px;
+  border-radius: 10px 10px 10px 0;
+  border: 1px solid $border-color;
+  line-height: normal;
+  background: #fff;
+
+  .file-icon {
+    display: inline-block;
+    height: 41px;
+    width: 37px;
+    margin: 14px 14px 8px 4px;
+    background-image: url(./assets/images/file-icon/other.png);
+    background-size: 100% 100%;
+
+    &.word {
+      background-image: url(./assets/images/file-icon/word.png);
+    }
+
+    &.xlsx {
+      background-image: url(./assets/images/file-icon/xlsx.png);
+    }
+
+    &.pdf {
+      background-image: url(./assets/images/file-icon/pdf.png);
+    }
+
+    &.ppt {
+      background-image: url(./assets/images/file-icon/ppt.png);
+    }
+
+    &.zip {
+      background-image: url(./assets/images/file-icon/zip.png);
+    }
+
+    &.txt {
+      background-image: url(./assets/images/file-icon/txt.png);
+    }
+
+    &.mp3 {
+      background-image: url(./assets/images/file-icon/mp3.png);
+    }
+
+    &.mp4 {
+      background-image: url(./assets/images/file-icon/mp4.png);
+    }
+
+    &.exe {
+      background-image: url(./assets/images/file-icon/exe.png);
+    }
+
+    &.apk {
+      background-image: url(./assets/images/file-icon/apk.png);
+    }
+
+    &.ipa {
+      background-image: url(./assets/images/file-icon/ipa.png);
+    }
+
+    &.pkg {
+      background-image: url(./assets/images/file-icon/pkg.png);
+    }
+
+    &.app {
+      background-image: url(./assets/images/file-icon/APP.png);
+    }
+
+    &.dmg {
+      background-image: url(./assets/images/file-icon/dmg.png);
+    }
+
+    &.other {
+      background-image: url(./assets/images/file-icon/other.png);
+    }
+  }
+
+  .file-info {
+    height: 74px;
+    width: 183px;
+    .file-info-item {
+      display: flex;
+      justify-content: space-between;
+    }
+    .title {
+      color: #122030;
+      max-width: 205px;
+      margin-top: 12px;
+      line-height: 20px;
+      font-size: 14px;
+    }
+    .msg-status {
+      max-width: 80px;
+      float: left;
+      &.uploading {
+        float: right;
+        margin-top: -14px;
+      }
+    }
+    .size {
+      position: relative;
+      margin-top: 5px;
+      color: #999999;
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 20px;
+      float: left;
+      .download {
+        margin-left: 10px;
+        cursor: pointer;
+        color: #596c96;
+        text-decoration: none;
+      }
+    }
+    .msg-status {
+      margin-top: 0;
+      margin-right: 0;
+    }
+  }
+
+  .progress-bar {
+    position: relative;
+    width: 120px;
+    height: 5px;
+    margin-left: 2px;
+    margin-right: 10px;
+    background-color: #ddd;
+
+    .bar {
+      display: block;
+      height: 5px;
+      background-color: $color-theme;
+    }
+  }
+
+  .msg-status {
+    color: #000;
+    margin: 6px 10px 0 0;
+
+    a {
+      text-decoration: none;
+    }
+
+    .cannel {
+      color: $color-red;
+      cursor: pointer;
+    }
+
+    .uploading {
+      color: #999999;
+    }
+  }
+}

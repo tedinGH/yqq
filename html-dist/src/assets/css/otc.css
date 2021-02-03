@@ -1,0 +1,200 @@
+@charset "UTF-8";
+
+/* 输入框 */
+.otc-input{position: relative;display: inline-block;width: 100%;height: 62px;padding: 0 15px;border-radius: 10px;border: 1px solid #d4d4d4;background-color: #fff;line-height: 62px;}
+.otc-input.middle{height:50px;line-height: 50px;}
+.otc-input.small{height: 40px;padding: 0 10px;border-radius: 6px;line-height: 40px;}
+.otc-input input{display: inline-block;width: 100%;height: 100%;line-height: 100%;font-size: 16px;}
+.otc-input .icon{position: absolute;top: 0;bottom: 0;right: 20px;width: 26px;height: 26px;margin: auto 0;}
+
+/* tab切换 */
+.otc-tab .tab-item{position: relative;display: inline-block;width: 100px;height: 50px;margin: 0 20px; font-size: 20px;text-align: center;line-height: 50px;cursor: pointer;} 
+.otc-tab .tab-item.active{color: #FA9400;}
+.otc-tab .tab-item.active::before{content: '';position: absolute;top: 50px;left: 0;width: 100px;height: 3px;background-color: #FA9400;}
+
+.otc-tab-cate .tab-item{position: relative;display: inline-block;width: 122px;height: 58px;border-radius: 10px;font-size: 18px;text-align: center;line-height: 58px;cursor: pointer;} 
+.otc-tab-cate .tab-item.active{color: #FFF;background-color: #3D4975;}
+.otc-tab-cate .tab-item::before{content: '';position: absolute;top: 16px;left: 0;z-index: -1;width: 1px;height: 26px;background-color: #D4D4D4;}
+
+/* 下拉选择框 */
+.dropdown-box .lable{display: inline-block;margin: 0 10px 0 20px;font-size: 16px;}
+.dropdown-box .dropdown-list{position: absolute;top: 40px;right: 0;z-index: 10;width: 100%;padding: 10px 0;border-radius: 6px;background-color: #fff;box-shadow: 0 3px 5px #ddd;}
+.dropdown-box .dropdown-list li{padding: 0 15px;font-size: 16px;cursor: pointer;}
+.dropdown-box .otc-input.middle .dropdown-list{top: 50px;line-height: 36px;}
+.dropdown-box .dropdown-list li.active{background-color: #F2F2F2;}
+.dropdown-box .otc-input input{font-size: 16px;cursor: pointer;}
+.dropdown-box .icon{right: 8px;border-radius: 6px;background-color: #F2F2F2;}
+.dropdown-box .icon .triangle{position: absolute;top: 8px;right: 8px;border-left: 5px solid transparent;border-right: 5px solid transparent;border-top: 10px solid #3D4975;line-height: 10px;}
+.dropdown-box .icon .triangle.active{transform:rotate(180deg);}
+
+/* 多选框 */
+.otc-check-item{display: inline-block;height: 26px;margin-right: 100px;;line-height: 26px;font-size: 18px;}
+.otc-check-item div{float: left;}
+.otc-check-item .img{position: relative;width: 24px;height: 24px;margin-right: 30px;border-radius: 2px;border: 1px solid #b5b5b5;background-color: #fff;cursor: pointer;}
+.otc-check-item .img img{position: absolute;top: -1px;left: -1px;width: 26px;height: 26px;}
+
+/* 自定义表格 */
+.otc-table{position: relative;width: 100%;margin: 25px 0;line-height: 35px;font-size: 18px;}
+.otc-table .otc-row{position: relative;margin-top: 16px;}
+.otc-table .otc-row:after, .otc-table .otc-row:before {display: table;content: "";}
+.otc-table .otc-row:after {clear: both;}
+.otc-table .otc-col {float: left;box-sizing: border-box;padding: 0 10px;word-break: keep-all;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+.otc-table .otc-col.left{text-align: left;}
+.otc-table .otc-col.center {text-align: center;}
+.otc-table .otc-col.right {text-align: right;}
+.otc-table .otc-col-2 {width: 8.33%;}
+.otc-table .otc-col-3 {width: 12.5%;}
+.otc-table .otc-col-4 {width: 16.66%;}
+.otc-table .otc-col-5 {width: 20.83%;}
+.otc-table .otc-col-6 {width: 25%;}
+.otc-table .otc-col-7 {width: 29.16%;}
+.otc-table .otc-col-8 {width: 33.33%;}
+.otc-table .otc-col-9 {width: 37.5%;}
+.otc-table .otc-col-10 {width: 41.66%;}
+.otc-table .otc-col-12 {width: 50%;}
+.otc-table .otc-col-18 {width: 75%;}
+.otc-table .title{height: 48px;line-height: 48px;font-size: 16px;border-bottom: 1px solid #D4D4D4;}
+.otc-table .title.active{border: 1px solid #D4D4D4;border-radius: 6px;}
+.otc-table span{word-break: keep-all;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;}
+
+/* --------- 法币交易 --------- */
+.otc .header{width: 100%;min-width: 1280px;height: 110px;padding: 24px 0;background-color: #3D4975;}
+.business-head{display: inline-block;position: relative;}
+.business-head .head{display: inline-block;width: 58px;height: 58px;margin-right: 12px;border-radius: 50%;object-fit: cover;}
+.paymentMethod{display: inline-block;}
+.pay-icon{display: inline-block;width: 27px;height: 27px;margin: 0 5px;border-radius: 50%;object-fit: cover;cursor: pointer;}
+.otc-fait .otc-col{line-height: 58px;}
+.otc-fait .dot{position: absolute;bottom: 4px;right:16px;display: block;width: 9px;height: 9px;border-radius: 50%;background-color: #999;}
+.otc-fait .otc-Btn-s{width:94px;margin: 9px auto;}
+.publish-Btn{position: fixed;right: 76px;bottom: 76px;text-align: center;line-height: 32px;cursor: pointer;}
+
+.menu-search{margin: 60px 0 30px 0;line-height: 60px;cursor: pointer;}
+.menu-search span.active{position: relative;color: #FA9400;}
+.menu-search span.active::after {content: '';position: absolute;left: 50%;top: 35px;width: 82px;height: 3px;margin-left: -41px;background: #FA9400;}
+.menu-search .otc-col{overflow: visible;}
+.menu-search .publish{width: 70%;background-color: #3D4975;}
+.menu-search .otc-input{width: 100% !important;font-size: 16px;}
+.menu-search .search{width: 100%;background-color: #3D4975;}
+
+/* 账户安全、支付方式、商家认证 */
+.account-title{width: 100%;margin: 25px 0 0 0;padding: 40px 0;border: 1px solid #D4D4D4;font-size: 16px;line-height: 58px;}
+.account-title .otc-row{margin-top: 0;}
+.account-menu{margin: 20px 0;}
+.account-menu .otc-Btn{width: 150px;margin-right: 40px;}
+.account-panel1{border: 1px solid #D4D4D4;padding: 65px;font-size: 18px;}
+.account-panel1 span{display: inline-block;width: 500px;}
+.account-panel1 .otc-Btn-s,
+.account-panel3 .otc-Btn-s{width: 102px;}
+.account-panel3{position: relative;min-height: 562px;margin-bottom: 60px;border: 1px solid #D4D4D4;padding: 30px 45px;font-size: 16px;line-height: 30px;}
+.account-panel3 .base div{display: inline-block;margin-right: 128px;}
+.account-panel3 .base span{display: inline-block;width: 128px;}
+.account-panel3 .video-verify{margin-left: 100px;color: #FF4E4E;font-size: 16px;}
+.account-panel3 .otc-Btn{display: block;width: 150px;margin: 0 auto;}
+.account-panel3 .pay-type{display: inline-block;width: 168px;margin-left: 20px;color: #1CD2FF;}
+.account-panel2 .box1 .otc-Btn{position: absolute;top: 44px;right: 72px;display: block;width: 150px;margin: 0 auto;}
+.account-panel3 span{cursor: pointer;}
+
+.perfectingInfo{width: 983px;padding: 50px 0;line-height: 42px;font-size: 16px;}
+.perfectingInfo .content-box{display: inline-block;width: 50%;padding: 0 60px;border-right: 1px solid #D4D4D4;}
+.perfectingInfo .content-box .otc-Btn{display: block;width: 150px;height: 58px;line-height: 58px;margin: 30px auto 0;}
+.perfectingInfo .download{display: inline-block;width: 49%;vertical-align: top;text-align: center;font-size: 24px;line-height: 170px;}
+.perfectingInfo .QR-code{width: 164px;height: 164px;margin: 30px auto;}
+
+.paymentType{width: 558px;padding: 45px;line-height: 40px;font-size: 16px;}
+.paymentType .upload-box{width: 200px;height: 200px;margin: 0 auto;}
+.paymentType .tip{position: absolute;bottom: 15px;width: 100%;text-align: center;color: #999;}
+.paymentType span{display: inline-block;width: 90px;margin-right: 6px;text-align: right;}
+.paymentType .otc-input{width: 365px;}
+.paymentType .otc-Btn{display: inline-block;width: 162px;height: 56px;margin: 0 46px 0 22px;line-height: 56px;}
+.paymentType .otc-Btn.greyBtn{margin: 0 22px 0 48px;}
+
+/* 广告模块 */
+.publish-advert{width: 100%;padding: 40px 12%;margin: 20px auto;box-shadow: 0 0 15px #ddd;}
+.publish-advert .dropdown-box{display: inline-block;margin-right: 8%;}
+.publish-advert .otc-input input{width: 84%;}
+.publish-advert .otc-input .tip{width: 16%;text-align: center;color: #5E5E5E;}
+.proportion .otc-input input{width: 70%;}
+.proportion .otc-input .tip{width: 30%;}
+.publish-advert .otc-table{margin: 0;line-height: 50px;}
+.publish-advert .otc-table .otc-col{padding: 0;}
+.publish-advert .transfer-img{position: relative;width: 100%;height: 50px;}
+.publish-advert .transfer-img img{position: absolute;bottom: 8px;left: 0;right: 0;width: 52px;height: 35px;margin: 0 auto;}
+.publish-advert .payment-icon{display: inline-block;margin-right: 30px;}
+.publish-advert .remarks{display: block;width: 100%;height: 195px;padding: 20px;margin-top: 15px;border: 1px solid #D4D4D4;border-radius: 10px;font-size: 18px;background-color: #fff;}
+.publish-advert .setting .otc-check-item{margin-bottom: 30px;}
+.publish-advert .otc-Btn{width: 20%;height: 84px;margin: 0 20% 150px 10%;line-height: 84px;}
+.publish-advert .otc-Btn.whiteBtn{margin: 0 10% 150px 20%;}
+.publish-advert .otc-Btn-s{width: 162px;margin: 0 40px 50px 18px;}
+.publish-advert .otc-Btn-s.whiteBtn{margin: 0 18px 50px 40px;}
+
+/* 资产 */
+.assets-title{padding: 0 10px;border-bottom: 1px solid #D4D4D4;line-height: 100px;font-size: 20px;}
+.assets .otc-check-item .img{margin-right: 10px;}
+.assets .otc-table .title{font-size: 18px;}
+.assets .coin-list{margin: 10px 0 0 0;}
+.assets .coin-list .title{border: 0;}
+.assets .coin-list .otc-row{height:188px;background:#fff;border-radius:10px;box-shadow: 0 0 7px #ddd;margin: 0 0 30px 0;line-height: 188px;}
+.assets .coin-list .coin-message{width: 100%;padding: 40px 0 20px;line-height: 51px;}
+.assets .coin-list .coin-message img{width: 78px;height: 78px;}
+.assets .coin-list .operation{padding: 20px 0;line-height: 37px;cursor: pointer;}
+.assets .bill-details .otc-row{margin-top: 0;border-bottom: 1px solid #D4D4D4;line-height: 64px;font-size: 16px;}
+.financial-record{width: 1276px;height: 750px;padding: 25px;}
+.financial-record .overview{margin: 50px 0 50px 30px;font-size: 18px;}
+.content-box{width: 100%;height: 700px;overflow: auto;font-size: 16px;line-height: 30px;}
+.recharge{width: 625px;height: 750px;padding: 25px 40px;}
+.recharge .title{margin-bottom: 30px;font-size: 20px;text-align: center;}
+.recharge .otc-Btn{width: 116px;height: 36px;line-height: 36px;}
+.recharge .otc-Btn.mid{margin: 0 88px;}
+.recharge .QR-code{position: relative;width: 382px;height: 362px;margin: 40px auto 30px;padding: 41px 51px;background: url(../../assets/images/otc/code_frame.png) 100% 100%;}
+.recharge .QR-code canvas{display: block;height: 100%!important;width: 100%!important;}
+.recharge .QR-code i{position: absolute;left: 50%;top: 50%;height: 50px;width: 50px;margin-top: -25px;margin-left: -25px;background-image: url(../../assets/images/logo/logo.png);background-size: 100% 100%;}
+.recharge .copy{margin: 10px 0 25px 0;font-size: 18px;color: #3D4975;}
+.recharge .notice{padding-top: 20px;border-top: 1px solid #D4D4D4;color: #999;}
+.withdraw-num .otc-input input{width: 90%;}
+.withdraw-num .otc-input .withdraw-all{width: 10%;color: #3D4975;cursor: pointer;}
+.withdraw-num .computer{margin: 8px 8px 0 8px;color: #999;}
+.withdraw-num p{margin: 0 8px 8px 8px;}
+.withdraw-num .fill-error{margin: 8px;color: #FF4E4E;}
+.recharge .otc-Btn-s,
+.transfer .otc-Btn-s{width: 100%;margin: 30px 0 70px 0;}
+.transfer{width: 625px;height: 552px;padding: 25px 40px;}
+.transfer-type{width: 100%;height: 78px;margin: 40px 0 30px;border-radius: 10px;border: 1px solid #a5a5a5;}
+.transfer-type .left-box{float: left;width: 36px;padding: 6px 0;}
+.transfer-type .left-box .dot{display: block;width: 3px;height: 3px;margin: 4px auto; border-radius: 50%;background-color: #999;}
+.transfer-type .left-box .dot.green{width: 8px;height: 8px;margin: 8px auto;background-color: #26DE4D;}
+.transfer-type .left-box .dot.red{width: 8px;height: 8px;margin: 8px auto;background-color: #FA7676;}
+.transfer-type .middle-box{float: left;}
+.transfer-type .dropdown-box{display: inline-block;}
+.transfer-type .lable{display: inline-block;width: 80px;font-size: 16px;color: #999;}
+.transfer-type .middle-box .otc-input{border: 0;height: 38px;line-height: 38px;background-color: rgba(0,0,0,0);}
+.transfer-type .right-box{float: left;width: 76px;height: 76px;border-left: 1px solid #a5a5a5;cursor: pointer;}
+.transfer-type .right-box img{display: block;width: 50px;height: 50px;margin: 13px;}
+.transfer-num .lable,
+.dropdown-box .lable{margin: 0 8px 0 10px;font-size: 16px;}
+.transfer-num .otc-input{display: inline-block;width: 415px;}
+.transfer-num .otc-input input{width: 90%;}
+.transfer-num .otc-input .tip{position: absolute; width: 10%;text-align: center;color: #5E5E5E;}
+.transfer .available{margin: 8px  0 20px 60px;color: #3D4975;}
+.transfer .remarks{width: 100%;margin-bottom: 10px;padding: 10px;border-radius: 5px;background-color: #F1EFF6;line-height: 24px;color: #999999;text-align: center;}
+
+/* 订单管理 */
+.order-info{float: left;width: 70%;padding: 50px 24px;font-size: 18px;line-height: 48px;}
+.order-info .otc-check-item{width: 100%;margin-bottom: 20px;}
+.order-info .otc-check span{margin-left: 30px;}
+.order-info .btn-wrap{text-align: center;margin: 30px 0 10px;}
+.order-info .btn-wrap .otc-Btn{display: inline-block;width: 138px;margin: 0 16px;}
+.order-info .w142{display: inline-block;width: 142px;}
+.chat-box{float: right;width: 28%;height: 700px;margin: 50px 0;box-shadow: 0 0 8px 5px #ddd;}
+
+.order-appeal{padding: 0 60px;font-size: 16px;line-height: 30px;}
+.order-appeal .appeal-title{font-size: 20px;padding: 30px 0 15px;}
+.order-appeal .appeal-remarks{display: block;width: 100%;height: 192px;padding: 15px;margin-top: 15px;border: 1px solid #D4D4D4;border-radius: 10px;font-size: 18px;background-color: #fff;}
+.order-appeal .btn-wrap{padding: 30px 0;}
+.order-appeal .btn-wrap .otc-Btn-s{width: 120px;margin: 0 56px;}
+.order-appeal .input-lable{display: inline-block;width: 100px;}
+.order-appeal .order-info .otc-input.small{display: inline-block;width: 220px;}
+
+.en-us .account-menu .otc-Btn,.en-us .account-panel2 .box1 .otc-Btn{width: 220px;}
+.en-us .account-title .otc-col{white-space:normal;line-height: 24px;}
+.en-us .account-panel3 .base span{width: 158px;}
+.en-us .otc-tab-cate .tab-item{width: 152px;}

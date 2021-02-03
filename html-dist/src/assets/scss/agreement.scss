@@ -1,0 +1,158 @@
+#app{
+  height:100%;
+}
+.mt{
+  margin-top:30px;
+}
+.AgreementLayer{
+  position: fixed;
+  left: 0;top:0;
+  height: 100%;
+  width: 100%;
+  line-height:28px;
+  font-size:16px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: rgba(0,0,0,.4);
+  .AgreementContent{
+    height: auto;
+    width: 750px;
+    margin: auto;
+    background: #fff;
+    header{
+      position: relative;
+      height: 83px;
+      line-height: 83px;
+      text-align: center;
+      font-size: 30px;
+      color: #333333;
+      border-bottom: 1px solid #bbb;
+      >i{
+        display: inline-block;
+        position: absolute;
+        left: 33px;
+        bottom: 24px;
+        height: 32px;
+        width: 18px;
+        background-image: url(../../../assets/images/index/agreement-back.png);
+        background-size: 100% 100%;
+      }
+      &.my{
+        padding:0 80px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+    }
+    h2{
+      font-size:22px;
+      font-weight:bold;
+      padding: .3rem .5rem;
+      width:100%;
+      word-break:break-all;
+    }
+
+    p{
+      padding: 0 .5rem;
+      width:100%;
+      word-break:break-all;
+    }
+    p.title{
+      font-size: 25px;
+      padding: 0 1.2em;
+    }
+    p.detail{
+      font-size: 20px;
+      line-height: 33px;
+      padding: 0 1.5em;
+      padding-bottom: 1em;
+    }
+    p.detail.pt{
+      padding-top: 1em;
+    }
+    p.detail.pb0{
+      font-size: 20px;
+      padding-bottom: 0;
+    }
+    p.detail.pl{
+      padding-left: 3em;
+      padding-bottom: 0;
+    }
+    p.detail.pb{
+      padding-left: 2em;
+      padding-bottom: 1em;
+    }
+    p.detail.f40{
+      color:rgb(220,60,80);
+      >span{
+        color: #333333;
+      }
+    }
+  }
+  
+}
+@media only screen and (min-width: 0) and (max-width: 1050px) {
+  .AgreementLayer{
+    height: 100%;
+    .AgreementContent{
+      height: auto;
+      width: 100%;
+      margin: auto;
+      background: #fff;
+      header{
+        position: relative;
+        height: 3.07rem;
+        line-height: 3.07rem;
+        text-align: center;
+        font-size: 1.11rem;
+        color: #333333;
+        border-bottom: 1px solid #bbb;
+        >i{
+          display: inline-block;
+          position: absolute;
+          left: 1rem;
+          bottom: .88rem;
+          height: 1.18rem;
+          width: .66rem;
+        }
+        &.my{
+          padding:0 40px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+      }
+      p.title{
+        padding: 0 1rem;
+        font-size: .92rem;
+      }
+      p.detail{
+        padding: 0 1rem;
+        font-size: .74rem;
+        line-height: 1.5;
+        padding-bottom: 1em;
+      }
+      p.detail.pt{
+        padding-top: 1em;
+      }
+      p.detail.pb0{
+        font-size: .74rem;
+        padding-bottom: 0;
+      }
+      p.detail.pl{
+        padding-left: 2em;
+        padding-bottom: 0;
+      }
+      p.detail.pb{
+        padding-left: 2em;
+        padding-bottom: 1em;
+      }
+      p.detail.f40{
+        color:rgb(220,60,80);
+        >span{
+          color: #333333;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+.AgreementLayer{
+	z-index: 1000;
+	position: fixed;
+	left: 0;top:0;
+	height: 100%;
+	width: 100%;
+	background: rgba(0,0,0,.4);
+	.AgreementContent{
+		position: relative;
+		height: 100%;
+		width: 100%;
+		margin: auto;
+		background: #fff;
+		padding-top: .82rem;
+		header{
+			position: fixed;
+			top: 0;
+			height: .82rem;
+			width: 100%;
+			line-height: .82rem;
+			text-align: center;
+			font-size: .30rem;
+			color: #333333;
+			border-bottom: 1px solid #D7D7D7;
+			background: #fff;
+			>i{
+				display: inline-block;
+				position: absolute;
+				left: .27rem;
+				bottom: .27rem;
+				height: .33rem;
+				width: .12rem;
+				background-image: url(../../assets/images/agreement-back.png);
+				background-size: 100% 100%;
+			}
+		}
+		.content{
+		    height: 100%;
+		    padding: 5px .28rem .28rem .28rem;
+		    overflow: auto;
+		    -webkit-overflow-scrolling: touch;
+		    p{
+		    	font-size: .24rem;
+    			line-height: 1.6;
+    			margin-top: 10px;
+    			width:100%;
+				word-break:break-all;
+		    }
+		}
+		
+	}
+	
+}

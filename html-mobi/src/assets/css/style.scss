@@ -1,0 +1,855 @@
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  position: relative;
+  background-color: #f8f8f8;
+}
+
+#app,
+.view {
+  height: 100%;
+}
+
+.wrap {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background: #fff;
+  font-size: .16rem;
+  overflow: hidden;
+
+  #test {
+    position: absolute;
+    top: 200%;
+    opacity: 0;
+  }
+
+  header {
+    height: .82rem;
+    width: 100%;
+    line-height: .82rem;
+    text-align: center;
+    font-size: .3rem;
+
+    a {
+      display: inline-block;
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: .82rem;
+      width: .82rem;
+      -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+      -webkit-user-select: none;
+      -moz-user-focus: none;
+      -moz-user-select: none;
+
+      i {
+        display: inline-block;
+        position: absolute;
+        right: .27rem;
+        bottom: .27rem;
+        height: .27rem;
+        width: .27rem;
+        background-image: url(../images/forget/icon-close.png);
+        background-size: 100% 100%;
+      }
+    }
+  }
+
+  .mobi-bg {
+    height: 100%;
+    width: 100%;
+    background-image: url(../images/forget/forget-bg.png);
+    background-size: 100% 100%;
+  }
+
+  .WrapContent {
+    z-index: 10;
+    position: absolute;
+    left: 50%;
+    // height: 9.62rem;
+    transform: translate(-50%);
+    -webkit-transform: translate(-50%);
+    box-shadow: 0 0.02rem 0.15rem #e6e6e6;
+
+    &.top {
+      height: 100%;
+      top: 0
+    }
+    .title{
+      padding:.22rem 0 0 0;
+      text-align: center;
+      font-size: .36rem;
+      color: #122030;
+    }
+    .form-content {
+      border-radius: .2rem;
+      // margin-top: 0.2rem;
+      // width: 6.8rem;
+      background: #fff;
+
+      .form-title {
+        color: #000000;
+        height: .25rem;
+        font-size: .24rem;
+        padding: .66rem 0 .60rem 0rem;
+      }
+
+      .countryname {
+        display: inline-block;
+        width: 5.9rem;
+        height: .8rem;
+        margin-left: .8rem;
+        font-size: .36rem;
+        line-height: .8rem;
+        margin-bottom: .6rem;
+        margin-top: 1.8rem;
+        border-bottom: 0.01rem solid #E1E6EC;
+        background: url(../images/forget/right.png) no-repeat;
+        background-position: 100%;
+        background-size: 0.08rem 0.16rem;
+      }
+
+      .form-title.double {
+        height: auto;
+        padding: .66rem 0 .13rem 0rem;
+      }
+
+      .form-title.password {
+        height: auto;
+        padding: .13rem 0 .13rem .28rem;
+      }
+
+      .form-item {
+        height: auto;
+        padding: 0 .8rem;
+        overflow: auto;
+
+        .item-input {
+          position: relative;
+          height: .76rem;
+          width: 5.9rem;
+          border-bottom: 0.04rem solid #46B4AA;
+          box-sizing: border-box;
+
+          input {
+            height: 100%;
+            width: 100%;
+            border: none;
+            background: transparent;
+            outline: none;
+            padding-left: 1.1rem;
+            font-size: .28rem;
+            caret-color: #46B4AA;
+          }
+
+          input.password {
+            padding-left: .28rem;
+            font-size: .28rem;
+            &.passwords{
+              font-size: .18rem;
+            }
+          }
+
+          .eyes {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            height: .44rem;
+            width: .44rem;
+            margin-top: -.15rem;
+            background-image: url(../images/eyes-hide.png);
+            background-size: 100% 100%;
+            cursor: pointer;
+          }
+
+          .eyes.active {
+            position: absolute;
+            top: 50%;
+            right: 11px;
+            height: .44rem;
+            width: .44rem;
+            margin-top: -.24rem;
+            background-image: url(../images/eyes-show.png);
+            background-size: 100% 100%;
+          }
+
+          span.countrycode {
+            position: absolute;
+            top: .18rem;
+            height: .4rem;
+            line-height: .4rem;
+            width: .85rem;
+            font-size: .24rem;
+            text-align: center;
+            color: #000;
+            border-right: 1px solid #d9d9d9;
+          }
+        }
+
+        .item-code.double {
+          margin-top: 1.94rem;
+          &.doubles{
+            margin-top: .6rem;
+          }
+        }
+
+        .item-code {
+          position: relative;
+          // height: .76rem;
+          width: 100%;
+          margin-top: .45rem;
+          border-bottom: 1px solid #d9d9d9;
+          box-sizing: border-box;
+
+          input {
+            margin-top: 0.4rem;
+            height: .76rem;
+            width: 100%;
+            border: none;
+            background: transparent;
+            outline: none;
+            padding-left: .28rem;
+            padding-bottom: .14rem;
+            font-size: .28rem;
+          }
+
+          button.getcode {
+            position: absolute;
+            top: .16rem;
+            right: 0;
+            height: .43rem;
+            line-height: .43rem;
+            width: 1.57rem;
+            font-size: .2rem;
+            text-align: center;
+            color: #46B4AA;
+            border: 0;
+            background: transparent;
+            outline: none;
+            border-left: 1px solid #d9d9d9;
+          }
+
+          button.getcode.frozen {
+            color: gray
+          }
+        }
+      }
+
+      .form-button {
+        padding: 0 .8rem;
+        margin-top: 3rem;
+        &.doubles{
+          margin-top: 2rem;
+        }
+
+        &.email {
+          padding: 0 .8rem;
+          margin-top: 3rem;
+        }
+
+        a {
+          display: inline-block;
+          height: .98rem;
+          width: 5.9rem;
+          line-height: .98rem;
+          // width: 100%;
+          font-size: .32rem;
+          text-align: center;
+          cursor: pointer;
+          outline: none;
+          border: 1px solid #46B4AA;
+          background: #46B4AA;
+          color: #fff;
+        }
+
+        .switch {
+          margin-top: .51rem;
+          border: 0px;
+          background: #fff;
+          color: #46B4AA;
+        }
+      }
+
+      .agreement {
+        position: relative;
+        height: .4rem;
+        line-height: .4rem;
+        width: 100%;
+        margin-top: .6rem;
+        cursor: pointer;
+        font-size: .28rem;
+        color: #8D95A2;
+        text-align: left;
+        padding: 0 .28rem;
+        padding-left: .5rem;
+        word-break: break-all;
+        outline: none;
+
+        input {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: .25rem;
+          width: .25rem;
+          vertical-align: middle;
+          opacity: 0;
+        }
+
+        i {
+          position: relative;
+          top: -2px;
+          margin-left: 0.3rem;
+          display: inline-block;
+          height: .25rem;
+          width: .25rem;
+          vertical-align: middle;
+          background-image: url(../images/icon-check-off.png);
+          background-size: 100% 100%;
+        }
+
+        .udl {
+          color: #46B4AA;
+        }
+      }
+
+      .agreement.active>i {
+        background-image: url(../images/icon-check-on.png);
+        background-size: 100% 100%;
+      }
+    }
+
+    /* 注册成功 */
+    .success-img {
+      display: block;
+      height: 1.2rem;
+      width: 1.2rem;
+      margin: .8rem auto .38rem auto;
+    }
+
+    .success-info {
+      font-size: .3rem;
+      color: #46B4AA;
+      text-align: center;
+      margin-bottom: 1.4rem;
+
+      a {
+        color: #ff4400;
+      }
+    }
+
+    .success-download {
+      display: block;
+      height: .98rem;
+      width: 5.9rem;
+      line-height: .98rem;
+      margin:  auto;
+      font-size: .32rem;
+      text-align: center;
+      cursor: pointer;
+      outline: none;
+      border: 1px solid #46B4AA;
+      background: #46B4AA;
+      border-radius: .08rem;
+      color: #fff;
+    }
+
+    .success-index {
+      display: block;
+      height: .76rem;
+      line-height: .76rem;
+      margin: .4rem  auto;
+      font-size: .32rem;
+      text-align: center;
+      cursor: pointer;
+      outline: none;
+      color: #46B4AA;
+    }
+
+    /* 忘记密码 */
+    .tip.success {
+      margin-top: .79rem;
+    }
+
+    .tip {
+      position: relative;
+      height: 0.6rem;
+      margin-top: .79rem;
+      overflow: auto;
+
+      span.account-line {
+        display: inline-block;
+        position: absolute;
+        left: 1.64rem;
+        top: 50%;
+        height: 1px;
+        width: 1.2rem;
+        background: #ccc;
+      }
+
+      span.password-line {
+        display: inline-block;
+        position: absolute;
+        right: 1.32rem;
+        top: 50%;
+        height: 1px;
+        width: 1.2rem;
+        background: #ccc;
+      }
+
+      i.icon-account {
+        display: inline-block;
+        position: absolute;
+        left: .6rem;
+        height: .6rem;
+        width: .6rem;
+        background: url(../images/forget/icon-account.png);
+        background-size: 100% 100%;
+      }
+
+      i.icon-account.success {
+        left: .6rem;
+        height: .6rem;
+        width: .6rem;
+        background: url(../images/forget/icon-account-success.png);
+        background-size: 100% 100%;
+      }
+
+      i.icon-password {
+        display: inline-block;
+        position: absolute;
+        left: 50%;
+        height: .6rem;
+        width: .6rem;
+        margin-left: -.3rem;
+        background-image: url(../images/forget/icon-password.png);
+        background-size: 100% 100%;
+      }
+
+      i.icon-password.on {
+        background-image: url(../images/forget/icon-password-on.png);
+      }
+
+      i.icon-password.success {
+        width: .23rem;
+        background-image: url(../images/forget/icon-success.png);
+      }
+
+      i.icon-complete {
+        position: absolute;
+        right: .44rem;
+        display: inline-block;
+        height: .6rem;
+        width: .6rem;
+        background-image: url(../images/forget/icon-completes.png);
+        background-size: 100% 100%;
+      }
+
+      i.icon-complete.success {
+        height: .6rem;
+        width: .6rem;
+        background-image: url(../images/forget/icon-complete.png);
+      }
+    }
+
+    .tip-text {
+      position: relative;
+      font-size: .24rem;
+      height: .23rem;
+      line-height: .23rem;
+      margin: .07rem 0 .28rem 0;
+      color: #ACACAC;
+      overflow: hidden;
+
+      span.text-account {
+        display: inline-block;
+        position: absolute;
+        left: .47rem;
+        width: auto;
+        color: #46B4AA;
+      }
+
+      span.text-account.success {
+        color: #ACACAC;
+      }
+
+      span.account-line {
+        display: inline-block;
+        position: absolute;
+        left: 1.64rem;
+        top: 50%;
+        height: 1px;
+        width: .81rem;
+        background: #ccc;
+      }
+
+      span.text-password {
+        display: inline-block;
+        position: absolute;
+        left: 50%;
+        width: auto;
+        color: #ACACAC;
+        transform: translate(-50%, 0);
+        -webkit-transform: translate(-50%, 0);
+      }
+
+      span.text-password.on {
+        color: #46B4AA;
+      }
+
+      span.text-password.success {
+        color: #ACACAC;
+      }
+
+      span.password-line {
+        display: inline-block;
+        position: absolute;
+        right: 1.32rem;
+        top: 50%;
+        height: 1px;
+        width: .81rem;
+        background: #ccc;
+      }
+
+      span.text-complete {
+        position: absolute;
+        right: .5rem;
+        display: inline-block;
+        width: auto;
+      }
+
+      span.text-complete.success {
+        color: #46B4AA;
+      }
+    }
+
+  }
+}
+
+.register {
+  height: 100%;
+  background: url(../images/forget/forget-bg.png);
+  background-size: 100% 100%;
+    .title{
+      padding:.22rem 0 0 0;
+      text-align: center;
+      font-size: .36rem;
+      color: #122030;
+    }
+  .invite {
+    height: 100%;
+    padding-top: 0.8rem;
+    padding-bottom: 0.16rem;
+  
+    img {
+      display: block;
+      width: 1.2rem;
+      height: 1.2rem;
+      margin: 0 auto;
+      border-radius: 50%;
+    }
+
+    .default {
+      display: block;
+      width: 1.4rem;
+      height: 1.4rem;
+      margin: 0 auto;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 1.4rem;
+      font-weight: 550;
+      font-size: .64rem;
+      color: #fff;
+      background: rgb(69, 121, 222);
+      ;
+    }
+
+    .nickName {
+      margin: 0 auto;
+      margin-top: 0.2rem;
+      font-size: 0.24rem;
+      font-weight: 600;
+      color: #122030;
+      text-align: center;
+    }
+
+    .text-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0.1rem 0.2rem 0 0.2rem;
+      color: #5F717F;
+
+      .text {
+        font-size: 0.24rem;
+        text-align: center;
+      }
+    }
+
+  }
+
+  .form-content2 {
+    box-shadow: 0 -0.02rem 0.15rem #e6e6e6;
+  }
+
+  .form-content {
+    border-radius: .2rem;
+    height: 7.52rem;
+    width: 6.9rem;
+    background: #fff;
+    margin: 0.6rem auto;
+    .form-title {
+      color: #000000;
+      height: .25rem;
+      font-size: .24rem;
+      padding: .66rem 0 .60rem .28rem;
+    }
+
+    .form-title.double {
+      height: auto;
+      padding: .66rem 0 .13rem .28rem;
+    }
+
+    .form-title.password {
+      height: auto;
+      padding: .13rem 0 .13rem .28rem;
+    }
+
+    .form-item {
+      height: auto;
+      padding: 0.8rem .5rem 0 .5rem;
+      overflow: auto;
+
+      .item-input {
+        position: relative;
+        height: .76rem;
+        width: 100%;
+        border-bottom: 2px solid #46B4AA;
+        box-sizing: border-box;
+        input {
+          height: 100%;
+          width: 100%;
+          border: none;
+          background: transparent;
+          outline: none;
+          padding-left: 1.1rem;
+          font-size: .28rem;
+          caret-color:#46B4AA;
+        }
+
+        input.password {
+          padding-left: .28rem;
+          font-size: .20rem;
+        }
+
+        .eyes {
+          position: absolute;
+          top: 50%;
+          right: 12px;
+          height: .3rem;
+          width: .45rem;
+          margin-top: -.15rem;
+          background-image: url(../images/eyes-show.png);
+          background-size: 100% 100%;
+          cursor: pointer;
+        }
+
+        .eyes.active {
+          position: absolute;
+          top: 50%;
+          right: 11px;
+          height: .48rem;
+          width: .45rem;
+          margin-top: -.24rem;
+          background-image: url(../images/eyes-hide.png);
+          background-size: 100% 100%;
+        }
+
+        span.countrycode {
+          position: absolute;
+          top: .18rem;
+          height: .4rem;
+          line-height: .4rem;
+          width: .85rem;
+          font-size: .24rem;
+          text-align: center;
+          color: #000;
+          border-right: 1px solid #d9d9d9;
+        }
+      }
+
+      .item-code.double {
+        margin-top: 0;
+      }
+
+      .item-code {
+        position: relative;
+        height: .76rem;
+        width: 100%;
+        margin-top: .45rem;
+        border-bottom: 1px solid #E1E6EC;
+        box-sizing: border-box;
+
+        input {
+          height: 100%;
+          width: 100%;
+          border: none;
+          background: transparent;
+          outline: none;
+          padding-left: .28rem;
+          font-size: .28rem;
+        }
+
+        button.getcode {
+          position: absolute;
+          top: .16rem;
+          right: 0;
+          height: .43rem;
+          line-height: .43rem;
+          width: 1.57rem;
+          font-size: .2rem;
+          text-align: center;
+          color: #46B4AA;
+          border: 0;
+          background: transparent;
+          outline: none;
+          border-left: 1px solid #d9d9d9;
+        }
+
+        button.getcode.frozen {
+          color: gray
+        }
+      }
+    }
+
+    .form-button {
+      padding: 0 .28rem;
+      margin-top: 1.6rem;
+
+      a {
+        display: inline-block;
+        height: .76rem;
+        line-height: .76rem;
+        width: 100%;
+        font-size: .3rem;
+        text-align: center;
+        cursor: pointer;
+        outline: none;
+        border: 1px solid #46B4AA; 
+        border-radius: .08rem;
+        background: #46B4AA;
+        color: #fff;
+      }
+
+      .switch {
+        margin-top: .51rem;
+        border: 1px solid #46B4AA;
+        border-radius: 20px;
+        background: #46B4AA;
+        color: #fff;
+      }
+    }
+
+    .agreement {
+      position: relative;
+      height: .4rem;
+      line-height: .4rem;
+      width: 100%;
+      margin-top: .6rem;
+      cursor: pointer;
+      font-size: .28rem;
+      color: #8D95A2;
+      text-align: left;
+      padding-right: 1.2rem;
+      padding-left: 1.2rem;
+      word-break: break-all;
+      outline: none;
+
+      input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: .25rem;
+        width: .25rem;
+        vertical-align: middle;
+        opacity: 0;
+      }
+
+      i {
+        position: relative;
+        top:-1px;
+        display: inline-block;
+        height: .32rem;
+        width: .32rem;
+        vertical-align: middle;
+        background-image: url(../images/icon-check-off.png);
+        background-size: 100% 100%;
+      }
+
+      .udl {
+        color: #46B4AA;
+      }
+    }
+
+    .agreement.active>i {
+      background-image: url(../images/icon-check-on.png);
+      background-size: 100% 100%;
+    }
+  }
+}
+
+.wx-mask {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: 0.8;
+  z-index: 99;
+
+  .tip-ios {
+    position: fixed;
+    top: .69rem;
+    right: .65rem;
+    width: 5.67rem;
+    height: 3.8rem;
+    background: url(../images/tip-ios.png);
+    background-size: 100% 100%;
+    display: block;
+    z-index: 99;
+  }
+
+  .tip-android {
+    position: fixed;
+    top: .69rem;
+    right: .65rem;
+    width: 5.67rem;
+    height: 3.26rem;
+    background: url(../images/tip-android.png);
+    background-size: 100% 100%;
+    display: block;
+    z-index: 99;
+  }
+
+  .wz {
+    position: fixed;
+    top: 162px;
+    left: 50%;
+    margin-left: -40%;
+    width: 80%;
+    height: 20px;
+    background: url(../images/zb_yd_wz.png);
+    background-size: 100% 20px;
+    display: block;
+    z-index: 99;
+  }
+}
+
+.wx-mask.active {
+  display: block;
+}

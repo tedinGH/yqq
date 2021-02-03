@@ -1,0 +1,200 @@
+body{
+	background-color: #eee;
+}
+.display-flex {
+	display:-webkit-box;
+	display:-webkit-flex;
+	display: flex;
+	align-items: center;
+	flex-wrap:wrap;
+	&-item{
+		-webkit-box-flex:1;
+		-webkit-flex:1;
+		flex:1;
+	}
+}
+.emoji-wrap{
+	height: 100%;
+	//padding-top: .75rem;
+	background-color: #fff;
+	overflow-y: auto;
+}
+.emoji-list{
+	width: 100%;
+	height: 100%;
+	// border-top: .2rem solid #eee;
+	.emoji-img{
+		width: 1.35rem;
+		height: 1.2rem;
+		padding: .2rem 0;
+		.img{
+			display: block;
+			width: .8rem;
+			height: .8rem;
+			margin: auto .22rem auto .33rem;
+		}
+	}
+	.emoji-info{
+		height: 1.2rem;
+		padding: .2rem 0;
+		border-bottom: 1px solid #e2e2e2;
+		font-size: .22rem;
+		color: #999;
+	}
+	.emoji-info-title{
+		margin-bottom: .08rem;
+		font-size: .32rem;
+		color: #122030;
+	}
+	.emoji-operation{
+		width: .9rem;
+		height: 100%;
+		.emoji-icon{
+			display: block;
+			width: .48rem;
+			height: .48rem;
+			margin: .15rem .1rem;
+			background: url(../../assets/images/emoji-add.png) no-repeat;
+			background-size: 100%;
+			&.fail{
+				background: url(../../assets/images/emoji-fail.png) no-repeat;
+				background-size: 100%;
+			}
+			&.success{
+				background: url(../../assets/images/emoji-success.png) no-repeat;
+				background-size: 100%;
+			}
+		}
+	}
+	.progress{
+		margin-right: .3rem;
+	}
+}
+.toast{
+	position: fixed;
+	left: 0;
+	right:0;
+	bottom: 2.5rem;
+	z-index: 999;
+	width: 3.5rem;
+	margin: 0 auto;
+	padding: .1rem .15rem;
+	border-radius: 3px;
+	box-sizing: border-box;
+	font-size: .22rem;
+	text-align: center;
+	color: #fff;
+	background: #888;
+}
+.emoji-popup{
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 99;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,.3);	
+	transition: .3s;
+	.popup-content{
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		border-radius: .7rem .7rem 0 0;
+		font-size: .3rem;
+		text-align: center;
+		line-height: .92rem;
+		background-color: #fff;
+		color: #000;
+		&.in{
+			-webkit-animation: pop-show .3s ease-out forwards;
+			animation: pop-show .3s ease-out forwards;
+		}
+		&.out{
+			-webkit-animation: pop-hide .3s ease-out forwards;
+			animation: pop-hide .3s ease-out forwards;
+		}
+	}
+	.popup-title{
+		line-height: 1.08rem;
+		color: #8D95A2;
+	}
+	.popup-list{
+		width: 100%;
+		max-height: 5.6rem;
+		padding: 0 .55rem .25rem .55rem;
+		overflow-y: auto;
+		.popup-list-item{
+			display: block;
+			width: 1.2rem;
+			height: 1.2rem;
+			margin: 0 .2rem .24rem .2rem;
+			.img{
+				width: 100%;
+				height: 100%;
+			}
+		}
+	}
+	.popup-add{
+    color: #122030;
+		margin-top: .25rem;
+		border-top: 1px solid #e2e2e2;
+	}
+	.popup-cancel{
+    color: #5F717F;
+		border-top: 3px solid #e2e2e2;
+		line-height: 1.18rem;
+	}
+}
+
+@-webkit-keyframes pop-show {
+  0% {
+    -webkit-transform: translateY(50%);
+    transform: translateY(50%);
+    opacity: 0
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0)
+  }
+}
+
+@keyframes pop-show {
+  0% {
+    -webkit-transform: translateY(50%);
+    transform: translateY(50%);
+    opacity: 0
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0)
+  }
+}
+
+@-webkit-keyframes pop-hide {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1
+  }
+  to {
+    opacity: 0;
+    -webkit-transform: translateY(50%);
+    transform: translateY(50%)
+  }
+}
+
+@keyframes pop-hide {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity:1
+  }
+  to {
+    opacity: 0;
+    -webkit-transform: translateY(50%);
+    transform: translateY(50%)
+  }
+}

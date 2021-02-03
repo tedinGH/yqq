@@ -1,0 +1,156 @@
+.help-page {
+  min-width: 1080px;
+  height: auto;
+  background: #0d234a;
+  overflow: auto;
+  .nav-bar nav a{
+    color: #fff;
+  }
+  .course-part {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 56px auto 0;
+    overflow: hidden;
+    color: #fff;
+    font-size: 16px;
+    .part-content.first{
+      .content-right {
+        position: relative;
+        height: 442px;
+      }
+      img {
+        position: absolute;
+        top: 0;
+        left: -60px;
+        height: 100%;
+        width: auto;
+      }
+      p {
+        padding-right: 50px;
+      }
+    }
+    .last img {
+      width: 224px !important;
+      margin-left: 23px;
+    }
+  }
+  .title {
+    position: relative;
+    height: 25px;
+    line-height: 25px;
+    width: 460px;
+    margin: 0 auto;
+    font-size: 24px;
+    text-align: center;
+    span {
+      display: inline-block;
+      position: relative;
+      padding-right: 35px;
+      font-size: 18px;
+      line-height: 25px;
+    }
+    i {
+      display: inline-block;
+      position: absolute;
+      top: 5px;
+      right: 0;
+      height: 15px;
+      width: 25px;
+      background-image: url(../../assets/images/contact/course-down.png);
+      background-size: 100% 100%;
+    }
+    &::before,&::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      height: 1px;
+      width: 200px;
+      background: #1CD2FF;
+    }
+    &::before {
+      left: 496px;
+    }
+    &::after {
+      right: 496px;
+    }
+  }
+  .part-content {
+    width: 584px;
+    padding-top: 55px;
+    margin: 0 auto;
+    .content-left {
+      float: left;
+      width: 315px;
+      .number {
+        font-size: 72px;
+        color: #1CD1FE;
+        line-height: 72px;
+      }
+      p {
+        height: auto;
+        line-height: 36px;
+        width: 315px;
+        font-size: 16px;
+        word-wrap: break-word;
+        overflow: auto;
+      }
+      a {
+        display: block;
+        height: auto;
+        line-height: 36px;
+        width: 315px;
+        font-size: 16px;
+        color: #fff;
+      }
+    }
+    .content-right {
+      float: right;
+      width: 256px;
+      img {
+        height: auto;
+        width: 100%;
+      }
+    }
+  }
+  .google {
+    text-align: center;
+    h3 {
+      font-size: 24px;
+    }
+    p {
+      font-size: 16px;
+      margin-top: 30px;
+    }
+  }
+  .relieve {
+    margin: 86px auto 120px;
+    font-size: 24px;
+    color: #fff;
+    text-align: center;
+  }
+  .footer-body {
+    background-color: #282828;
+  }
+
+  &.my{
+    .course-part{
+      .title{
+        width: 490px;
+        font-size:14px;
+        &::before {
+          left: 516px;
+        }
+        &::after {
+          right: 516px;
+        }
+      }
+      .content-left{
+        p{
+          font-size:14px;
+        }
+      }
+    }
+  }
+}
+
