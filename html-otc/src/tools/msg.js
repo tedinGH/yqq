@@ -9,6 +9,8 @@ import { sessionInfo } from "@/session/sessionInfo";
 
 import {msgFormatTemplate} from "@/session/msgFormatTemplate";
 
+import { throttle } from "@/tools/utils";
+
 let _vioceReady = true;
 let lang = null;
 let _langIdx = 0;
@@ -66,7 +68,17 @@ const messageParse = {
       arrayList.push(fault)
     }
     //计算预加载消息集合  end
-    
+    let cacheSessionJson={};
+    for(let key in session){
+      cacheSessionJson[key]=session[key];
+    }
+      //防抖
+    let delaySession = event => {
+      store.commit("UPDATE_SESSION_BATCH", event);
+    };
+    let throttleMove = throttle(delaySession, 500);
+
+
     for (let i = 0; i < list.length; i++) {
       let item = list[i];
       if (item.fromType == 10) {
@@ -78,7 +90,10 @@ const messageParse = {
       if (!item.msg) {
         sessionInfo.getChatInfo(item.fromType, item.fromId).then(chatInfo=>{
           let msgItem=this.msgTemplate(item, { bodyType:1, preview:'' }, chatInfo);
-          store.commit("UPDATE_SESSION", msgItem);
+
+          cacheSessionJson[msgItem.paramId + "-" + msgItem.fromType]=msgItem
+          throttleMove(cacheSessionJson)
+          // store.commit("UPDATE_SESSION", msgItem);
         })
         continue;
       }
@@ -101,7 +116,10 @@ const messageParse = {
             msgItem1.lastReadId=item.lastReadId;
             let n=msgItem1.mId-msgItem1.lastReadId;
             msgItem1.unreadNum= n>0?n:0;
-            store.commit("UPDATE_SESSION", msgItem1);
+
+            cacheSessionJson[msgItem1.paramId + "-" + msgItem1.fromType]=msgItem1
+            throttleMove(cacheSessionJson)
+            // store.commit("UPDATE_SESSION", msgItem1);
           })
           //  msgManager.updateMsg(item.fromType,item.fromId,msgItem);
         ///end

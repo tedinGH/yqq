@@ -70,6 +70,7 @@ export default {
   [types.UPDATE_SESSION_BATCH](state, payload) {
     state.session.v = state.session.v + 1;
     delete payload["undefined-undefined"];
+    delete state.session['record']
     Vue.set(state.session, "record", payload);
     sessionUtil.setSessionListLocalStore(state.session.record);
   },
@@ -286,5 +287,4 @@ export default {
   [types.CLEARTOKEN] (state, payload) {
     state.cancelTokenArr = []
   },
-  
 };

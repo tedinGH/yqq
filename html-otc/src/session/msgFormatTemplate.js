@@ -237,9 +237,9 @@ export const msgFormatTemplate = {
           case 54: // 安全SafetyNoticeProtocol
             this.SafetyNoticeProtocol(resolve, content);
             break;
-          case 57:// 客服FeedbackProtocol
-            this.FeedbackProtocol(resolve,content);
-          break;
+          case 57: // 客服FeedbackProtocol
+            this.FeedbackProtocol(resolve, content);
+            break;
           default:
             throw "Not currently supported";
             break;
@@ -301,7 +301,6 @@ export const msgFormatTemplate = {
         content.msgContent.imgUrl = content.msgContent.imgUrl.substr(1);
       }
       try {
-        
         let imgUrl = Config.fileDownUrl + "low/" + content.msgContent.imgUrl;
         this.preDownload(imgUrl);
         // var imgObject = new Image();
@@ -352,7 +351,11 @@ export const msgFormatTemplate = {
 
       try {
         /**视频图片预加载 */
-        let imgUrl = Config.fileDownUrl + "compress/" + content.msgContent.videoUrl +'.png';
+        let imgUrl =
+          Config.fileDownUrl +
+          "compress/" +
+          content.msgContent.videoUrl +
+          ".png";
         this.preDownload(imgUrl);
         // this.preDownload(Config.fileDownUrl + "original/" + content.msgContent.videoUrl);
         // var imgObject = new Image();
@@ -609,13 +612,21 @@ export const msgFormatTemplate = {
           if (userIds[i] == "allMember") {
             showText = showText + "@" + lang.msgPanel.all + " " + atText[i + 1];
           } else {
+            let userInfoEntity = userInfo[id];
             if (store.state.friendList[id]) {
               if (store.state.friendList[id].notes) {
-                userInfo[id].nickName = store.state.friendList[id].notes;
+                if (userInfoEntity) {
+                  userInfoEntity.nickName = store.state.friendList[id].notes;
+                }
               }
             }
-            showText =
-              showText + "@" + userInfo[id].nickName + " " + atText[i + 1];
+
+            let nickName = id;
+            if (userInfoEntity) {
+              nickName = userInfoEntity.nickName;
+            }
+
+            showText = showText + "@" + nickName + " " + atText[i + 1];
           }
         }
         content.msgContent = this.xssHandler(showText);
@@ -1109,7 +1120,7 @@ export const msgFormatTemplate = {
     resolve(content);
   },
   // 客服
-  FeedbackProtocol(resolve, content){
+  FeedbackProtocol(resolve, content) {
     content.preview = lang.common.service;
     content.noChatInfo = true;
     resolve(content);
@@ -1187,7 +1198,7 @@ export const msgFormatTemplate = {
     resolve(content);
   },
   /**预下载 图片 */
-  preDownload(url){
+  preDownload(url) {
     var imgObject = new Image();
     imgObject.src = url;
     imgObject.onload = function () {};
@@ -1205,12 +1216,12 @@ export const msgFormatTemplate = {
     //     ifr = null;
     //   },1000)
     // };
-    
+
     // // window.name=url
     // ifr.src = Config.fileDownUrl+ 'html/preDownload.html';
     // ifr.style.display = 'none';
     // if(ifr.attachEvent) ifr.attachEvent('onload', loadFunc);
-    // else ifr.onload = loadFunc;    
+    // else ifr.onload = loadFunc;
     // document.body.appendChild(ifr);
   },
 };
