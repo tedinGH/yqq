@@ -25,3 +25,12 @@ export const GET_CUSTOMFIELD = BUILD_URL + '/leave/getCustomField'   //获取留
 // 上传需求
 export const INITFILE_CHANNEL_UPLOAD_FILE = BUILD_URL + "/file/initFileChannel"; // 分片上传文件
 export const UPLOAD_FILE_V2 = BUILD_URL + "/file/fileUpload"; // 上传文件V2
+
+// 客服评价
+export const GET_EVALUATE_CONF = BUILD_URL + "/evaluate/getEvaluateConf"; // 评价配置内容
+
+export const SET_EVALUATE_INVITION_RECORD = BUILD_URL + "/evaluate/savaInvitionRecoro"; // 保存邀请记录
+
+export const GET_IS_EVALUATE = BUILD_URL + "/evaluate/getIsEvaluate"; // 获取是否已评价
+
+export const SET_SAVE_EVALUATE = BUILD_URL + "/evaluate/savaEvaluate"; // 保存评价

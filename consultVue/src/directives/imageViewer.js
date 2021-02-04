@@ -2,7 +2,7 @@ import Vue from "vue";
 import store from "../store";
 import lightGallery from "../components/common/H5videos";
 import { Config } from "@/common/config";
-import { msgEnumTypes, sessionEnumTypes } from "@/common/enum";
+import { msgEnum, sessionEnum } from "@/common/enum";
 import { msgManager } from "@/session/msgManager";
 
 export const viewer = {
@@ -30,7 +30,7 @@ const handler = (el, binding) => {
 
     for (let i = 0; i < data.length; i++) {
       let cache = data[i];
-      if (cache.type == msgEnumTypes.video || cache.type == msgEnumTypes.img) {
+      if (cache.type == msgEnum.video || cache.type == msgEnum.img) {
         cacheArray.push(cache);
       } //音频先剔除
     }
@@ -55,7 +55,7 @@ const handler = (el, binding) => {
       }
 
       poster = msgContent.fileUrl;
-      if (cache.type == msgEnumTypes.video) {
+      if (cache.type == msgEnum.video) {
         let videoUrl = Config.fileDownUrl + fileUrl;
         msgContent1 = {
           poster: Config.fileDownUrl.replace("/cs/", "/") + "compress/" + poster + ".png",

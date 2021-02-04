@@ -48,7 +48,15 @@ const state = {
   bubbles: {
     mybackground: "",
     adversebackground: ""
-  }
+  },
+  // 评价内容
+  // activeStatus: 推送方式-对话中访客主动进行评价 1开启 -1关闭
+  // closeStatus: 推送方式-客服关闭会话后主动推送状态：1开启-1关闭
+  // endStatus: 推送方式-系统自动结束会话后主动推送状态1开启-1关闭
+  // invitatStatus: 推送方式-对话中客服主动发送 1开启 -1关闭
+  // status: 推送方式-访客关闭会话窗口时弹出
+  evaluateStatus: "invitatStatus",
+  evaluateConf: {}
 };
 
 export default new Vuex.Store({

@@ -1,5 +1,5 @@
 import store from "../store";
-import { msgEnumTypes, sessionEnumTypes } from "@/common/enum";
+import { msgEnum, sessionEnum } from "@/common/enum";
 let _vioceReady = true;
 let lang = null;
 let _langIdx = 0;
@@ -36,7 +36,7 @@ const messageParse = {
         visitorMsgVoiceNotifyState
       } = store.state.reminderSettings;
 
-      if (param.chatType == sessionEnumTypes.visitor) {
+      if (param.chatType == sessionEnum.visitor) {
         if (visitorMsgDesktopNotifyState) {
           if (visitorMsgVoiceNotifyState) {
             this.voiceAction("visitorMsgVoiceNotifyState");
@@ -117,7 +117,7 @@ const messageParse = {
     // console.log(param);
     const payload = {
       ...param,
-      title: param.chatType == sessionEnumTypes.visitor ? `News ${param.id}` : ""
+      title: param.chatType == sessionEnum.visitor ? `News ${param.id}` : ""
     };
 
     var notify = new Notification(payload.title, {

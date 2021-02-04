@@ -263,5 +263,70 @@ export const actionApi = {
         }
       );
     });
+  },
+  // 客服评价
+  getEvaluateConf(data) {
+    return new Promise((resolve, reject) => {
+      let param = {
+        httpUrl: urls.GET_EVALUATE_CONF,
+        data
+      };
+      serves.post(param).then(
+        res => {
+          resolve(res);
+        },
+        () => {
+          reject();
+        }
+      );
+    });
+  },
+  getIsEvaluate(data) {
+    return new Promise((resolve, reject) => {
+      let param = {
+        httpUrl: urls.GET_IS_EVALUATE,
+        data
+      };
+      serves.post(param).then(
+        res => {
+          resolve(res);
+        },
+        () => {
+          reject();
+        }
+      );
+    });
+  },
+  setSaveEvaluate(data) {
+    return new Promise((resolve, reject) => {
+      let param = {
+        httpUrl: urls.SET_SAVE_EVALUATE,
+        data
+      };
+      serves.post(param).then(
+        res => {
+          resolve(res);
+        },
+        () => {
+          reject();
+        }
+      );
+    });
+  },
+  setEvaluateInvitionRecord(data) {
+    return new Promise((resolve, reject) => {
+      let param = {
+        httpUrl: urls.SET_EVALUATE_INVITION_RECORD,
+        data
+      };
+      serves.post(param).then(
+        res => {
+          resolve(res);
+        },
+        () => {
+          reject();
+        }
+      );
+    });
   }
 }

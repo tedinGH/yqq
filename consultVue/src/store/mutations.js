@@ -61,5 +61,8 @@ export default {
   },
   [types.SET_BUBBLES](state, payload) {
     state.bubbles = payload;
-  }
+  },
+  [types.SET_EVALUATE_CONF](state, payload) {
+    state.evaluateConf = payload;
+  },
 };

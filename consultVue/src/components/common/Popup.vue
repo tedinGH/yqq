@@ -1,7 +1,7 @@
 <template>
   <transition name="scale-x">
-    <div class="e-popup" @click.stop="">
-      <div class="e-popup-box" :style="{ 'border-radius': radius + 'px' }" @click.stop="">
+    <div class="e-popup" @click.stop>
+      <div class="e-popup-box" :style="{ 'border-radius': radius + 'px' }" @click.stop>
         <div class="popup-header" :style="{ 'text-align': titleAlign }" v-if="!hideHeader">
           <label class="title">{{ title }}</label>
           <span class="close" @click="close" v-if="!hideClose"></span>
@@ -21,35 +21,35 @@ export default {
   props: {
     title: {
       type: String,
-      default: ""
+      default: "",
     },
     hideHeader: {
       type: Boolean,
-      default: false
+      default: false,
     },
     hideClose: {
       type: Boolean,
-      default: false
+      default: false,
     },
     titleAlign: {
       type: String,
-      default: "left"
+      default: "left",
     },
     radiu: {
       type: String,
-      default: "0"
+      default: "0",
     },
     radius: {
       type: Number,
-      default: "2"
-    }
+      default: "2",
+    },
   },
   methods: {
     close() {
       this.$store.dispatch("setLayout", ["", "", false]);
-    }
+    },
   },
-  mounted() {}
+  mounted() {},
 };
 </script>
 

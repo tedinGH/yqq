@@ -9,39 +9,50 @@
     </div>
     <div class="body">
       <div class="nav" v-if="webstyle == 'twoNav' || webstyle == 'leftNav'">
-        <img :src="config.imgurl + 'original/' + imgdata.leftAdvertiImg" @click="goto(imgdata.leftLinkUrl)" />
+        <img
+          :src="config.imgurl + 'original/' + imgdata.leftAdvertiImg"
+          @click="goto(imgdata.leftLinkUrl)"
+        />
       </div>
       <div class="chat">
         <div class="user" v-if="!customerServiceId">您现在排在第 {{ num }} 位（{{ time }}）</div>
         <div class="service" v-else>
-          <img v-if="serviceInfo.avatar != null" :src="config.imgurl + 'original/' + serviceInfo.avatar" />
+          <img
+            v-if="serviceInfo.avatar != null"
+            :src="config.imgurl + 'original/' + serviceInfo.avatar"
+          />
           <img v-else src="../assets/img/logo.png" />
-          <div class="content">
-            {{ serviceInfo.name }}
-          </div>
+          <div class="content">{{ serviceInfo.name }}</div>
         </div>
         <!-- 拖拽功能 -->
         <!-- <div class="message-box" @drop="dropArea($event)"> -->
         <div class="message-box" id="message-box" ref="list" v-scrollBar>
           <MsgList :chatlist="chatlist" :userInfo="userInfo" :currentSession="currentSession"></MsgList>
         </div>
-        <SessionInput v-if="msging" ref="sessionInput" :layout="layout" @selectAll="selectAll" @send="send"></SessionInput>
-        <div class="session-input" v-if="!msging">
-          <div class="tip-title">This session has ended, you can</div>
-          <div class="checkBtn">
-            <p @click="Leave()" style="margin-right:20px">Leave</p>
-            <p @click="refresh()" style="margin-left:20px">Continue</p>
-          </div>
-        </div>
+        <SessionInput
+          ref="sessionInput"
+          :msging="msging"
+          :layout="layout"
+          :chatlist="chatlist"
+          @selectAll="selectAll"
+          @send="send"
+        ></SessionInput>
       </div>
       <div class="nav" v-if="webstyle == 'twoNav' || webstyle == 'rightNav'">
-        <img :src="config.imgurl + 'original/' + imgdata.rightAdvertiImg" @click="goto(imgdata.rightLinkUrl)" />
+        <img
+          :src="config.imgurl + 'original/' + imgdata.rightAdvertiImg"
+          @click="goto(imgdata.rightLinkUrl)"
+        />
       </div>
     </div>
     <div class="tip" v-if="showleavemsg && !customerServiceId">
-      <div class="head"><span style="font-size: 16px">Tip</span><img @click="close" src="../assets/img/chat/xx.png" /></div>
+      <div class="head">
+        <span style="font-size: 16px">Tip</span>
+        <img @click="close" src="../assets/img/chat/xx.png" />
+      </div>
       <p class="official">
-        Your waiting time has reached<span>{{ leavemsgtime }}s,</span>In order not to delay your precious time, you can choose to leave us a message
+        Your waiting time has reached
+        <span>{{ leavemsgtime }}s,</span>In order not to delay your precious time, you can choose to leave us a message
       </p>
       <div class="btns">
         <div class="keepwait" @click="close">wait</div>
@@ -49,9 +60,9 @@
       </div>
     </div>
     <div class="tip2" v-if="showtip">
-      <p class="official">
-        Whether to leave the current session to leave a message, and return to the session after entering the message.You need to queue again
-      </p>
+      <p
+        class="official"
+      >Whether to leave the current session to leave a message, and return to the session after entering the message.You need to queue again</p>
       <div class="btns">
         <div class="keepwait" @click="showtip = false">No</div>
         <div class="goleaveMsg" @click="goLeaveMsg">Yes</div>
@@ -59,24 +70,62 @@
     </div>
     <file-popup ref="sendFile" :fileInfo="dropFileInfo"></file-popup>
     <picture-popup ref="sendPicture" :imgInfo="pasteImage"></picture-popup>
-    <Popup :hideClose="false" v-if="layout.module == 'oversize' && layout.child == 'close'" :radius="10">
+    <Popup
+      :hideClose="false"
+      v-if="layout.module == 'oversize' && layout.child == 'close'"
+      :radius="10"
+    >
       <div class="seal" slot="body">
         <div class="content">{{ $t("msg.chatPanel.overSize") }}</div>
         <div class="btn" @click="confirmTips">{{ $t("msg.common.confirm") }}</div>
       </div>
     </Popup>
-    <Popup :hideClose="false" v-if="layout.module == 'fileTypeSupport' && layout.child == 'close'" :radius="10">
+    <Popup :hideClose="false" v-if="layout.module == 'fileTypeSupport'" :radius="10">
       <div class="seal" slot="body">
         <div class="content">{{ $t("msg.chatPanel.fileTypeSupport") }}</div>
         <div class="btn" @click="confirmTips">{{ $t("msg.common.confirm") }}</div>
       </div>
     </Popup>
-    <Popup :hideClose="false" v-if="layout.module == 'error' && layout.child == 'close'" :radius="10">
+    <Popup
+      :hideClose="false"
+      v-if="layout.module == 'error' && layout.child == 'close'"
+      :radius="10"
+    >
       <div class="seal" slot="body">
         <div class="content">Error!</div>
         <div class="btn" @click="confirmTips">{{ $t("msg.common.confirm") }}</div>
       </div>
     </Popup>
+    <!--  v-if="layout.module == 'evaluatePop'" -->
+    <Popup :hideClose="false" v-if="layout.module == 'evaluatedFirst'" :radius="10">
+      <div class="seal" slot="body">
+        <div class="content">{{ $t("msg.evaluate.evaluatedFirst") }}</div>
+        <div class="btn" @click="confirmTips">{{ $t("msg.common.confirm") }}</div>
+      </div>
+    </Popup>
+    <Popup :hideClose="false" v-if="layout.module == 'evaluateInvite'" :radius="10">
+      <div class="seal" slot="body">
+        <img class="land-head-icon" src="../assets/img/evaluate/evaluate.png" />
+        <div class="content">{{ $t("msg.evaluate.evaluateInvite") }}</div>
+        <div
+          class="display-flex"
+          style="
+              width: 260px;
+          justify-content: space-around;
+          "
+        >
+          <div class="btn" @click="confirmTips">{{ $t("msg.evaluate.evaluateNext") }}</div>
+          <div class="btn" @click="acceptEvaluate">{{ $t("msg.evaluate.evaluateAccept") }}</div>
+        </div>
+      </div>
+    </Popup>
+    <EvaluatePopup
+      :hideClose="false"
+      :isLeave="isLeave"
+      v-if="layout.module == 'evaluatePop'"
+      :radius="10"
+    ></EvaluatePopup>
+    <div class="mask" v-if="layout.mask" @click.stop></div>
     <audio id="audio_remind_news" style="opacity: 0" src="../assets/voice/visitor.mp3" muted="true"></audio>
   </div>
 </template>
@@ -84,7 +133,7 @@
 <script>
 import { actionApi } from "@/api";
 import Rtc from "@/tools/rtc-message";
-import { msgEnumTypes, sessionEnumTypes } from "@/common/enum";
+import { msgEnum, sessionEnum, evaluateCSEnum } from "@/common/enum";
 import { msgUtil } from "@/tools/msgUtil";
 import store from "@/store";
 import { timeUtil } from "@/tools/timeUtil";
@@ -95,6 +144,8 @@ import { msgManager } from "@/session/msgManager";
 import MsgList from "@/components/home/MsgList";
 import SessionInput from "@/components/home/SessionInput";
 import UplaodFiles from "@/components/common/uploadFile";
+import EvaluatePopup from "@/components/common/EvaluatePopup";
+
 import { mapGetters } from "vuex";
 import { Crypto } from "@/tools/crypto";
 export default {
@@ -107,10 +158,11 @@ export default {
       chatlist: [],
       sortJson: {}, //用于消息排序：date:[]
       moreThan: true,
-      msgEnumTypes,
+      msgEnum,
+      isLeave: false, // 是否离开会话
       company: {
         companyName: "",
-        logo: ""
+        logo: "",
       },
       currentSession: {
         msgId: 0,
@@ -131,7 +183,7 @@ export default {
       Nomsgservice: null, //客服无消息内容
       Nomsgtimer: null, //客服无消息定时器
       Nomsgvisitor: {
-        contentUs: null
+        contentUs: null,
       }, //访客无消息内容
       Nomsgtimer2: null, //访客无消息定时器
       Closemsg: null, //关闭聊天定内容
@@ -139,22 +191,23 @@ export default {
       showleavemsg: false,
       leavemsgtime: null, //
       leavemsgtimer: null, //留言弹出定时器
-      duplicateRemovalCacheId: null //去重ID集合
+      duplicateRemovalCacheId: null, //去重ID集合
     };
   },
   components: {
     MsgList,
-    SessionInput
+    SessionInput,
+    EvaluatePopup,
   },
   mixins: [UplaodFiles],
   computed: {
-    ...mapGetters(["layout", "userId", "serviceInfo", "customerServiceId", "msging"]),
+    ...mapGetters(["layout", "userId", "companyId", "serviceInfo", "customerServiceId", "msging", "evaluateConf"]),
     userInfo() {
       return {
         id: this.userId,
-        nickName: null
+        nickName: null,
       };
-    }
+    },
   },
   watch: {
     chatlist(item, old) {
@@ -204,6 +257,7 @@ export default {
               this.$refs.list.scrollTop = this.$refs.list.scrollHeight;
             }, 200);
             actionApi.closeConnect(); //关闭会话
+            this.$refs.sessionInput.pushEvaluate(evaluateCSEnum.invitationType.systemSessionOverPush);
             this.$store.commit("SET_MSGING", false);
           }, this.Closemsg.repleTimeUs * 1000 * 60);
         }
@@ -228,11 +282,11 @@ export default {
           }, 200);
         }
       }
-    }
+    },
   },
   methods: {
     cancelUploadMsg(id) {
-      let mediaIndex = this.chatlist.findIndex(item => item.id == id);
+      let mediaIndex = this.chatlist.findIndex((item) => item.id == id);
       console.log(mediaIndex);
       this.chatlist.splice(mediaIndex, 1);
     },
@@ -251,7 +305,7 @@ export default {
       let htmlValue = obj || this.$refs.sessionInput.$refs.editMsg.innerHTML;
       // let txtValue = face.htmlToString(htmlValue) //表情解析
       let txtValue = ""; //移除无用html标签
-      let msgtype = msgEnumTypes.text;
+      let msgtype = msgEnum.text;
       if (obj && obj.type) {
         msgtype = obj.type;
         txtValue = JSON.stringify(obj);
@@ -261,7 +315,7 @@ export default {
         let regExp = new RegExp("(&nbsp*)|(<br>*)|( )", "g");
         let reg = /((https|http|ftp|rtsp|mms)?:\/\/)?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?(([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9a-z_!~*'()-]+\.)*([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\.[a-z]{2,6})(:[0-9]{1,5})?((\/?)(\/?[0-9a-z_!~*^'().;?/:@&=+$,%#-]+)+)?/gi;
         if (reg.test(htmlValue) == true) {
-          msgtype = msgEnumTypes.textHyperLink;
+          msgtype = msgEnum.textHyperLink;
         }
 
         if (txtValue.replace(regExp, "").length == 0) {
@@ -279,9 +333,9 @@ export default {
           timeStamp: timeUtil.nowTimestamp(),
           id: -1,
           type: msgtype,
-          body: txtValue
+          body: txtValue,
         })
-        .then(data => {
+        .then((data) => {
           arrayIndex = this.pushMsg(data);
         });
 
@@ -293,9 +347,9 @@ export default {
         .sendMsg({
           msgType: msgtype,
           toId: this.customerServiceId,
-          msg: txtValue
+          msg: txtValue,
         })
-        .then(data => {
+        .then((data) => {
           msgFormatTemplate
             .formatMsgNew({
               isSender: true,
@@ -304,26 +358,22 @@ export default {
               timeStamp: Number(data.time),
               id: data.msgId,
               type: msgtype,
-              body: txtValue
+              body: txtValue,
             })
-            .then(data => {
+            .then((data) => {
               let that = this;
               that.currentSession.msgId = data.msgId;
+              let viewShow = typeof data.viewShow == "string" ? data.viewShow : { ...data.viewShow };
               const chatItem = {
-                ...data.viewShow,
+                viewShow,
                 id: data.id,
                 item: data.viewShow,
                 type: data.type,
                 time: data.time,
-                isSender: true
+                isSender: true,
               };
-              if (
-                data.type == msgEnumTypes.img ||
-                data.type == msgEnumTypes.video ||
-                data.type == msgEnumTypes.files ||
-                data.type == msgEnumTypes.audio
-              ) {
-                let mediaIndex = that.chatlist.findIndex(item => item?.item?.mediaIndex == data.viewShow.mediaIndex);
+              if (data.type == msgEnum.img || data.type == msgEnum.video || data.type == msgEnum.files || data.type == msgEnum.audio) {
+                let mediaIndex = that.chatlist.findIndex((item) => item?.item?.mediaIndex == data.viewShow.mediaIndex);
                 that.$set(that.chatlist, mediaIndex, chatItem);
                 that.chatlist[mediaIndex] = chatItem;
               } else {
@@ -344,6 +394,7 @@ export default {
      */
     pushMsg(data, mode = "") {
       //如何加时间上去
+      // console.log(data);
       //id去重
       if (data.id != -1) {
         if (this.duplicateRemovalCacheId.has(data.id)) {
@@ -369,15 +420,15 @@ export default {
 
       const chatItem = {
         ...data,
-        item: data.viewShow
+        item: data.viewShow,
       };
 
       if (
         data.viewShow.uploadStatus == true &&
         mode != "init" &&
-        (data.type == msgEnumTypes.img || data.type == msgEnumTypes.video || data.type == msgEnumTypes.files || data.type == msgEnumTypes.audio)
+        (data.type == msgEnum.img || data.type == msgEnum.video || data.type == msgEnum.files || data.type == msgEnum.audio)
       ) {
-        let mediaIndex = this.chatlist.findIndex(item => item?.item?.mediaIndex == data.viewShow.mediaIndex);
+        let mediaIndex = this.chatlist.findIndex((item) => item?.item?.mediaIndex == data.viewShow.mediaIndex);
 
         if (mediaIndex >= 0) {
           this.chatlist[mediaIndex] = chatItem;
@@ -457,8 +508,8 @@ export default {
         query: {
           id: this.$route.params.id,
           userid: this.userId,
-          url: this.$route.params.url
-        }
+          url: this.$route.params.url,
+        },
       });
     },
     close() {
@@ -467,13 +518,8 @@ export default {
     confirmTips() {
       this.$store.dispatch("setLayout", ["", "", false]);
     },
-    //关闭当前页面
-    Leave() {
-      window.location.href = "about:blank";
-      window.close();
-    },
-    refresh() {
-      window.location.reload();
+    acceptEvaluate() {
+      this.$store.dispatch("setLayout", ["evaluatePop", "", true]);
     },
     //打开会话再请求rtc
     open() {
@@ -483,17 +529,17 @@ export default {
       this.$api
         .open({
           companyId: this.$store.state.companyId,
-          visitorId: fromId
+          visitorId: fromId,
         })
-        .then(res => {
+        .then((res) => {
           let serviceId = res.data.customerId;
           if (serviceId) {
             this.$store.commit("SET_CUSTOMER_SERVICE_ID", serviceId);
           }
           EchatDB.openDB(id + "-" + this.$store.state.userId).then(() => {
             Rtc.rtc();
-            msgManager.getMsg(0, 0, 1000, 1, true, 100).then(data => {
-              data.sort(this.up).forEach(item => {
+            msgManager.getMsg(0, 0, 1000, 1, true, 100).then((data) => {
+              data.sort(this.up).forEach((item) => {
                 this.pushMsg(item, "init");
               });
             });
@@ -512,9 +558,9 @@ export default {
             this.$api
               .getvisitorsort({
                 companyId: this.$route.params.id,
-                visitorId: store.state.userId
+                visitorId: store.state.userId,
               })
-              .then(res => {
+              .then((res) => {
                 this.num = res.data;
               });
           } else if (res.data.openState == -1) {
@@ -523,8 +569,8 @@ export default {
               query: {
                 id: this.$route.params.id,
                 userid: this.$store.state.userId,
-                url: this.$route.params.url
-              }
+                url: this.$route.params.url,
+              },
             });
           }
         });
@@ -534,9 +580,9 @@ export default {
       let id = this.$route.params.id;
       this.$api
         .getsysreplebytype({
-          companyId: id
+          companyId: id,
         })
-        .then(res => {
+        .then((res) => {
           if (res.data) {
             let timeoutCache;
             for (let index in res.data) {
@@ -549,7 +595,7 @@ export default {
                     this.automaticContent = timeoutCache.contentUs;
                     let data = `<div class="no-chat"> <span class="text overtime">${this.automaticContent}</span> </div> `;
                     setTimeout(() => {
-                      if (!msging) {
+                      if (!this.msging) {
                         this.chatlist.push(data);
                         setTimeout(() => {
                           this.$refs.list.scrollTop = this.$refs.list.scrollHeight;
@@ -559,7 +605,7 @@ export default {
                       }
                     }, this.automaticTime * 1000);
                     let timer;
-                    if (timeoutCache.cycleStatus == 1 && !msging) {
+                    if (timeoutCache.cycleStatus == 1 && !this.msging) {
                       timer = setInterval(() => {
                         this.chatlist.push(data);
                         setTimeout(() => {
@@ -588,7 +634,7 @@ export default {
             return;
           }
         });
-    }
+    },
   },
   created() {
     let companyid = window.localStorage.getItem("companyid");
@@ -608,7 +654,7 @@ export default {
     let checkCode = Crypto.encryptByMd5(id + url + data + userid + styleid);
     if (checkCode != this.$route.params.checkCode) {
       this.$router.push({
-        path: "/notfond"
+        path: "/notfond",
       });
     }
     //获取样式
@@ -616,15 +662,15 @@ export default {
       this.$api
         .getdefaultstyle({
           companyId: id,
-          styleId: styleid
+          styleId: styleid,
         })
-        .then(res => {
+        .then((res) => {
           window.document.title = res.data.siteTitle;
           this.imgdata = {
             leftAdvertiImg: res.data.leftImg,
             leftLinkUrl: res.data.leftLinkUrl,
             rightAdvertiImg: res.data.rightImg,
-            rightLinkUrl: res.data.rightLinkUrl
+            rightLinkUrl: res.data.rightLinkUrl,
           };
           this.themeColour = res.data.dialogSkin;
           store.commit("SET_THEMECOLOUR", res.data.dialogSkin);
@@ -634,15 +680,15 @@ export default {
       this.$api
         .getstyle({
           companyId: id,
-          styleId: styleid
+          styleId: styleid,
         })
-        .then(res => {
+        .then((res) => {
           window.document.title = res.data.siteTitle;
           this.imgdata = {
             leftAdvertiImg: res.data.leftImg,
             leftLinkUrl: res.data.leftLinkUrl,
             rightAdvertiImg: res.data.rightImg,
-            rightLinkUrl: res.data.rightLinkUrl
+            rightLinkUrl: res.data.rightLinkUrl,
           };
           this.themeColour = res.data.dialogSkin;
           store.commit("SET_THEMECOLOUR", res.data.dialogSkin);
@@ -652,18 +698,18 @@ export default {
     //获取公司信息
     this.$api
       .getcompanyname({
-        companyId: id
+        companyId: id,
       })
-      .then(res => {
+      .then((res) => {
         this.company = res.data;
       });
 
     //获取留言设置
     this.$api
       .getleaveconf({
-        companyId: id
+        companyId: id,
       })
-      .then(res => {
+      .then((res) => {
         if (res.data.waitStatus == 1) {
           this.leavemsgtime = res.data.waitTime;
           this.leavemsgtimer = setTimeout(() => {
@@ -685,9 +731,9 @@ export default {
         url: url,
         companyId: id,
         visitorUuid: channelId,
-        siteName: device
+        siteName: device,
       })
-      .then(res => {
+      .then((res) => {
         try {
           this.open();
         } catch (error) {
@@ -699,13 +745,24 @@ export default {
   },
   mounted() {
     this.duplicateRemovalCacheId = new Set();
-    window.addEventListener("click", event => {
+    window.addEventListener("click", (event) => {
       if (this.layout.module != "") {
         this.$store.commit("SET_LAYOUT", ["", "", false]);
       }
     });
     setTimeout(() => {
       this.$refs.list.scrollTop = this.$refs.list.scrollHeight;
+      // 获取客服评价配置
+      actionApi
+        .getEvaluateConf({
+          userId: this.userId,
+          companyId: this.companyId,
+        })
+        .then((res) => {
+          if (res && res.code == 0) {
+            this.$store.commit("SET_EVALUATE_CONF", res.data);
+          }
+        });
     }, 200);
 
     //等待时间
@@ -715,14 +772,14 @@ export default {
     //留言弹窗
     // 5秒后开始更新等待排序，10秒更新一次
     setTimeout(() => {
-      if (store.state.customerServiceId == null) {
+      if (this.customerServiceId == null) {
         this.settime2 = setInterval(() => {
           this.$api
             .getvisitorsort({
               companyId: this.$route.params.id,
-              visitorId: store.state.userId
+              visitorId: this.userId,
             })
-            .then(res => {
+            .then((res) => {
               this.num = res.data;
             });
         }, 10000);
@@ -736,7 +793,7 @@ export default {
   destroyed() {
     console.log(this.$options.name + " 被销毁");
     delete this.$store.state.activityComponents[this.$options.name]; //销毁
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -944,27 +1001,22 @@ export default {
           width: 100%;
         }
       }
-
-              .tip-title {
-          padding-top: 30px;
-          text-align: center;
-          font-size: 20px;
-        }
-
-        .checkBtn {
-          display: flex;
-          margin-top: 30px;
-          justify-content: center;
-
-          p {
-            border-radius: 5px;
-            padding: 10px 12px;
-            background: $color-theme;
-            color: #fff;
-            cursor: pointer;
-          }
-        }
     }
   }
+  .land-head-icon {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    margin-left: -60px;
+  }
+}
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.6);
 }
 </style>

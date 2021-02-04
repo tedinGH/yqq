@@ -1,33 +1,30 @@
 <template>
   <ul class="message-list">
     <li v-for="(item, index) in chatlist" :key="index" :id="`anchor${item.id}`">
-      <div v-if="item.type == msgEnumTypes.newTransferEntry" class="list clearfix">
+      <div v-if="item.type == msgEnum.newTransferEntry" class="list clearfix">
         <div class="no-chat">
-          <span class="text"> {{ item.item.fromUserName }} transfer conversation to {{ item.item.nickName }}</span>
+          <span
+            class="text"
+          >{{ item.item.fromUserName }} transfer conversation to {{ item.item.nickName }}</span>
         </div>
       </div>
       <div
-        v-if="item.type == msgEnumTypes.textHyperLink || item.type == msgEnumTypes.text || item.type == msgEnumTypes.inout"
+        v-if="item.type == msgEnum.textHyperLink || item.type == msgEnum.text || item.type == msgEnum.inout  || item.type == msgEnum.evaluateCustomerService"
         v-html="item.item"
         class="list clearfix"
         @click="openUrl($event)"
       ></div>
       <!-- 图片 -->
-      <div v-if="item.type == msgEnumTypes.img" class="list clearfix">
+      <div v-if="item.type == msgEnum.img" class="list clearfix">
         <div
           class="chat-name"
           :class="{
             self: item.isSender
           }"
-        >
-          {{ userInfo.id ? userInfo.nickName : item.fromName }}
-        </div>
-        <div
-          class="chat-item"
-          :class="{
+        >{{ userInfo.id ? userInfo.nickName : item.fromName }}</div>
+        <div class="chat-item" :class="{
             self: item.isSender
-          }"
-        >
+          }">
           <div
             class="item-box msg-detail msg-img"
             ondragstart="return false;"
@@ -86,27 +83,22 @@
                           fail: item.loading == 3
                         }"
                         @click="reSend(item)"
-                      ></span> -->
+              ></span>-->
             </div>
           </div>
         </div>
       </div>
       <!-- 视频 -->
-      <div v-if="item.type == msgEnumTypes.video" class="list clearfix">
+      <div v-if="item.type == msgEnum.video" class="list clearfix">
         <div
           class="chat-name"
           :class="{
             self: item.isSender
           }"
-        >
-          {{ userInfo.id ? userInfo.nickName : item.fromName }}
-        </div>
-        <div
-          class="chat-item"
-          :class="{
+        >{{ userInfo.id ? userInfo.nickName : item.fromName }}</div>
+        <div class="chat-item" :class="{
             self: item.isSender
-          }"
-        >
+          }">
           <div
             class="item-box msg-detail msg-video"
             :data-index="`{%type%:%message%,%id%:${item.id},%msgType%:${item.type}}`"
@@ -126,7 +118,7 @@
             }"
             :data-progress="item.item.progress"
             v-videoError
-            v-if="item.type == msgEnumTypes.video"
+            v-if="item.type == msgEnum.video"
           >
             <img
               class="img"
@@ -168,28 +160,23 @@
                             fail: item.loading == 2
                           }"
                           @click="reSend(item)"
-                        ></span> -->
+              ></span>-->
             </div>
           </div>
         </div>
       </div>
 
       <!-- 文件 -->
-      <div v-if="item.type == msgEnumTypes.files" class="list clearfix">
+      <div v-if="item.type == msgEnum.files" class="list clearfix">
         <div
           class="chat-name"
           :class="{
             self: item.isSender
           }"
-        >
-          {{ userInfo.id ? userInfo.nickName : item.fromName }}
-        </div>
-        <div
-          class="chat-item"
-          :class="{
+        >{{ userInfo.id ? userInfo.nickName : item.fromName }}</div>
+        <div class="chat-item" :class="{
             self: item.isSender
-          }"
-        >
+          }">
           <div
             :style="{ background: userInfo.id == item.bodyFrom ? bubbles.mybackground : bubbles.adversebackground }"
             class="item-box msg-file display-flex"
@@ -213,7 +200,11 @@
               target="_self"
               :alt="item.item.fileId"
             >
-              <div v-if="item.item.progress <= 100" class="file-icon" :class="item.item.fileUrl | fileFitler">
+              <div
+                v-if="item.item.progress <= 100"
+                class="file-icon"
+                :class="item.item.fileUrl | fileFitler"
+              >
                 <div class="cancelUploadBtn"></div>
               </div>
             </a>
@@ -221,11 +212,15 @@
               <p class="title">{{ item.item.fileName || item.item.fileId | fileName(15) }}</p>
               <div class="file-info-item display-flex-item">
                 <div class="size">
-                  <span v-if="item.item.progress == 100 || (item.loading == 2 && item.item.progress == 500)">{{ item.item.size | fileSize }}</span>
+                  <span
+                    v-if="item.item.progress == 100 || (item.loading == 2 && item.item.progress == 500)"
+                  >{{ item.item.size | fileSize }}</span>
                   <div class="progress-bar" v-if="item.item.progress < 100">
                     <span class="bar" :style="{ width: item.item.progress + '%' }"></span>
                   </div>
-                  <span v-if="item.item.progress < 100">{{ item.item.progress > 0 ? item.item.progress : 0 }}%</span>
+                  <span
+                    v-if="item.item.progress < 100"
+                  >{{ item.item.progress > 0 ? item.item.progress : 0 }}%</span>
                 </div>
                 <div v-if="item.item.progress == 100" class="msg-status file-info-item">
                   <span class="time">
@@ -242,9 +237,14 @@
                   </span>
                 </div>
                 <div class="msg-status uploading file-info-item" v-if="item.item.progress < 100">
-                  <span class="uploading display-flex-item" v-if="item.loading == 2 && item.item.progress == 500">{{
+                  <span
+                    class="uploading display-flex-item"
+                    v-if="item.loading == 2 && item.item.progress == 500"
+                  >
+                    {{
                     $t("msg.chatPanel.network")
-                  }}</span>
+                    }}
+                  </span>
                   <span class="time">
                     {{ item.time }}
                     <span class="time">
@@ -262,21 +262,21 @@
 </template>
 
 <script>
-import { msgEnumTypes, sessionEnumTypes } from "@/common/enum";
+import { msgEnum, sessionEnum } from "@/common/enum";
 import UplaodFiles from "@/components/common/uploadFile";
 
 export default {
   name: "FileMsgList",
   data() {
     return {
-      msgEnumTypes
+      msgEnum,
     };
   },
   mixins: [UplaodFiles],
   props: {
     userInfo: Object,
     chatlist: Array,
-    currentSession: Object
+    currentSession: Object,
   },
   methods: {
     openUrl(ev) {
@@ -291,9 +291,9 @@ export default {
       a.href = url;
       a.target = "_blank";
       a.dispatchEvent(event);
-    }
+    },
   },
-  mounted() {}
+  mounted() {},
 };
 </script>
 

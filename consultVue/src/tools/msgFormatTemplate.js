@@ -1,7 +1,7 @@
 import store from "@/store";
 import filter from "@/common/filters";
 import { Config } from "@/common/config";
-import { msgEnumTypes, sessionEnumTypes } from "@/common/enum";
+import { msgEnum, sessionEnum } from "@/common/enum";
 import { timeUtil } from "@/tools/timeUtil";
 import { msgManager } from "@/session/msgManager";
 import { face } from "@/tools/emoji";
@@ -34,36 +34,39 @@ export const msgFormatTemplate = {
       try {
         if (!lang) lang = store.state.translate;
         switch (content.type) {
-          case msgEnumTypes.text: //普通文本
-          case msgEnumTypes.textHyperLink: //转接协议
+          case msgEnum.text: //普通文本
+          case msgEnum.textHyperLink: //转接协议
             this.textTemp(resolve, content);
             break;
-          case msgEnumTypes.img: //图片
+          case msgEnum.img: //图片
             this.imgTemp(resolve, content);
             break;
-          case msgEnumTypes.video: //离线视频
+          case msgEnum.video: //离线视频
             this.offlineVideoTemp(resolve, content);
             break;
-          case msgEnumTypes.aduio: //离线音频
+          case msgEnum.aduio: //离线音频
             this.offlineAudioTemp(resolve, content);
             break;
-          case msgEnumTypes.inout: //进入/离开协议
+          case msgEnum.inout: //进入/离开协议
             this.inOrOutTemp(resolve, content);
             break;
-          case msgEnumTypes.sessionOver: //会话结束协议
+          case msgEnum.sessionOver: //会话结束协议
             this.sessionCloseTemp(resolve, content);
             break;
-          case msgEnumTypes.newTransferEntry: //转接协议
+          case msgEnum.newTransferEntry: //转接协议
             this.swichTemp(resolve, content);
             break;
-          case msgEnumTypes.msgTyping: //输入中
+          case msgEnum.msgTyping: //输入中
             break;
-          case msgEnumTypes.msgReaded: //消息已读
+          case msgEnum.msgReaded: //消息已读
             this.msgRead(content);
             break;
           // 上传
-          case msgEnumTypes.files: //文件
+          case msgEnum.files: //文件
             this.fileTemp(resolve, content);
+            break;
+          case msgEnum.evaluateCustomerService: //客服评价
+            this.evaluateTemp(resolve, content);
             break;
           default:
             throw "Not currently supported";
@@ -218,6 +221,23 @@ export const msgFormatTemplate = {
       content.viewShow = `<div class="no-chat"> <span class="text">${cacheJson.name + msgTxt}</span> </div> `;
     }
     content.preview = cacheJson.name + msgTxt;
+    resolve(content);
+  },
+  // 客服评价
+  evaluateTemp(resolve, content) {
+    // debugger
+    let cacheJson = JSON.parse(content.body);
+    let msgTxt = lang.common.sendEvaluate;
+    const { isEvaluate = 0} = cacheJson;
+    if (isEvaluate == 0) {
+      //发起评价
+      msgTxt = lang.evaluate.evaluateInvite;
+    } else {
+      //评价结束
+      msgTxt = cacheJson.evaluateOverText || lang.evaluate.evaluationEnd;
+    }
+    content.viewShow = `<div class="no-chat"> <span class="text">${filter.timeFilter3(content.timeStamp)} <br/> ${msgTxt}</span> </div> `;
+    content.preview = msgTxt;
     resolve(content);
   },
   sessionCloseTemp(resolve, content) {

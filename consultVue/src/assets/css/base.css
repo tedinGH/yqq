@@ -4,6 +4,8 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body,
@@ -116,15 +118,16 @@ img {
 button {
   border: 0;
   cursor: pointer;
-  outline: none
+  outline: none;
 }
 
 input {
   border: 0;
-  outline: none
+  outline: none;
 }
 
-input::-ms-clear, input::-ms-reveal{
+input::-ms-clear,
+input::-ms-reveal {
   display: none;
 }
 
@@ -141,9 +144,8 @@ input::-ms-clear, input::-ms-reveal{
 }
 
 .green {
-  color: #44B051;
+  color: #44b051;
 }
-
 
 /* flex布局 */
 
@@ -173,7 +175,6 @@ input::-ms-clear, input::-ms-reveal{
   white-space: nowrap;
 }
 
-
 /* 清除浮动 */
 
 .clearfix:after {
@@ -195,18 +196,17 @@ input::-ms-clear, input::-ms-reveal{
   transform: translate(-50%, -50%);
 }
 
-
 /* 过渡动画 */
 
 .pop-enter-active,
 .pop-leave-active {
   position: absolute;
-  transition: opacity 350ms cubic-bezier(.55, 0, .1, 1);
+  transition: opacity 350ms cubic-bezier(0.55, 0, 0.1, 1);
 }
 
 .pop-enter,
 .pop-leave-to {
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .scale-x-enter-active,
@@ -222,47 +222,47 @@ input::-ms-clear, input::-ms-reveal{
 .pop-left-enter-active,
 .pop-left-leave-active {
   will-change: transform;
-  transition: all 400ms cubic-bezier(.55, 0, .1, 1);
+  transition: all 400ms cubic-bezier(0.55, 0, 0.1, 1);
   opacity: 1;
 }
 
 .scale-x-enter {
-  transform: scaleX(.2);
+  transform: scaleX(0.2);
   opacity: 0;
 }
 
 .scale-x-leave-active {
-  transform: scaleX(.2);
+  transform: scaleX(0.2);
   opacity: 0;
 }
 
 .drop-enter {
-  transform: scale(.1) translate(0, -80%);
+  transform: scale(0.1) translate(0, -80%);
   opacity: 0;
 }
 
 .drop-leave-active {
-  transform: scale(.1) translate(0, -80%);
+  transform: scale(0.1) translate(0, -80%);
   opacity: 0;
 }
 
 .drop-bottom-enter {
-  transform: scale(.2) translate(0, 80%);
+  transform: scale(0.2) translate(0, 80%);
   opacity: 0;
 }
 
 .drop-bottom-leave-active {
-  transform: scale(.2) translate(0, 80%);
+  transform: scale(0.2) translate(0, 80%);
   opacity: 0;
 }
 
 .drop-left-enter {
-  transform: scale(.2) translate(-40%, -80%);
+  transform: scale(0.2) translate(-40%, -80%);
   opacity: 0;
 }
 
 .drop-left-leave-active {
-  transform: scale(.2) translate(-40%, -80%);
+  transform: scale(0.2) translate(-40%, -80%);
   opacity: 0;
 }
 
@@ -275,7 +275,6 @@ input::-ms-clear, input::-ms-reveal{
   transform: translate(100%, 0);
   opacity: 0;
 }
-
 
 /* 滚动条滑块 */
 
@@ -294,8 +293,8 @@ input::-ms-clear, input::-ms-reveal{
   height: 0;
   bottom: 0;
   opacity: 0;
-  transition: background-color .2s linear, opacity .2s linear;
-  -webkit-transition: background-color .2s linear, opacity .2s linear;
+  transition: background-color 0.2s linear, opacity 0.2s linear;
+  -webkit-transition: background-color 0.2s linear, opacity 0.2s linear;
 }
 
 .ps__rail-y {
@@ -306,22 +305,22 @@ input::-ms-clear, input::-ms-reveal{
   width: 0;
   display: none;
   opacity: 0;
-  transition: background-color .2s linear, opacity .2s linear;
-  -webkit-transition: background-color .2s linear, opacity .2s linear;
+  transition: background-color 0.2s linear, opacity 0.2s linear;
+  -webkit-transition: background-color 0.2s linear, opacity 0.2s linear;
 }
 
-.ps--active-x>.ps__rail-x,
-.ps--active-y>.ps__rail-y {
+.ps--active-x > .ps__rail-x,
+.ps--active-y > .ps__rail-y {
   display: block;
   background-color: transparent;
 }
 
-.ps:hover>.ps__rail-x,
-.ps:hover>.ps__rail-y,
-.ps--focus>.ps__rail-x,
-.ps--focus>.ps__rail-y,
-.ps--scrolling-x>.ps__rail-x,
-.ps--scrolling-y>.ps__rail-y {
+.ps:hover > .ps__rail-x,
+.ps:hover > .ps__rail-y,
+.ps--focus > .ps__rail-x,
+.ps--focus > .ps__rail-y,
+.ps--scrolling-x > .ps__rail-x,
+.ps--scrolling-y > .ps__rail-y {
   opacity: 0.6;
 }
 
@@ -335,7 +334,6 @@ input::-ms-clear, input::-ms-reveal{
   opacity: 0.9;
 }
 
-
 /*
  * Scrollbar thumb styles
  */
@@ -343,8 +341,8 @@ input::-ms-clear, input::-ms-reveal{
 .ps__thumb-x {
   background-color: #3c4975;
   border-radius: 6px;
-  transition: background-color .2s linear, height .2s ease-in-out;
-  -webkit-transition: background-color .2s linear, height .2s ease-in-out;
+  transition: background-color 0.2s linear, height 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s linear, height 0.2s ease-in-out;
   height: 6px;
   /* there must be 'bottom' for ps__thumb-x */
   bottom: 2px;
@@ -355,8 +353,8 @@ input::-ms-clear, input::-ms-reveal{
 .ps__thumb-y {
   background-color: #3c4975;
   border-radius: 6px;
-  transition: background-color .2s linear, width .2s ease-in-out;
-  -webkit-transition: background-color .2s linear, width .2s ease-in-out;
+  transition: background-color 0.2s linear, width 0.2s ease-in-out;
+  -webkit-transition: background-color 0.2s linear, width 0.2s ease-in-out;
   width: 6px;
   /* there must be 'right' for ps__thumb-y */
   right: 2px;
@@ -372,7 +370,7 @@ input::-ms-clear, input::-ms-reveal{
 .readed-list .ps__thumb-y {
   background-color: #fff;
 }
-.search-key{
+.search-key {
   color: #3498df;
 }
 
@@ -384,15 +382,14 @@ input::-ms-clear, input::-ms-reveal{
   }
 }
 
-@media screen and (-ms-high-contrast: active),
-(-ms-high-contrast: none) {
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   .ps {
     overflow: auto !important;
   }
 }
 
 /* 聊天记录预览 */
-.chat-preview{
+.chat-preview {
   display: inline-block;
   width: 248px;
   font-size: 14px;
@@ -400,7 +397,7 @@ input::-ms-clear, input::-ms-reveal{
   background-color: #fff;
 }
 
-.chat-preview .title{
+.chat-preview .title {
   display: block;
   padding: 5px 12px;
   border-bottom: 1px solid #e2e2e2;
@@ -410,12 +407,12 @@ input::-ms-clear, input::-ms-reveal{
   cursor: pointer;
 }
 
-.chat-preview .text{
+.chat-preview .text {
   padding: 5px 12px;
   color: #999;
 }
 
-.chat-preview .text-line{
+.chat-preview .text-line {
   padding: 3px 0;
   line-height: 18px;
   white-space: nowrap;
@@ -424,12 +421,12 @@ input::-ms-clear, input::-ms-reveal{
 }
 
 /* 禁止选中 */
-.not-select{
-  -moz-user-select:none; 
-  -webkit-user-select:none; 
-  -ms-user-select:none; 
-  -khtml-user-select:none; 
-  user-select:none;
+.not-select {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
 }
 
 .main-body > .loading-box {

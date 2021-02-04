@@ -19,8 +19,22 @@ module.exports = {
       imageOutDate: "Photo has expired",
       videoOutDate: "Video has expired"
     },
+    evaluate: {
+      sendEvaluate: "Customer service sent you an invitation to evaluate",
+      evaluationEnd: "Evaluation end",
+      evaluated: "It has been evaluated and cannot be repeated",
+      evaluatedFirst: "You haven't replied to the visitors, please reply first",
+      evaluateNext: "Not now",
+      evaluateAccept: "Accept",
+      evaluateInvite: "We cordially invite you to evaluate",
+      evaluateSubmit: "Submit",
+      evaluteGrade1: "Poor",
+      evaluteGrade2: "Moderate",
+      evaluteGrade3: "Good",
+      evaluateOverThankCopy: "Thank you for your evaluation for this service. Wish you a happy life. Goodbye!"
+    },
     menu: {
-      Pmessage: "Please enter a message...",
+      Pmessage: "Please enter a message..."
     },
     emoji: {
       "d-0": "OK",

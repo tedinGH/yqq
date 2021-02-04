@@ -2,19 +2,19 @@
   <div class="my-popup send-file" v-show="dropFileInfo.show">
     <div :class="dropFileInfo.info.length > 1 ? 'my-popup-content small' : 'my-popup-content'">
       <span class="my-popup-close" @click="close"></span>
-      <div class="text" v-if="dropFileInfo.info.length > 1 && lang == 'zh_CN'">
-        {{ $t("msg.chatPanel.filesselected") }}{{ dropFileInfo.info.length }}个文件
-      </div>
-      <div class="text" v-else-if="dropFileInfo.info.length > 1 && lang != 'zh_CN'">
-        {{ dropFileInfo.info.length }}{{ $t("msg.chatPanel.filesselected") }}
-      </div>
+      <div
+        class="text"
+        v-if="dropFileInfo.info.length > 1 && lang == 'zh_CN'"
+      >{{ $t("msg.chatPanel.filesselected") }}{{ dropFileInfo.info.length }}个文件</div>
+      <div
+        class="text"
+        v-else-if="dropFileInfo.info.length > 1 && lang != 'zh_CN'"
+      >{{ dropFileInfo.info.length }}{{ $t("msg.chatPanel.filesselected") }}</div>
       <div class="drop-file-container display-flex" v-else>
         <div class="drop-file-icon" :class="dropFileInfo.info.name | fileFitler"></div>
         <div>
           <div class="drop-file-name">{{ dropFileInfo.info.name }}</div>
-          <div class="drop-file-size">
-            {{ dropFileInfo.info.size | fileSize }}
-          </div>
+          <div class="drop-file-size">{{ dropFileInfo.info.size | fileSize }}</div>
         </div>
       </div>
       <div :class="dropFileInfo.info.length > 1 ? 'explain small' : 'explain'">
@@ -22,15 +22,25 @@
         <input type="text" v-model="explain" />
       </div>
       <p class="popup-btn">
-        <button class="btn btn-white" type="button" @click="dropFileAction(false)">
-          {{ $t("msg.common.cancel") }}
-        </button>
-        <button class="btn btn-active" type="button" @click="dropFileAction(true, explain)">
-          {{ $t("msg.common.send") }}
-        </button>
+        <button
+          class="btn btn-white"
+          type="button"
+          @click="dropFileAction(false)"
+        >{{ $t("msg.common.cancel") }}</button>
+        <button
+          class="btn btn-active"
+          type="button"
+          @click="dropFileAction(true, explain)"
+        >{{ $t("msg.common.send") }}</button>
       </p>
     </div>
-    <input type="file" hidden="true" id="file" accept=".doc,.docx,.pdf,.ppt,.xlsx,.xls,.csv,.txt,.mp4,.aac,.mp3,.bmp,.png,.jpg,.jpeg,.gif" @change="selectFile($event)" />
+    <input
+      type="file"
+      hidden="true"
+      id="file"
+      accept=".doc, .docx, .pdf, .ppt, .xlsx, .xls, .csv, .txt, .mp4, .aac, .mp3, .bmp, .png, .jpg, .jpeg, .gif"
+      @change="selectFile($event)"
+    />
     <div id="video-thumb" style="display:none"></div>
   </div>
 </template>
@@ -40,7 +50,7 @@ import Vue from "vue";
 import { Util } from "@/tools/utils";
 import { timeUtil } from "@/tools/timeUtil";
 import { msgUtil } from "@/tools/msgUtil";
-import { msgEnumTypes, sessionEnumTypes } from "@/common/enum";
+import { msgEnum, sessionEnum } from "@/common/enum";
 import { msgFormatTemplate } from "@/tools/msgFormatTemplate";
 import { actionApi } from "@/api";
 // import BMF from'browser-md5-file';
@@ -57,7 +67,7 @@ export default {
       fileXml: null,
       fileNum: 1,
       explain: "",
-      lang: Vue.config.lang
+      lang: Vue.config.lang,
     };
   },
   computed: {
@@ -69,7 +79,7 @@ export default {
         window.removeEventListener("keyup", this.sendEvent);
       }
       return this.fileInfo;
-    }
+    },
   },
   watch: {
     fileList() {
@@ -93,7 +103,7 @@ export default {
       } else {
         this.ready = false;
       }
-    }
+    },
     // fileInfo: {
     //   handler() {
     //     if (this.fileInfo.info && !this.fileInfo.show) {
@@ -109,8 +119,8 @@ export default {
   props: {
     fileInfo: {
       type: Object,
-      default: {}
-    }
+      default: {},
+    },
   },
   methods: {
     close() {
@@ -159,10 +169,10 @@ export default {
           let obj = {
             msg,
             msgType: "1",
-            chatType: sessionEnumTypes.visitor,
+            chatType: sessionEnum.visitor,
             toId: this.customerServiceId,
             time,
-            userId: this.userId
+            userId: this.userId,
           };
           this.$store.dispatch("sendMsg", obj).then(() => {});
           this.explain = "";
@@ -198,11 +208,12 @@ export default {
         fileType.indexOf("bmp") < 0
       ) {
         this.$store.dispatch("setLayout", ["fileTypeSupport", "", true]);
+        return;
       }
 
       if (fileType.indexOf("image/") >= 0) {
         //图片
-        this.getImageInfo(file).then(data => {
+        this.getImageInfo(file).then((data) => {
           this.initFileTwo(
             i,
             file,
@@ -210,17 +221,17 @@ export default {
               imgUrl: data.imgUrl,
               imgWidth: data.width,
               imgHeigh: data.height,
-              size: file.size
+              size: file.size,
             },
-            msgEnumTypes.img
+            msgEnum.img
           );
         });
       } else {
-        let uploadFileType = msgEnumTypes.files;
+        let uploadFileType = msgEnum.files;
 
         if (fileType.indexOf("video/") >= 0) {
-          uploadFileType = msgEnumTypes.video;
-          this.getVideoInfo(file).then(data => {
+          uploadFileType = msgEnum.video;
+          this.getVideoInfo(file).then((data) => {
             browserMD5File(file, (err, md5) => {
               let viewShow = {
                 name: file.name,
@@ -229,7 +240,7 @@ export default {
                 size: file.size,
                 url: "",
                 progress: -1,
-                md5: md5
+                md5: md5,
               };
               this.initFileTwo(i, file, viewShow, uploadFileType);
             });
@@ -242,14 +253,14 @@ export default {
               size: file.size,
               url: "",
               progress: -1,
-              md5: md5
+              md5: md5,
             };
             this.initFileTwo(i, file, viewShow, uploadFileType);
           });
         }
         // 音乐文件类型
         //  else if(fileType.indexOf("audio/") >= 0 ) {
-        //   uploadFileType = msgEnumTypes.audio;
+        //   uploadFileType = msgEnum.audio;
         // }
         //文件
       }
@@ -268,8 +279,8 @@ export default {
         toId: this.customerServiceId,
         chatInfo: {
           headImg: "", // this.userInfo.headImg,
-          nickName: "" // this.userInfo.nickName
-        }
+          nickName: "", // this.userInfo.nickName
+        },
       };
       let count = parseInt(file.size / this.cutSize);
       if (file.size % this.cutSize > 0) {
@@ -280,19 +291,19 @@ export default {
         name: file.name,
         size: file.size,
         time: time,
-        imgUrl: viewShow.imgUrl|| "",
+        imgUrl: viewShow.imgUrl || "",
         fileName: file.name,
-	      mediaIndex: `abc${time}`,
-        chatType: sessionEnumTypes.visitor,
+        mediaIndex: `abc${time}`,
+        chatType: sessionEnum.visitor,
         toId: this.customerServiceId,
-        count: count
+        count: count,
       };
       // 更新会话记录列表
       this.getFileData(fileItem, i, file, bodyType);
     },
     getFileData(item, i, file, bodyType) {
       // 数据整理过程
-      const reqTouch = data => {
+      const reqTouch = (data) => {
         item.uploadId = data.uploadId;
         item.fileId = data.fileId;
         item.fileUrl = data.fileUrl;
@@ -305,21 +316,21 @@ export default {
         let historyC = this.history[i];
         console.log(historyC);
         switch (historyC.bodyType) {
-          case msgEnumTypes.img:
+          case msgEnum.img:
             //图片
             historyC.viewShow.imgUrl = data.fileUrl;
             break;
-          case msgEnumTypes.audio:
+          case msgEnum.audio:
             //音频
             break;
-          case msgEnumTypes.video:
+          case msgEnum.video:
             //视频
             break;
           default:
             historyC.viewShow.url = data.fileUrl;
             let obj = JSON.stringify({
               url: this.global.fileDownUrl + "original/" + historyC.viewShow.url,
-              name: historyC.viewShow.name
+              name: historyC.viewShow.name,
             });
             let d = window.encodeURIComponent(obj);
             let str = window.btoa(d);
@@ -359,29 +370,29 @@ export default {
         size: item.size,
         progress: 0, // item.viewShow && item.viewShow.progress || 0,
         mediaIndex: item.mediaIndex,
-        type: bodyType || msgEnumTypes.files,
-        uploadStatus: false
+        type: bodyType || msgEnum.files,
+        uploadStatus: false,
       });
 
       Util.getFileUrl(file).then(
-        data => {
+        (data) => {
           // console.log(data)
           reqTouch(data);
         },
-        err => {
+        (err) => {
           this.fileNum--;
           if (this.fileList.length == this.fileNum) {
             this.fileList = this.fileList.sort((a, b) => a.time - b.time);
             this.ready = true;
           }
           this.$store.dispatch("setLayout", ["error", "", true]);
-        },
+        }
       );
     },
 
     uploadFile(fileBlock, uploadId) {
       return new Promise((resolve, reject) => {
-        fileBlock.file.arrayBuffer().then(data => {
+        fileBlock.file.arrayBuffer().then((data) => {
           try {
             let a = { fileName: fileBlock.file.name, fileIndex: fileBlock.index, fileId: fileBlock.fileId, indexNum: fileBlock.indexNum };
             if (uploadId) {
@@ -421,10 +432,10 @@ export default {
         cacheFile.progressIndex = cacheFile.progressIndex + 1;
         let pr = {
           id: cacheFile.time,
-          num: parseInt((cacheFile.progressIndex / cacheFile.count) * 100)
+          num: parseInt((cacheFile.progressIndex / cacheFile.count) * 100),
         };
         let list = this.$store.state.uploadInfo;
-        list.forEach(item => {
+        list.forEach((item) => {
           if (pr.id == item.mId) {
             item.viewShow.progress = pr.num;
           }
@@ -447,14 +458,14 @@ export default {
         size: item.size,
         mediaIndex: item.mediaIndex,
         progress: 100, // item.viewShow.progress,
-        type: msgType || msgEnumTypes.files,
+        type: msgType || msgEnum.files,
         uploadStatus: true,
       });
 
-        this.ready = true;
-        this.count = 0;
-        this.fileList.shift();
-        this.history.shift();
+      this.ready = true;
+      this.count = 0;
+      this.fileList.shift();
+      this.history.shift();
       //   this.$store.commit("DELETE_UPLOAD_LIST", 0);
       //   console.log(data);
     },
@@ -467,7 +478,7 @@ export default {
           name: file.name + ".part" + (i + 1),
           file: file.slice(this.cutSize * i, this.cutSize * (i + 1)),
           index: this.cutSize * i,
-          fileId
+          fileId,
         });
       }
       if (file.size % this.cutSize > 0) {
@@ -476,7 +487,7 @@ export default {
           name: file.name + ".part" + (count + 1),
           file: file.slice(this.cutSize * count, file.size),
           index: this.cutSize * count,
-          fileId
+          fileId,
         });
       }
 
@@ -484,7 +495,7 @@ export default {
     },
     uploadCancel(data) {
       //取消上传
-      console.log(this.fileList)
+      console.log(this.fileList);
       this.$parent.cancelUploadMsg(data.id);
 
       // 多个文件上传
@@ -514,33 +525,34 @@ export default {
       }
     },
     getImageInfo(file) {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         let fr = new FileReader();
         fr.readAsDataURL(file);
-        fr.onload = function() {
+        fr.onload = function () {
           //onload文件读取完成事件
           let img = new Image();
           img.src = fr.result;
-          img.onload = function() {
+          img.onload = function () {
             let width = img.width;
             let height = img.height;
             let imgUrl = fr.result;
             resolve({
               width,
               height,
-              imgUrl
+              imgUrl,
             });
           };
         };
       });
     },
     getVideoInfo(file) {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         let windowURL = window.URL || window.webkitURL,
           url = windowURL.createObjectURL(file);
-        document.getElementById("video-thumb").innerHTML = '<video id="video-thumb-source" muted controls ><source src="' + url + '" type="video/mp4"></video>';
+        document.getElementById("video-thumb").innerHTML =
+          '<video id="video-thumb-source" muted controls ><source src="' + url + '" type="video/mp4"></video>';
         var videoElement = document.getElementById("video-thumb-source");
-        videoElement.addEventListener("canplay", _event => {
+        videoElement.addEventListener("canplay", (_event) => {
           var canvas = document.createElement("canvas");
           canvas.width = videoElement.videoWidth;
           canvas.height = videoElement.videoHeight;
@@ -549,7 +561,7 @@ export default {
             canvas.getContext("2d").drawImage(videoElement, 0, 0, canvas.width, canvas.height);
             let img = new Image();
             img.src = canvas.toDataURL("image/png");
-            img.onload = function() {
+            img.onload = function () {
               videoElement.pause();
               let width = img.width;
               let height = img.height;
@@ -557,7 +569,7 @@ export default {
               resolve({
                 width,
                 height,
-                imgUrl
+                imgUrl,
               });
             };
           }, 100);
@@ -565,27 +577,27 @@ export default {
       });
     },
     getAudioInfo(file) {
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         let fr = new FileReader();
         fr.readAsDataURL(file);
-        fr.onload = function() {
+        fr.onload = function () {
           //onload文件读取完成事件
           let audio = new Audio();
           audio.src = fr.result;
-          audio.onload = function() {
+          audio.onload = function () {
             let width = audio.width;
             let height = audio.height;
             let url = fr.result;
             resolve({
               width,
               height,
-              url
+              url,
             });
           };
         };
       });
-    }
+    },
   },
-  mounted() {}
+  mounted() {},
 };
 </script>
