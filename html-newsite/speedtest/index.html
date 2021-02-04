@@ -11,7 +11,7 @@
 		function I(i) { return document.getElementById(i); }
 		//INITIALIZE SPEEDTEST
 		var s = new Speedtest(); //create speedtest object
-		var url = location.search; //获取url中"?"符后的字串
+		var url = decodeURIComponent(location.search); //获取url中"?"符后的字串
 		var arraytemp = url.split('?');
 		var obj = new Object();
 		var meterBk = /Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent) ? "#ECF7F6" : "#ECF7F6";
@@ -342,6 +342,9 @@
 			line-height: 1.7em;
 			text-align: left;
 			display: inline-block;
+			overflow:hidden;
+			text-overflow:ellipsis;
+			white-space:nowrap;
 		}
 
 		div.testArea {
