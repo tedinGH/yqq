@@ -94,3 +94,5 @@ export const SET_TOAST_TEXT = "SET_TOAST_TEXT";
 export const SET_FILESIZE = "SET_FILESIZE";
 
 export const SET_BUBBLES = "SET_BUBBLES";
+
+export const SET_EVALUATE_CONF = "SET_EVALUATE_CONF";

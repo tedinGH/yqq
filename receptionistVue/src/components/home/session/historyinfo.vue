@@ -1,7 +1,7 @@
 <template>
-  <div class="historyinfo" @click.stop="">
+  <div class="historyinfo" @click.stop>
     <header>
-      <span class="head-text"> #{{ currentSession.chatId | name }}</span>
+      <span class="head-text">#{{ currentSession.chatId | name }}</span>
       <div>
         <span class="search" title="搜索" @click="search"></span>
         <span class="derive" title="导出" @click="derive"></span>
@@ -9,10 +9,18 @@
       </div>
     </header>
     <div v-show="!inSearchMode.status" class="classify">
-      <span v-for="(i, index) in classify" :key="index" :class="{ active: classType == i.type }" @click="classType = i.type">{{ i.text }}</span>
+      <span
+        v-for="(i, index) in classify"
+        :key="index"
+        :class="{ active: classType == i.type }"
+        @click="classType = i.type"
+      >{{ i.text }}</span>
     </div>
     <div v-if="inSearchMode.inCoText" class="date-classify-back">
-      <el-button type="text" @click="backToInCoText"><img src="../../../assets/images/chat/arrow-left.png" />{{ $t("msg.search.backResult") }}</el-button>
+      <el-button type="text" @click="backToInCoText">
+        <img src="../../../assets/images/chat/arrow-left.png" />
+        {{ $t("msg.search.backResult") }}
+      </el-button>
       <el-button type="text" @click="closeSearchResult">{{ $t("msg.search.closeResult") }}</el-button>
     </div>
     <div v-show="inSearchMode.status" class="date-classify-bar">
@@ -22,9 +30,7 @@
           :key="index"
           :class="{ active: dateClassifyType == i.type }"
           @click="searchKeyWord(i.type, 'button');"
-        >
-          {{ i.name }}
-        </span>
+        >{{ i.name }}</span>
         <span v-if="dateClassifyType == 'custom'">
           <el-date-picker
             class="time"
@@ -38,8 +44,7 @@
             end-placeholder="Ending date"
             popper-class="history-info-date-picker"
             align="right"
-          >
-          </el-date-picker>
+          ></el-date-picker>
         </span>
         <span
           class="keywordInput"
@@ -47,7 +52,14 @@
             inCustom: dateClassifyType == 'custom'
           }"
         >
-          <el-input placeholder="Please enter key words" v-model="searchMsgContent" clearable @clear="clearSearchKeyword" @change="onChangeMsgContent" @blur="onBlurMsgContent">
+          <el-input
+            placeholder="Please enter key words"
+            v-model="searchMsgContent"
+            clearable
+            @clear="clearSearchKeyword"
+            @change="onChangeMsgContent"
+            @blur="onBlurMsgContent"
+          >
             <i slot="suffix" class="el-input__icon el-icon-search" @click="searchKeyWord"></i>
           </el-input>
         </span>
@@ -56,51 +68,81 @@
         <p>{{ $t("msg.search.resultTitle") }}</p>
       </div>
     </div>
-    <div class="msgListContent" :class="{ hasSearchResult: inSearchMode.status || this.inSearchMode.inCoText }">
-      <div class="msgList" v-scrollBar  @ps-y-reach-end="more" id="msgList">
+    <div
+      class="msgListContent"
+      :class="{ hasSearchResult: inSearchMode.status || this.inSearchMode.inCoText }"
+    >
+      <div class="msgList" v-scrollBar @ps-y-reach-end="more" id="msgList">
         <ul>
-          <li v-for="(item, idx) in msgList" :key="idx" :class="{haskeyword: inSearchMode.hasKeyWord ? (item.type == msgEnumTypes.text || item.type == msgEnumTypes.textHyperLink) : false }">
-              <div class="view-co-text" @click="viewCoText(item)">
-                {{ $t("msg.search.inCoText")}}
-              </div>
-              <div class="text" v-if="(item.type == msgEnumTypes.text || item.type == msgEnumTypes.textHyperLink) && classType == 'all'">
-                <div class="name" v-if="currentSession.chatId == item.fromId">#{{ currentSession.chatId | name }} {{ item.createTime | timeFilter3 }}</div>
-                <div class="name" v-else>{{ item.fromName }} {{ item.createTime | timeFilter3 }}</div>
-                <div class="msg" @click="openUrl($event)" v-html="item.msg"></div>
-              </div>
-              <div class="text" v-if="item.type == msgEnumTypes.img && (classType == 'img' || classType == 'all')">
-                <div class="name" v-if="currentSession.chatId == item.fromId">
-                  #({{ currentSession.chatId | name }}) {{ item.createTime | timeFilter3 }}
-                </div>
-                <div class="name" v-else>{{ item.fromName }} {{ item.createTime | timeFilter3 }}</div>
-                <div class="msg">
-                  <img
-                    class="img thumbnails"
-                    ondragstart="return false"
-                    :src="
+          <li
+            v-for="(item, idx) in msgList"
+            :key="idx"
+            :class="{haskeyword: inSearchMode.hasKeyWord ? (item.type == msgEnum.text || item.type == msgEnum.textHyperLink  || item.type == msgEnum.evaluateCustomerService) : false }"
+          >
+            <div class="view-co-text" @click="viewCoText(item)">{{ $t("msg.search.inCoText")}}</div>
+            <div
+              class="text"
+              v-if="(item.type == msgEnum.text || item.type == msgEnum.textHyperLink) && classType == 'all'"
+            >
+              <div
+                class="name"
+                v-if="currentSession.chatId == item.fromId"
+              >#{{ currentSession.chatId | name }} {{ item.createTime | timeFilter3 }}</div>
+              <div class="name" v-else>{{ item.fromName }} {{ item.createTime | timeFilter3 }}</div>
+              <div class="msg" @click="openUrl($event)" v-html="item.msg"></div>
+            </div>
+            <div
+              class="text"
+              v-if="item.type == msgEnum.evaluateCustomerService && classType == 'all'"
+            >
+              <div
+                class="name"
+                v-if="currentSession.chatId == item.fromId"
+              >#{{ currentSession.chatId | name }} {{ item.createTime | timeFilter3 }}</div>
+              <div class="name" v-else>{{ item.fromName }} {{ item.createTime | timeFilter3 }}</div>
+              <div class="msg" v-html="item.item"></div>
+            </div>
+            <div
+              class="text"
+              v-if="item.type == msgEnum.img && (classType == 'img' || classType == 'all')"
+            >
+              <div
+                class="name"
+                v-if="currentSession.chatId == item.fromId"
+              >#({{ currentSession.chatId | name }}) {{ item.createTime | timeFilter3 }}</div>
+              <div class="name" v-else>{{ item.fromName }} {{ item.createTime | timeFilter3 }}</div>
+              <div class="msg">
+                <img
+                  class="img thumbnails"
+                  ondragstart="return false"
+                  :src="
                       item.item.imgUrl
                         ? item.item.imgUrl.indexOf('data:') < 0
                           ? global.fileDownUrl.replace('/cs/', '/') + 'compress/' + item.item.imgUrl
                           : item.item.imgUrl
                         : ''
                     "
-                    :data-idx="idx"
-                    :data-id="item.msgId"
-                    v-viewer:list="msgList"
-                  />
-                </div>
+                  :data-idx="idx"
+                  :data-id="item.msgId"
+                  v-viewer:list="msgList"
+                />
               </div>
-              <div class="text" v-if="item.type == msgEnumTypes.video && (classType == 'video' || classType == 'all')">
-                <div class="name" v-if="currentSession.chatId == item.fromId">
-                  #({{ currentSession.chatId | name }}) {{ item.createTime | timeFilter3 }}
-                </div>
-                <div class="name" v-else>{{ item.fromName }} {{ item.createTime | timeFilter3 }}</div>
-                <div class="msg">
-                  <div
-                    class="msg-detail msg-video"
-                    style="float: none"
-                    :data-index="`{%type%:%message%,%id%:${item.msgId},%msgType%:${item.type}}`"
-                    :style="{
+            </div>
+            <div
+              class="text"
+              v-if="item.type == msgEnum.video && (classType == 'video' || classType == 'all')"
+            >
+              <div
+                class="name"
+                v-if="currentSession.chatId == item.fromId"
+              >#({{ currentSession.chatId | name }}) {{ item.createTime | timeFilter3 }}</div>
+              <div class="name" v-else>{{ item.fromName }} {{ item.createTime | timeFilter3 }}</div>
+              <div class="msg">
+                <div
+                  class="msg-detail msg-video"
+                  style="float: none"
+                  :data-index="`{%type%:%message%,%id%:${item.msgId},%msgType%:${item.type}}`"
+                  :style="{
                       width:
                         item.item.imgWidth > 254 || item.item.imgHeigh > 142
                           ? item.item.imgWidth / item.item.imgHeigh > 254 / 142
@@ -114,49 +156,62 @@
                             : (item.item.imgHeigh / item.item.imgWidth) * 254 + 'px'
                           : item.item.imgHeigh + 'px'
                     }"
-                    :data-progress="item.item.progress"
-                    v-videoError
-                  >
-                    <img
-                      class="img"
-                      ondragstart="return false"
-                      :data-thumb="item.item.imgUrl"
-                      :src="item.item.progress > 0 ? global.fileDownUrl.replace('/cs/', '/') + 'compress/' + item.item.fileUrl + '.png' : item.item.imgUrl"
-                      :data-idx="idx"
-                      :data-id="item.msgId"
-                      v-viewer:list="msgList"
-                    />
-                  </div>
+                  :data-progress="item.item.progress"
+                  v-videoError
+                >
+                  <img
+                    class="img"
+                    ondragstart="return false"
+                    :data-thumb="item.item.imgUrl"
+                    :src="item.item.progress > 0 ? global.fileDownUrl.replace('/cs/', '/') + 'compress/' + item.item.fileUrl + '.png' : item.item.imgUrl"
+                    :data-idx="idx"
+                    :data-id="item.msgId"
+                    v-viewer:list="msgList"
+                  />
                 </div>
               </div>
-              <div class="text" v-if="item.type == msgEnumTypes.files && (classType == 'files' || classType == 'all')">
-                <div class="name" v-if="currentSession.chatId == item.fromId">
-                  #({{ currentSession.chatId | name }}) {{ item.createTime | timeFilter3 }}
-                </div>
-                <div class="name" v-else>{{ item.fromName }} {{ item.createTime | timeFilter3 }}</div>
-                <div class="msg">
-                  <div class="item-box msg-file display-flex" style="float: none">
-                    <a class="download" :href="global.fileDownUrl + item.item.fileUrl + '#' + item.item.dl64" target="_blank" :alt="item.item.fileId">
-                      <div class="file-icon" :class="item.item.fileUrl | fileFitler"></div>
-                    </a>
-                    <div class="file-info display-flex-item">
-                      <p class="title">{{ item.item.fileName || item.item.fileId | fileName(15) }}</p>
-                      <div class="file-info-item display-flex-item">
-                        <div class="size">
-                          <span v-if="item.item.progress == 100">{{ item.item.size | fileSize }}</span>
-                        </div>
+            </div>
+            <div
+              class="text"
+              v-if="item.type == msgEnum.files && (classType == 'files' || classType == 'all')"
+            >
+              <div
+                class="name"
+                v-if="currentSession.chatId == item.fromId"
+              >#({{ currentSession.chatId | name }}) {{ item.createTime | timeFilter3 }}</div>
+              <div class="name" v-else>{{ item.fromName }} {{ item.createTime | timeFilter3 }}</div>
+              <div class="msg">
+                <div class="item-box msg-file display-flex" style="float: none">
+                  <a
+                    class="download"
+                    :href="global.fileDownUrl + item.item.fileUrl + '#' + item.item.dl64"
+                    target="_blank"
+                    :alt="item.item.fileId"
+                  >
+                    <div class="file-icon" :class="item.item.fileUrl | fileFitler"></div>
+                  </a>
+                  <div class="file-info display-flex-item">
+                    <p class="title">{{ item.item.fileName || item.item.fileId | fileName(15) }}</p>
+                    <div class="file-info-item display-flex-item">
+                      <div class="size">
+                        <span v-if="item.item.progress == 100">{{ item.item.size | fileSize }}</span>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="text" v-if="item.type == msgEnumTypes.textHyperLink && (classType == 'link' || classType == 'all')">
-                <div class="name" v-if="currentSession.chatId == item.fromId">
-                  #({{ currentSession.chatId | name }}) {{ item.createTime | timeFilter3 }}
-                </div>
-                <div class="name" v-else>{{ item.fromName }} {{ item.createTime | timeFilter3 }}</div>
-                <div class="msg" v-to-url @click="openUrl($event)" v-html="item.msg"></div>
-              </div>
+            </div>
+            <div
+              class="text"
+              v-if="item.type == msgEnum.textHyperLink && (classType == 'link' || classType == 'all')"
+            >
+              <div
+                class="name"
+                v-if="currentSession.chatId == item.fromId"
+              >#({{ currentSession.chatId | name }}) {{ item.createTime | timeFilter3 }}</div>
+              <div class="name" v-else>{{ item.fromName }} {{ item.createTime | timeFilter3 }}</div>
+              <div class="msg" v-to-url @click="openUrl($event)" v-html="item.msg"></div>
+            </div>
           </li>
         </ul>
       </div>
@@ -168,7 +223,13 @@
         <p v-else>{{ $t("msg.search.noData") }}</p>
       </div>
     </div>
-    <Popup :hideClose="false" :closeBtnFun="'confirmTips'" @confirmTips="confirmTips" v-if="inSearchMode.exportLimitPopup" :radius="10">
+    <Popup
+      :hideClose="false"
+      :closeBtnFun="'confirmTips'"
+      @confirmTips="confirmTips"
+      v-if="inSearchMode.exportLimitPopup"
+      :radius="10"
+    >
       <div class="seal" slot="body">
         <div class="content">{{ $t("msg.search.exportLimit") }}</div>
         <div class="btn" @click="confirmTips">{{ $t("msg.common.confirm") }}</div>
@@ -179,7 +240,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { msgEnumTypes, sessionEnumTypes } from "@/common/enum";
+import { msgEnum, sessionEnum } from "@/common/enum";
 import filter from "@/common/filters";
 import { Config } from "@/common/config";
 import { timeUtil } from "@/tools/timeUtil";
@@ -190,7 +251,7 @@ export default {
   name: "historyinfo",
   data() {
     return {
-      msgEnumTypes,
+      msgEnum,
       currentPage: 1,
       pageSize: 40,
       inSearchMode: {
@@ -200,52 +261,52 @@ export default {
         exportLimitPopup: false,
         exportingCount: 1,
         exportingLimit: 1, // 限制连续3次导出
-        inCoText: false // 上下文
+        inCoText: false, // 上下文
       },
       searchMsgContent: null,
       searchMsgContentTmp: null,
       msgList: [],
       exChangePool: {
         searchMsgContent: null,
-        msgList: []
+        msgList: [],
       }, // 临时交换结果列表
       stopScroll: false,
       classify: [
         {
           type: "all",
-          text: "All"
+          text: "All",
         },
         {
           type: "img",
-          text: "Image"
+          text: "Image",
         },
         {
           type: "video",
-          text: "Video"
+          text: "Video",
         },
         {
           type: "files",
-          text: "File"
+          text: "File",
         },
         {
           type: "link",
-          text: "Link"
-        }
+          text: "Link",
+        },
       ],
       classType: "all",
       dateClassify: [
         {
           name: "Today",
-          type: "today"
+          type: "today",
         },
         {
           name: "Yesterday",
-          type: "yesterday"
+          type: "yesterday",
         },
         {
           name: "Selection time",
-          type: "custom"
-        }
+          type: "custom",
+        },
       ],
       dateClassifyType: "today",
       pickerOptions: {
@@ -255,21 +316,21 @@ export default {
             onClick(picker) {
               let { startTime, endTime } = timeUtil.getDateRangeTimestamp("today");
               picker.$emit("pick", [startTime, endTime]);
-            }
+            },
           },
           {
             text: "Yesterday",
             onClick(picker) {
               let { startTime, endTime } = timeUtil.getDateRangeTimestamp("yesterday");
               picker.$emit("pick", [startTime, endTime]);
-            }
+            },
           },
           {
             text: "Last 7 day",
             onClick(picker) {
               let { startTime, endTime } = timeUtil.getDateRangeTimestamp("last7day");
               picker.$emit("pick", [startTime, endTime]);
-            }
+            },
           },
           // 本月
           {
@@ -277,7 +338,7 @@ export default {
             onClick(picker) {
               let { startTime, endTime } = timeUtil.getDateRangeTimestamp("thisMonth");
               picker.$emit("pick", [startTime, endTime]);
-            }
+            },
           },
           // 上个月
           {
@@ -285,7 +346,7 @@ export default {
             onClick(picker) {
               let { startTime, endTime } = timeUtil.getDateRangeTimestamp("lastMonth");
               picker.$emit("pick", [startTime, endTime]);
-            }
+            },
           },
           // 最近一个月
           {
@@ -293,11 +354,11 @@ export default {
             onClick(picker) {
               let { startTime, endTime } = timeUtil.getDateRangeTimestamp("last30day");
               picker.$emit("pick", [startTime, endTime]);
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
-      time: []
+      time: [],
     };
   },
   computed: {
@@ -307,12 +368,12 @@ export default {
       switch (this.classType) {
         case "all":
           msgListIndex = this.msgList.findIndex(
-            item =>
-              item.type == msgEnumTypes.video ||
-              item.type == msgEnumTypes.img ||
-              item.type == msgEnumTypes.files ||
-              item.type == msgEnumTypes.textHyperLink ||
-              item.type == msgEnumTypes.text
+            (item) =>
+              item.type == msgEnum.video ||
+              item.type == msgEnum.img ||
+              item.type == msgEnum.files ||
+              item.type == msgEnum.textHyperLink ||
+              item.type == msgEnum.text
           );
           // console.log(msgListIndex);
           if (msgListIndex < 0) {
@@ -320,25 +381,25 @@ export default {
           }
           break;
         case "img":
-          msgListIndex = this.msgList.findIndex(item => item.type == msgEnumTypes.img);
+          msgListIndex = this.msgList.findIndex((item) => item.type == msgEnum.img);
           if (msgListIndex < 0) {
             return true;
           }
           break;
         case "video":
-          msgListIndex = this.msgList.findIndex(item => item.type == msgEnumTypes.video);
+          msgListIndex = this.msgList.findIndex((item) => item.type == msgEnum.video);
           if (msgListIndex < 0) {
             return true;
           }
           break;
         case "files":
-          msgListIndex = this.msgList.findIndex(item => item.type == msgEnumTypes.files);
+          msgListIndex = this.msgList.findIndex((item) => item.type == msgEnum.files);
           if (msgListIndex < 0) {
             return true;
           }
           break;
         case "link":
-          msgListIndex = this.msgList.findIndex(item => item.type == msgEnumTypes.textHyperLink);
+          msgListIndex = this.msgList.findIndex((item) => item.type == msgEnum.textHyperLink);
           if (msgListIndex < 0) {
             return true;
           }
@@ -347,7 +408,7 @@ export default {
           break;
       }
       return false;
-    }
+    },
   },
   watch: {},
   methods: {
@@ -358,7 +419,7 @@ export default {
       this.$store.dispatch("setLayout", ["", "", false]);
     },
     search() {
-      if(this.inSearchMode.status || this.inSearchMode.inCoText) return;
+      if (this.inSearchMode.status || this.inSearchMode.inCoText) return;
       this.inSearchMode.status = true;
     },
     derive() {
@@ -371,7 +432,7 @@ export default {
       this.inSearchMode.exportingCount -= 1;
       let that = this;
       let obj = {
-        channelId: this.currentSession.visitorUuid
+        channelId: this.currentSession.visitorUuid,
       };
       if (this.dateClassifyType == "today") {
         obj.startTime = timeUtil.getDateRangeTimestamp("today").startTime;
@@ -386,8 +447,8 @@ export default {
 
       let exportList = [];
 
-      this.$api.exportSessionRecord(obj).then(res => {
-        res.data.forEach(element => {
+      this.$api.exportSessionRecord(obj).then((res) => {
+        res.data.forEach((element) => {
           const { msgType, fromName, fromId, toId, createTime, msgId } = element;
           let { msg } = element;
           msgFormatTemplate
@@ -398,10 +459,10 @@ export default {
               id: msgId,
               type: msgType,
               body: msg,
-              chatType: sessionEnumTypes.visitor,
-              userId: toId
+              chatType: sessionEnum.visitor,
+              userId: toId,
             })
-            .then(data => {
+            .then((data) => {
               exportList.push({
                 type: data.type,
                 fromName,
@@ -409,12 +470,12 @@ export default {
                 createTime,
                 msg,
                 msgId,
-                item: data.viewShow
+                item: data.viewShow,
               });
             });
         });
         setTimeout(() => {
-          exportList.map(item => {
+          exportList.map((item) => {
             item.name =
               that.currentSession.chatId == item.fromId
                 ? `#${filter.name(that.currentSession.chatId)} ${filter.timeFilter3(item.createTime)}`
@@ -429,7 +490,6 @@ export default {
             this.inSearchMode.exporting = false;
             this.inSearchMode.exportingCount += 1;
           }
-
         }, 600);
       });
     },
@@ -437,62 +497,62 @@ export default {
       let title = `<div class="title">#${filter.name(this.currentSession.chatId)} ${filter.timeFilter3(this.time[0])}${
         this.time[1] ? ` ~ ${filter.timeFilter3(this.time[1])}` : ""
       } History</div>`;
-      let fileName = `#${filter.name(this.currentSession.chatId)} ${filter.timeFilter3(this.time[0])}${this.time[1] ? ` - ${filter.timeFilter3(this.time[1])}` : ""} History.html`
+      let fileName = `#${filter.name(this.currentSession.chatId)} ${filter.timeFilter3(this.time[0])}${
+        this.time[1] ? ` - ${filter.timeFilter3(this.time[1])}` : ""
+      } History.html`;
 
       let msgItem = null;
 
-      exportData
-        .map(
-          item => {
-            switch (item.type) {
-              case msgEnumTypes.img:
-                msgItem = JSON.parse(item.msg);
-                item.viewShow = `
+      exportData.map((item) => {
+        switch (item.type) {
+          case msgEnum.img:
+            msgItem = JSON.parse(item.msg);
+            item.viewShow = `
                 <div class="text">
                     <div class="name">
                       ${item.name}
                     </div>
                     <div class="msg">
-                      <a target="_blank" href=${Config.fileDownUrl.replace('/cs/', '/') + '1080' + msgItem.imgUrl}>
-                        <img src=${Config.fileDownUrl.replace('/cs/', '/') + 'compress' + msgItem.imgUrl} />
+                      <a target="_blank" href=${Config.fileDownUrl.replace("/cs/", "/") + "1080" + msgItem.imgUrl}>
+                        <img src=${Config.fileDownUrl.replace("/cs/", "/") + "compress" + msgItem.imgUrl} />
                       </a>
                     </div>
                 </div>
-                `
-                break;
-              case msgEnumTypes.video:
-                msgItem = JSON.parse(item.msg);
-                item.viewShow = `
+                `;
+            break;
+          case msgEnum.video:
+            msgItem = JSON.parse(item.msg);
+            item.viewShow = `
                 <div class="text">
                     <div class="name">
                       ${item.name}
                     </div>
                     <div class="msg">
-                      <video src="${Config.fileDownUrl.replace('/cs/', '/cs') + msgItem.fileUrl}" controls="controls">
+                      <video src="${Config.fileDownUrl.replace("/cs/", "/cs") + msgItem.fileUrl}" controls="controls">
                       您的浏览器不支持 video 标签。
                       </video>
                     </div>
                 </div>
-                `
-                break;
-              case msgEnumTypes.files:
-                msgItem = JSON.parse(item.msg);
-                item.viewShow = `
+                `;
+            break;
+          case msgEnum.files:
+            msgItem = JSON.parse(item.msg);
+            item.viewShow = `
                 <div class="text">
                     <div class="name">
                       ${item.name}
                     </div>
                     <div class="msg">
-                      <a target="_blank" href=${Config.fileDownUrl.replace('/cs/', '/cs') + msgItem.fileUrl}>
+                      <a target="_blank" href=${Config.fileDownUrl.replace("/cs/", "/cs") + msgItem.fileUrl}>
                         ${msgItem.fileId}
                       </a>
                     </div>
                 </div>
-                `
-                break;
-            
-              default:
-                item.viewShow = `
+                `;
+            break;
+
+          default:
+            item.viewShow = `
                 <div class="text">
                     <div class="name">
                       ${item.name}
@@ -501,17 +561,13 @@ export default {
                       ${item.msg}
                     </div>
                 </div>
-                `
-                break;
-            }
-          }
-        )
+                `;
+            break;
+        }
+      });
 
       let list = `
-          ${exportData
-            .map(
-              item => `${item.viewShow}`
-            ).join("")}`;
+          ${exportData.map((item) => `${item.viewShow}`).join("")}`;
 
       let template = `
         <!DOCTYPE html>
@@ -598,9 +654,9 @@ export default {
       this.inSearchMode.inCoText = true;
       this.inSearchMode.status = false;
       let currentPage = parseInt(item.msgId / this.pageSize);
-      this.currentPage = currentPage < 1  ? 1 : currentPage;
+      this.currentPage = currentPage < 1 ? 1 : currentPage;
       this.searchKeyWord();
-      // 
+      //
     },
     backToInCoText() {
       this.msgList = this.exChangemsgList.msgList;
@@ -617,10 +673,10 @@ export default {
     },
     clearSearchKeyword() {
       this.searchMsgContent = null;
-      this.searchKeyWord() 
+      this.searchKeyWord();
     },
     onChangeMsgContent() {
-      console.log(this.searchMsgContent)
+      console.log(this.searchMsgContent);
     },
     onBlurMsgContent() {
       setTimeout(() => {
@@ -636,14 +692,14 @@ export default {
       let obj = {
         channelId: this.currentSession.visitorUuid,
         currentPage: this.currentPage,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
       };
       if (mode == "morePage") {
         if (this.stopScroll) return;
         this.currentPage = this.currentPage + 1;
       }
       // 点击固定时间按钮重置时间范围值time
-      if(modeType == "button") {
+      if (modeType == "button") {
         this.classType = "all";
         this.dateClassifyType = mode;
         obj.startTime = "";
@@ -654,9 +710,9 @@ export default {
         this.classType = "all";
         obj.msgContent = this.searchMsgContent;
         this.inSearchMode.hasKeyWord = true;
-        if(this.searchMsgContent == "") {
+        if (this.searchMsgContent == "") {
           this.inSearchMode.hasKeyWord = false;
-          this.searchMsgContent = null
+          this.searchMsgContent = null;
         } else {
           this.searchMsgContentTmp = this.searchMsgContent;
         }
@@ -669,16 +725,16 @@ export default {
       } else if (this.dateClassifyType == "yesterday") {
         obj.startTime = timeUtil.getDateRangeTimestamp("yesterday").startTime;
       } else if (this.dateClassifyType == "custom") {
-        if(this.time && this.time[0]) {
+        if (this.time && this.time[0]) {
           obj.startTime = this.time[0];
           obj.endTime = this.time[1];
         } else {
-          return
+          return;
         }
       }
 
       // 组织数据
-      if(this.inSearchMode.inCoText) {
+      if (this.inSearchMode.inCoText) {
         this.exChangePool.msgContent = this.msgContent;
         this.exChangePool.msgList = this.msgList;
         this.msgList = [];
@@ -689,7 +745,7 @@ export default {
         this.msgList = [];
       }
 
-      this.$api.getSessionRecord(obj).then(res => {
+      this.$api.getSessionRecord(obj).then((res) => {
         if (mode == "morePage") {
           if (this.currentPage > res.data.pages) {
             this.stopScroll = true;
@@ -697,7 +753,7 @@ export default {
           }
           if (this.currentPage == res.data.pages) this.stopScroll = true;
         }
-        res.data.list.forEach(element => {
+        res.data.list.forEach((element) => {
           const { msgType, fromName, fromId, toId, createTime, msgId } = element;
           let { msg } = element;
           msgFormatTemplate
@@ -708,11 +764,11 @@ export default {
               id: msgId,
               type: msgType,
               body: msg,
-              chatType: sessionEnumTypes.visitor,
-              userId: toId
+              chatType: sessionEnum.visitor,
+              userId: toId,
             })
-            .then(data => {
-              const addmsgList= () => {
+            .then((data) => {
+              const addmsgList = () => {
                 that.msgList.unshift({
                   type: data.type,
                   fromName,
@@ -720,28 +776,25 @@ export default {
                   createTime,
                   msg,
                   msgId,
-                  item: data.viewShow
+                  item: data.viewShow,
                 });
-              }
+              };
               // 文字和链接标红
-              if (
-                this.searchMsgContent
-              ) {
+              if (this.searchMsgContent) {
                 // 上下文场景插入消息对象
-                if(this.inSearchMode.inCoText) {
-                  if(data.type == msgEnumTypes.text || data.type == msgEnumTypes.textHyperLink){
+                if (this.inSearchMode.inCoText) {
+                  if (data.type == msgEnum.text || data.type == msgEnum.textHyperLink) {
                     msg = repalceToRed(this.searchMsgContent, msg);
                   }
                   addmsgList();
                 } else {
-                  if(data.type == msgEnumTypes.text || data.type == msgEnumTypes.textHyperLink){
+                  if (data.type == msgEnum.text || data.type == msgEnum.textHyperLink) {
                     msg = repalceToRed(this.searchMsgContent, msg);
                     addmsgList();
                   }
                 }
-
               } else {
-                addmsgList(); 
+                addmsgList();
               }
             });
         });
@@ -751,14 +804,14 @@ export default {
           this.stopScroll = true;
         }
       });
-    }
+    },
   },
   created() {
     this.searchKeyWord("init", "");
   },
   mounted() {
     // window.searchKeyWord = this.searchKeyWord;
-  }
+  },
 };
 </script>
 
@@ -828,19 +881,19 @@ export default {
     }
   }
 
-   .date-classify-back {
-      text-align: center;
-      padding: 0 8px;
-      display: flex;
-      border-bottom: 1px solid $border-color;
-      /deep/.el-button--text{
-        color: $color-theme;
-      }
-      Button{
-        margin-right: 24px;
-      }
+  .date-classify-back {
+    text-align: center;
+    padding: 0 8px;
+    display: flex;
+    border-bottom: 1px solid $border-color;
+    /deep/.el-button--text {
+      color: $color-theme;
     }
-  
+    Button {
+      margin-right: 24px;
+    }
+  }
+
   .date-classify {
     height: 38px;
     display: flex;
@@ -890,13 +943,13 @@ export default {
       line-height: 25px;
     }
   }
-  .msgListContent{
+  .msgListContent {
     height: 519px;
     position: relative;
     overflow: hidden;
-    &.hasSearchResult{
-       .haskeyword{
-         display: block;
+    &.hasSearchResult {
+      .haskeyword {
+        display: block;
         .view-co-text {
           display: block;
         }
@@ -906,15 +959,15 @@ export default {
   .msgList {
     height: 519px;
     position: relative;
-    ul{
+    ul {
       li {
         border-top: 1px solid $border-color;
         padding: 18px;
         position: relative;
-        &.haskeyword{
+        &.haskeyword {
           display: none;
         }
-        &:first-child{
+        &:first-child {
           border-top: none;
         }
       }
@@ -927,7 +980,7 @@ export default {
       max-width: 600px;
       word-wrap: break-word;
     }
-    .text{
+    .text {
       width: 80%;
     }
     .msg-detail.msg-video {
@@ -938,13 +991,13 @@ export default {
         margin-left: 14px;
       }
     }
-    .view-co-text{
+    .view-co-text {
       display: none;
-      position:absolute;
+      position: absolute;
       width: 20%;
       right: 0;
       color: $color-theme;
-      top:45%;
+      top: 45%;
       cursor: pointer;
     }
   }

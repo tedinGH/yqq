@@ -3,19 +3,17 @@
     <div class="sessionlist">
       <div class="search">
         <div class="tab1">
-          <div class="stock" @click="cut1">
-            In the dialogue
-          </div>
-          <div class="question" @click="cut2">
-            History
-          </div>
+          <div class="stock" @click="cut1">In the dialogue</div>
+          <div class="question" @click="cut2">History</div>
           <div class="strip" ref="strip"></div>
         </div>
         <div class="search-icon">
           <img v-if="tab1 == 2" @click.stop="opensearch" src="../../../assets/images/search.png" />
           <search-history v-if="tab1 == 2 && layout.module == 'list' && layout.child == 'search'"></search-history>
         </div>
-        <div style="margin-left:20px;margin-right:18px"><img src="../../../assets/images/serve.png" /></div>
+        <div style="margin-left:20px;margin-right:18px">
+          <img src="../../../assets/images/serve.png" />
+        </div>
       </div>
       <!-- <div class="wait" :class="{verify:showwait}" @click="show">
       <div class="content">
@@ -24,7 +22,7 @@
         <div class="text">{{$t('msg.sessionlist.wait')}}</div>
       </div>
       <div class="num">{{$t('msg.sessionlist.line')}} {{waitLists.length}} {{$t('msg.sessionlist.person')}}</div>
-    </div> -->
+      </div>-->
       <!-- <el-collapse-item class="chat-history" :title="'（'+browsingList.length+'）'" name="3">
           <ul v-scrollBar >
             <li class="listitem" :class="item.isActivity?'active':''" @click="pitchhistory(item)"
@@ -34,16 +32,26 @@
               <span class="visitor">{{item.name}} 通过手机正在访问【 {{item.preview}} 】页面</span>
             </li>
           </ul>
-        </el-collapse-item> -->
+      </el-collapse-item>-->
       <div class="conversation">
         <div v-if="tab1 == 1" @ps-y-reach-end="sessionEnd">
           <ul v-scrollBar class="list">
-            <li class="listitem" :class="item.isActivity ? 'active' : ''" @click="pitch(item)" v-for="(item, index) in sessionLists" :key="index">
-              <img class="img" src="../../../assets/images/chat/phone.png" v-if="item.source == '2'" />
+            <li
+              class="listitem"
+              :class="item.isActivity ? 'active' : ''"
+              @click="pitch(item)"
+              v-for="(item, index) in sessionLists"
+              :key="index"
+            >
+              <img
+                class="img"
+                src="../../../assets/images/chat/phone.png"
+                v-if="item.source == '2'"
+              />
               <img class="img" src="../../../assets/images/chat/pc.png" v-else />
               <div class="box">
                 <div class="top-box">
-                  <span class="visitor"> #{{ item.chatId | name }}</span>
+                  <span class="visitor">#{{ item.chatId | name }}</span>
                   <span class="time">{{ item.time | timeFilter }}</span>
                 </div>
                 <span class="ip">
@@ -57,12 +65,18 @@
         </div>
         <div v-if="tab1 == 2">
           <ul v-scrollBar class="list" @ps-y-reach-end="scrollEnd">
-            <li class="listitem" :class="item.isActivity ? 'active' : ''" @click="pitchhistory(item)" v-for="(item, index) in endLists" :key="index">
+            <li
+              class="listitem"
+              :class="item.isActivity ? 'active' : ''"
+              @click="pitchhistory(item)"
+              v-for="(item, index) in endLists"
+              :key="index"
+            >
               <img class="img" src="../../../assets/images/chat/pc.png" v-if="item.source == '1'" />
               <img class="img" src="../../../assets/images/chat/phone.png" v-else />
               <div class="content">
                 <span>
-                  <span class="visitor"> #{{ item.chatId | name }}</span>
+                  <span class="visitor">#{{ item.chatId | name }}</span>
                 </span>
               </div>
               <div class="news">
@@ -83,7 +97,7 @@ import messagebox from "@/components/home/session/messagebox";
 import searchHistory from "@/components/home/session/searchHistory";
 import { Util, sessionItemPool } from "@/tools/utils";
 import { msgFormatTemplate } from "@/tools/msgFormatTemplate";
-import { sessionEnumTypes } from "@/common/enum";
+import { sessionEnum } from "@/common/enum";
 // import MouseRight from '@/components/common/MouseRight'
 // let mouseRight = Vue.extend(MouseRight);
 import { mapGetters } from "vuex";
@@ -99,12 +113,12 @@ export default {
       stopsessionScroll: false,
       endpageNum: 1,
       endpageSize: 20,
-      stopScroll: false
+      stopScroll: false,
     };
   },
   components: {
     messagebox,
-    searchHistory
+    searchHistory,
     // MouseRight
   },
   computed: {
@@ -118,8 +132,8 @@ export default {
       "showwait",
       "windowSize",
       "browsingList",
-      "layout"
-    ])
+      "layout",
+    ]),
   },
   watch: {
     sessionLists(oldval, newval) {
@@ -127,7 +141,7 @@ export default {
     },
     endLists(oldval, newval) {
       if (newval.length == 0) this.$store.dispatch("setLuyou", "default");
-    }
+    },
   },
   methods: {
     formatInitMsg(obj) {
@@ -172,10 +186,10 @@ export default {
       let obj = {
         type: 2,
         currentPage: this.sessionpageNum,
-        pageSize: this.endpageSize
+        pageSize: this.endpageSize,
       };
       this.sessionpageNum = this.sessionpageNum + 1;
-      this.$api.getVisitorList(obj).then(res => {
+      this.$api.getVisitorList(obj).then((res) => {
         this.setVisitorList(res, "sessionEnd");
       });
     },
@@ -183,7 +197,7 @@ export default {
       console.log(mode);
       let visitorList = new Array();
       let unreadNumAll = 0;
-      res.data.list.forEach(element => {
+      res.data.list.forEach((element) => {
         const { newMsgId, visitorUuid, switched, preSessionId } = element;
         let unReadNum = element.newMsgId - element.readId;
         unReadNum = unReadNum < 0 ? 0 : unReadNum;
@@ -193,9 +207,9 @@ export default {
           switched,
           visitorUuid,
           preSessionId,
-          chatType: sessionEnumTypes.visitor,
+          chatType: sessionEnum.visitor,
           newMsgId,
-          unread: unReadNum
+          unread: unReadNum,
         };
 
         switch (mode) {
@@ -219,7 +233,7 @@ export default {
             this.$store.commit("ADD_SESSIONLISTSBOTTOM", visitorList);
           }
           this.$store.commit("SET_UNREAD_NUMBER", {
-            unReadNum: unreadNumAll
+            unReadNum: unreadNumAll,
           });
           break;
         case "scroll":
@@ -242,17 +256,17 @@ export default {
       if (condition) {
         condition.currentPage = this.endpageNum;
         this.endpageNum = this.endpageNum + 1;
-        this.$api.getAllVisitorSession(condition).then(res => {
+        this.$api.getAllVisitorSession(condition).then((res) => {
           this.setVisitorList(res, "scroll");
         });
       } else {
         let paylaod = {
           type: 3,
           currentPage: this.endpageNum,
-          pageSize: this.endpageSize
+          pageSize: this.endpageSize,
         };
         this.endpageNum = this.endpageNum + 1;
-        this.$api.getVisitorList(paylaod).then(res => {
+        this.$api.getVisitorList(paylaod).then((res) => {
           this.setVisitorList(res, "scroll");
         });
       }
@@ -291,7 +305,7 @@ export default {
       }
       let unreadNumAll = this.$store.state.redPoint.unReadNum - item.unread || 0;
       this.$store.commit("SET_UNREAD_NUMBER", {
-        unReadNum: unreadNumAll
+        unReadNum: unreadNumAll,
       });
       item.unread = 0;
       this.$set(item, "isActivity", true);
@@ -314,10 +328,10 @@ export default {
       this.$set(item, "isActivity", true);
       this.$store.dispatch("setLuyou", "history");
       this.$store.commit("UPDATE_CURRENT_SESSION", item);
-    }
+    },
   },
   created() {
-    this.$api.getAndSetReadedSessionList({ sessionType: 10 }).then(data => {
+    this.$api.getAndSetReadedSessionList({ sessionType: 10 }).then((data) => {
       let time = data.data.time; //记录时间戳
       this.$store.commit("SET_SESSION_TIME", time);
     });
@@ -325,7 +339,7 @@ export default {
   mounted() {
     this.$store.dispatch("setLuyou", "default");
     // 获取问候语
-  }
+  },
 };
 </script>
 

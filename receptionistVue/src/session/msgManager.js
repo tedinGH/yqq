@@ -2,7 +2,7 @@
  * 消息管理器
  *
  */
-import { sessionEnumTypes } from "@/common/enum";
+import { sessionEnum } from "@/common/enum";
 import { group } from "@/session/group";
 import { visitor } from "@/session/visitor";
 import { colleague } from "@/session/colleague";
@@ -30,18 +30,18 @@ export const msgManager = {
       this.activeId = sessionId;
     }
     return new Promise(resolve => {
-      if (fromType == sessionEnumTypes.friend) {
+      if (fromType == sessionEnum.friend) {
         //同事聊天消息
         colleague.getMsg(sessionId, maxMsgId, firstMsgId, pageSize, currentPage).then(data => {
           // console.log(data);
           resolve(data);
         });
-      } else if (fromType == sessionEnumTypes.group) {
+      } else if (fromType == sessionEnum.group) {
         //群聊消息
         group.getMsg(sessionId, maxMsgId, firstMsgId, pageSize).then(data => {
           resolve(data);
         });
-      } else if (fromType == sessionEnumTypes.visitor) {
+      } else if (fromType == sessionEnum.visitor) {
         //访客消息
         visitor.getMsg(sessionId, maxMsgId, firstMsgId, pageSize).then(data => {
           resolve(data);
@@ -387,13 +387,13 @@ export const msgManager = {
    * @param {*} mId  消息ID
    */
   updateMsgRead(chatType, userId, mId) {
-    if (chatType == sessionEnumTypes.friend) {
+    if (chatType == sessionEnum.friend) {
       //单聊消息
       colleague.updateMsgRead(userId, mId);
-    } else if (chatType == sessionEnumTypes.group) {
+    } else if (chatType == sessionEnum.group) {
       //群聊消息
       group.updateMsgRead(userId, mId);
-    } else if (chatType == sessionEnumTypes.visitor) {
+    } else if (chatType == sessionEnum.visitor) {
       //访客消息
       visitor.updateMsgRead(userId, mId);
     }

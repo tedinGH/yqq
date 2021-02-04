@@ -1,7 +1,7 @@
 import store from "@/store";
 import { actionApi } from "@/api";
 import Msg from "./notice";
-import { msgEnumTypes, sessionEnumTypes } from "@/common/enum";
+import { msgEnum, sessionEnum } from "@/common/enum";
 import { msgFormatTemplate } from "@/tools/msgFormatTemplate";
 import { msgTypeProtocol } from "@/session/msgTypeProtocol";
 import { msgUtil, Util } from "@/tools/msgUtil";
@@ -14,7 +14,7 @@ export default {
     let { body, bodyFrom, fromId, chatType, msgType, source, toId, newMsg } = data;
     let updateTime = data.time;
     let sessionId = data.bodyFrom;
-    let switchID = msgType == msgEnumTypes.newTransferEntry ? JSON.parse(body).preSessionId : "";
+    let switchID = msgType == msgEnum.newTransferEntry ? JSON.parse(body).preSessionId : "";
     let isSender = bodyFrom == toId; //是否为消息发送者 true-消息发送者 false-消息接收者
     //  (currentSession && currentSession.sessionId == sessionId )   判断当前是否在此聊天页面
     let { currentSession } = store.state;
@@ -22,13 +22,13 @@ export default {
       if (
         ((currentSession.sessionId && currentSession.sessionId == sessionId) || currentSession.chatId == sessionId) &&
         currentSession.chatType == chatType &&
-        msgType != msgEnumTypes.msgReaded &&
-        msgType != msgEnumTypes.msgTyping &&
-        msgType != msgEnumTypes.sessionOver &&
-        msgType != msgEnumTypes.inout &&
-        msgType != msgEnumTypes.webPluginInout &&
-        msgType != msgEnumTypes.visitorPopWin &&
-        msgType != msgEnumTypes.visitorWait
+        msgType != msgEnum.msgReaded &&
+        msgType != msgEnum.msgTyping &&
+        msgType != msgEnum.sessionOver &&
+        msgType != msgEnum.inout &&
+        msgType != msgEnum.webPluginInout &&
+        msgType != msgEnum.visitorPopWin &&
+        msgType != msgEnum.visitorWait
       ) {
         //发送消息已读
         actionApi.getAndSetReadedSessionList({ sessionType: chatType, sessionId, maxId: data.msgId, time: store.state.sessionTime }).then(data => {
@@ -39,7 +39,7 @@ export default {
       }
     }
 
-    if (chatType == sessionEnumTypes.visitor) {
+    if (chatType == sessionEnum.visitor) {
       store.state.sessionLists.forEach(element => {
         if (element.chatId == fromId) {
           element.msgId = data.msgId;
@@ -47,7 +47,7 @@ export default {
       });
     }
 
-    if (chatType == sessionEnumTypes.friend) {
+    if (chatType == sessionEnum.friend) {
       // store.state.sessionColleagueList.forEach(element => {
       //   if (element.chatId == fromId) {
       //     element.msgId = data.msgId;
@@ -56,10 +56,10 @@ export default {
     }
 
     switch (msgType) {
-      case msgEnumTypes.text:
+      case msgEnum.text:
         break;
       //普通文本
-      case msgEnumTypes.inout:
+      case msgEnum.inout:
         //进入离开协议
         // 广播
         if (isSender) {
@@ -70,16 +70,16 @@ export default {
         }
         this.inout(data);
         break;
-      case msgEnumTypes.sessionOver:
+      case msgEnum.sessionOver:
         //会话结束
         break;
-      case msgEnumTypes.msgTyping:
+      case msgEnum.msgTyping:
         //输入中
         break;
-      case msgEnumTypes.msgReaded:
+      case msgEnum.msgReaded:
         //消息已读
         break;
-      case msgEnumTypes.webPluginInout:
+      case msgEnum.webPluginInout:
         //网页进入/离开协议
         // if (json.type == 1) {
         //   store.commit("ADD_BROWSING", {
@@ -96,12 +96,12 @@ export default {
         //   store.commit("REMVOE_BROWSING", fromId);
         // }
         return;
-      case msgEnumTypes.visitorPopWin:
+      case msgEnum.visitorPopWin:
         //访客弹窗协议
         break;
-      case msgEnumTypes.textHyperLink:
+      case msgEnum.textHyperLink:
         break;
-      case msgEnumTypes.newTransferEntry:
+      case msgEnum.newTransferEntry:
         let info = JSON.parse(body);
         // console.log(info, data)
         const sessionItem = {
@@ -142,11 +142,11 @@ export default {
         //   });
         // });
         break;
-      case msgEnumTypes.visitorWait:
+      case msgEnum.visitorWait:
         let nums = JSON.parse(body);
         store.commit("SET_WAITNUM", nums.waitingCount);
         return;
-      case msgEnumTypes.csOnlineStatus:
+      case msgEnum.csOnlineStatus:
         //客服在线协议
         let a = JSON.parse(body);
         store.commit("UPDATE_SESSION_COLLEAGUE_ONLINE", {
@@ -155,17 +155,20 @@ export default {
         });
         return;
       // 上传
-      case msgEnumTypes.img:
+      case msgEnum.img:
         //图片
         break;
-      case msgEnumTypes.video:
+      case msgEnum.video:
         //视频文件
         break;
-      case msgEnumTypes.audio:
+      case msgEnum.audio:
         // 音频文件
         break;
-      case msgEnumTypes.files:
+      case msgEnum.files:
         // 其它文件
+        break;
+     case msgEnum.evaluateCustomerService:
+        // 客服评价
         break;
       default:
         break;
@@ -186,20 +189,20 @@ export default {
       .then(res => {
         let componentName = null;
         // 更新数据主流程
-        if (res.chatType == sessionEnumTypes.visitor) {
+        if (res.chatType == sessionEnum.visitor) {
           componentName = "dialogue";
-        } else if (res.chatType == sessionEnumTypes.friend) {
+        } else if (res.chatType == sessionEnum.friend) {
           componentName = "friendbox";
         }
 
         if (msgType) {
-          if (msgType != msgEnumTypes.msgReaded) {
-            if (res.chatType == sessionEnumTypes.visitor) {
-              if (msgType == msgEnumTypes.newTransferEntry) {
+          if (msgType != msgEnum.msgReaded) {
+            if (res.chatType == sessionEnum.visitor) {
+              if (msgType == msgEnum.newTransferEntry) {
                 res.preview = "";
               }
               store.commit("UPDATE_SESSION_PREVIEW", res);
-            } else if (res.chatType == sessionEnumTypes.friend) {
+            } else if (res.chatType == sessionEnum.friend) {
               store.commit("UPDATE_SESSION_COLLEAGUE_PREVIEW", res);
               let nickName = "";
               store.state.departmentUsers.forEach(item => {
@@ -334,7 +337,7 @@ export default {
       };
       store.commit("ADD_SESSIONLISTS", {
         ...sessionItemPool(sessionItem),
-        chatType: sessionEnumTypes.visitor,
+        chatType: sessionEnum.visitor,
         unread: currentSession && currentSession.sessionId == sessionId ? 0 : 1,
         preSessionId: visitorsJson.preSessionId
       });
@@ -348,7 +351,7 @@ export default {
                 msgType: 1,
                 toId: fromId,
                 msg: txtValue,
-                chatType: sessionEnumTypes.visitor
+                chatType: sessionEnum.visitor
               })
               .then(data => {
                 msgFormatTemplate
@@ -357,18 +360,18 @@ export default {
                     bodyFrom: store.state.userId,
                     timeStamp: data.time,
                     id: data.msgId,
-                    type: msgEnumTypes.text,
+                    type: msgEnum.text,
                     body: txtValue,
-                    chatType: sessionEnumTypes.visitor,
+                    chatType: sessionEnum.visitor,
                     userId: fromId,
                     fromName: store.state.userInfo.nickName
                   })
                   .then(res => {
                     let componentName = null;
-                    if (res.chatType == sessionEnumTypes.visitor) {
+                    if (res.chatType == sessionEnum.visitor) {
                       componentName = "dialogue";
                       store.commit("UPDATE_SESSION_PREVIEW", res);
-                    } else if (res.chatType == sessionEnumTypes.friend) {
+                    } else if (res.chatType == sessionEnum.friend) {
                       componentName = "friendbox";
                       store.commit("UPDATE_SESSION_COLLEAGUE_PREVIEW", res);
                     }
@@ -399,7 +402,7 @@ export default {
             if (waitCache) {
               store.commit("ADD_SESSIONLISTS", {
                 ...sessionItemPool(waitCache),
-                chatType: sessionEnumTypes.visitor,
+                chatType: sessionEnum.visitor,
                 msgId: 0,
                 unread: 0,
                 preSessionId: waitCache.preSessionId

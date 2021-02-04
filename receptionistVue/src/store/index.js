@@ -116,7 +116,8 @@ const state = {
   bubbles: {
     mybackground: "",
     adversebackground: ""
-  }
+  },
+  evaluateConf: {}
 };
 
 export default new Vuex.Store({

@@ -39,52 +39,55 @@ body {
       }
     }
   }
-  .el-picker-panel {
-    margin-left: 207px;
-    .el-picker-panel__sidebar {
-      width: 146px;
-    }
-    .el-picker-panel__body {
-      margin-left: 146px;
-      .available {
-        &.today {
-          span {
+  .search-history-info-date-picker {
+    &.el-picker-panel {
+      margin-left: 207px;
+      .el-picker-panel__sidebar {
+        width: 146px;
+      }
+      .el-picker-panel__body {
+        margin-left: 146px;
+        .available {
+          &.today {
+            span {
+              color: $color-theme;
+            }
+          }
+          &.start-date {
+            span {
+              color: #fff;
+              background: $color-theme;
+            }
+          }
+          &.end-date {
+            span {
+              color: #fff;
+              background: $color-theme;
+            }
+          }
+        }
+        .el-time-panel__btn {
+          &.confirm {
             color: $color-theme;
           }
         }
-        &.start-date {
-          span {
-            color: #fff;
-            background: $color-theme;
-          }
-        }
-        &.end-date {
-          span {
-            color: #fff;
-            background: $color-theme;
-          }
-        }
       }
-      .el-time-panel__btn {
-        &.confirm {
+      .el-picker-panel__sidebar {
+        .el-picker-panel__shortcut:hover {
           color: $color-theme;
         }
       }
-    }
-    .el-picker-panel__sidebar {
-      .el-picker-panel__shortcut:hover {
-        color: $color-theme;
-      }
-    }
-    .el-picker-panel__footer {
-      .is-plain {
-        &:hover {
-          color: $color-theme;
-          border-color: $color-theme;
+      .el-picker-panel__footer {
+        .is-plain {
+          &:hover {
+            color: $color-theme;
+            border-color: $color-theme;
+          }
         }
       }
     }
   }
+
   .history-info-date-picker {
     &.el-date-range-picker.has-sidebar {
       width: 646px;

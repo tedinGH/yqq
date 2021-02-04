@@ -58,4 +58,17 @@ export const INITFILE_CHANNEL_UPLOAD_FILE = BUILD_URL + "/file/initFileChannel";
 
 export const UPLOAD_FILE_V2 = BUILD_URL + "/file/fileUpload"; // 上传文件V2
 
-export const GETENABLEJOININFO = BUILD_URL +"/cache/getEnableJoinInfo"
+export const GETENABLEJOININFO = BUILD_URL + "/cache/getEnableJoinInfo"
+
+// 客服评价
+export const GET_EVALUATE_CONF = BUILD_URL + "/evaluate/getEvaluateConf"; // 评价配置内容
+
+export const SET_EVALUATE_INVITION_RECORD = BUILD_URL + "/evaluate/savaInvitionRecoro"; // 保存邀请记录
+
+export const GET_IS_EVALUATE = BUILD_URL + "/evaluate/getIsEvaluate"; // 获取是否已评价
+
+export const GET_EVALUATE_CHART = BUILD_URL + "/evaluate/getChartStatis"; // 客服评价报表图形
+
+export const GET_EVALUATE_DEPPARTMENT_TYPE = BUILD_URL + "/evaluate/getDataByType"; // 根据类型获取部门-分组-全部用户
+
+export const GET_EVALUATE_LABLE_TABLE = BUILD_URL + "/evaluate/getLableStatis"; // 获评价报表标签统计数据

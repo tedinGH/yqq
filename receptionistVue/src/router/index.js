@@ -23,6 +23,11 @@ const routes = [
         name: "friend"
       },
       {
+        path: "/dashboard",
+        component: () => import("@/components/home/dashboard/index.vue"),
+        name: "dashboard"
+      },
+      {
         path: "/personageinfo",
         component: () =>
           import("@/components/home/personage/personageinfo.vue"),

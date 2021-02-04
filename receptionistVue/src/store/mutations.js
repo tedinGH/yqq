@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { Util } from "@/tools/utils";
-import { msgEnumTypes } from "@/common/enum";
+import { msgEnum } from "@/common/enum";
 import * as types from "./mutation-types";
 
 export default {
@@ -96,7 +96,7 @@ export default {
           element.type = payload.type;
         }
         if (state.currentSession.chatId != payload.userId) {
-          if (payload.type != msgEnumTypes.inout) {
+          if (payload.type != msgEnum.inout) {
             element.unread += 1;
           } else {
             element.unread = 1;
@@ -242,5 +242,8 @@ export default {
   },
   [types.SET_BUBBLES](state, payload) {
     state.bubbles = payload;
-  }
+  },
+  [types.SET_EVALUATE_CONF](state, payload) {
+    state.evaluateConf = payload;
+  },
 };

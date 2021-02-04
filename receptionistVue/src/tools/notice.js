@@ -1,6 +1,6 @@
 import store from "../store";
 import { Util } from "@/tools/utils";
-import { msgEnumTypes, sessionEnumTypes } from "@/common/enum";
+import { msgEnum, sessionEnum } from "@/common/enum";
 import filter from "@/common/filters";
 
 let _vioceReady = true;
@@ -47,8 +47,8 @@ const messageParse = {
       } = store.state.reminderSettings;
 
       // 通知开关判断
-      if (param.chatType == sessionEnumTypes.visitor) {
-        if (param.type == msgEnumTypes.newTransferEntry) {
+      if (param.chatType == sessionEnum.visitor) {
+        if (param.type == msgEnum.newTransferEntry) {
           if (sessionVoiceNotifyState) {
             this.voiceAction("sessionVoiceNotifyState");
           }
@@ -64,8 +64,8 @@ const messageParse = {
       }
 
       // 声效开关判断
-      if (param.chatType == sessionEnumTypes.visitor) {
-        if (param.type == msgEnumTypes.newTransferEntry) {
+      if (param.chatType == sessionEnum.visitor) {
+        if (param.type == msgEnum.newTransferEntry) {
           if (!sessionDesktopNotifyState) {
             return;
           }
@@ -161,19 +161,19 @@ const messageParse = {
     let title = "";
     let body = Util.replaceText(param.preview);
     switch (param.chatType) {
-      case sessionEnumTypes.visitor:
-        if (param.type == msgEnumTypes.newTransferEntry) {
+      case sessionEnum.visitor:
+        if (param.type == msgEnum.newTransferEntry) {
           title = `New Conversation`;
           body = `Conversation #${filter.name(param.userId)} entry`;
         } else {
           title = `Conversation #${filter.name(param.userId)}`;
-          if (param.type == msgEnumTypes.inout) {
+          if (param.type == msgEnum.inout) {
             title = `New Conversation`;
             body = `Conversation #${filter.name(param.userId)} entry`;
           }
         }
         break;
-      case sessionEnumTypes.firend:
+      case sessionEnum.firend:
         title = param.nickName;
         break;
       default:

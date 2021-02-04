@@ -3,7 +3,7 @@
 // import { Areas } from "../common/areas";
 // import { Crypto } from "./crypto"
 import { Config } from "@/common/config";
-import { sessionEnumTypes } from "@/common/enum";
+import { sessionEnum } from "@/common/enum";
 import { actionApi } from "@/api";
 import * as urls from "@/api/urls";
 import "../common/pinyin_dict_notone.js";

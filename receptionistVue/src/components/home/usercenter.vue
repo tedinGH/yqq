@@ -7,17 +7,40 @@
     <div class="usercolumn">
       <div class="user-content">
         <div class="message" @click="checkmessage('session')">
-          <el-badge :value="redPoint.unReadNum" :hidden="redPoint.unReadNum <= 0" :max="999" class="item" ref="message">
+          <el-badge
+            :value="redPoint.unReadNum"
+            :hidden="redPoint.unReadNum <= 0"
+            :max="999"
+            class="item"
+            ref="message"
+          >
             <img v-if="!show.session" src="../../assets/images/message.png" />
             <img v-else src="../../assets/images/message-dis.png" />
-            <span v-if="unfold" class="text" :class="show.session ? 'active' : ''">Online consultation</span>
+            <span
+              v-if="unfold"
+              class="text"
+              :class="show.session ? 'active' : ''"
+            >Online consultation</span>
           </el-badge>
         </div>
         <div class="colleague" @click="checkcolleague('friend')">
-          <el-badge :value="redPoint.colleagueUnReadNum" :hidden="redPoint.colleagueUnReadNum <= 0" :max="999" class="item" ref="colleague">
+          <el-badge
+            :value="redPoint.colleagueUnReadNum"
+            :hidden="redPoint.colleagueUnReadNum <= 0"
+            :max="999"
+            class="item"
+            ref="colleague"
+          >
             <img v-if="!show.friend" src="../../assets/images/colleague.png" />
             <img v-else src="../../assets/images/colleague-dis.png" />
             <span v-if="unfold" class="text" :class="show.friend ? 'active' : ''">Colleague</span>
+          </el-badge>
+        </div>
+        <div class="dashboard" @click="checkDashboard('dashboard')">
+          <el-badge :max="999" class="item" ref="dashboard">
+            <img v-if="!show.dashboard" src="../../assets/images/dashboard.png" />
+            <img v-else src="../../assets/images/dashboard-dis.png" />
+            <span v-if="unfold" class="text" :class="show.dashboard ? 'active' : ''">Dashboard</span>
           </el-badge>
         </div>
       </div>
@@ -31,7 +54,7 @@
 </template>
 
 <script>
-import { sessionEnumTypes } from "@/common/enum";
+import { sessionEnum } from "@/common/enum";
 import { Util, sessionItemPool } from "@/tools/utils";
 import { mapGetters } from "vuex";
 import { Config } from "@/common/config";
@@ -41,18 +64,18 @@ export default {
     return {
       show: {
         session: false,
-        friend: false
+        friend: false,
       },
       isset: false,
       pageNum: "1",
-      pageSize: 20
+      pageSize: 20,
     };
   },
   computed: {
     ...mapGetters(["userInfo", "unfold", "waitLists", "waitnum"]),
     redPoint() {
       return this.$store.state.redPoint;
-    }
+    },
   },
   components: {},
   watch: {
@@ -64,7 +87,7 @@ export default {
           this.show[obj] = true;
         }
       }
-    }
+    },
   },
   methods: {
     getlist() {
@@ -72,9 +95,9 @@ export default {
         .getVisitorList({
           type: 1,
           currentPage: this.pageNum,
-          pageSize: this.pageSize
+          pageSize: this.pageSize,
         })
-        .then(res => {
+        .then((res) => {
           this.$store.commit("SET_WAITLISTS", res.data.list);
           this.$store.commit("SET_WAITNUM", res.data.total);
         });
@@ -82,28 +105,29 @@ export default {
         .getVisitorList({
           type: 2,
           currentPage: this.pageNum,
-          pageSize: this.pageSize
+          pageSize: this.pageSize,
         })
-        .then(res => {
+        .then((res) => {
           let sessionList = new Array();
           let unreadNumAll = 0;
 
-          res.data.list.forEach(element => {
-            const { readId, newMsgId, switched, preSessionId } = element;
+          res.data.list.forEach((element) => {
+            const { readId, newMsgId, switched, preSessionId, visitorUuid } = element;
             let unReadNum = newMsgId - readId;
             unReadNum = unReadNum < 0 ? 0 : unReadNum;
             unreadNumAll += unReadNum;
             sessionList.push({
               ...sessionItemPool(element),
               preSessionId,
+              visitorUuid,
               newMsgId,
               switched,
               unread: unReadNum,
-              chatType: sessionEnumTypes.visitor
+              chatType: sessionEnum.visitor,
             });
           });
           this.$store.commit("SET_UNREAD_NUMBER", {
-            unReadNum: unreadNumAll
+            unReadNum: unreadNumAll,
           });
           // 插入等待列表
           let upLimit = this.$store.state.admitLimit;
@@ -117,9 +141,9 @@ export default {
                 ...sessionItemPool(waitCache),
                 msgId: 0,
                 unread: 0,
-                chatType: sessionEnumTypes.visitor
+                chatType: sessionEnum.visitor,
               });
-              this.$api.connectManager(waitCache.sessionId).then(data => {});
+              this.$api.connectManager(waitCache.sessionId).then((data) => {});
               this.$store.commit("SET_WAITNUM", this.waitnum - 1);
             }
           }
@@ -138,7 +162,20 @@ export default {
       }
       if (this.$route.name != "session") {
         this.$router.push({
-          name: "session"
+          name: "session",
+        });
+      }
+    },
+    checkDashboard(obj) {
+      for (let key in this.show) {
+        this.show[key] = false;
+        if ((key = obj)) {
+          this.show[obj] = true;
+        }
+      }
+      if (this.$route.name != "dashboard") {
+        this.$router.push({
+          name: "dashboard",
         });
       }
     },
@@ -152,13 +189,13 @@ export default {
       this.$store.commit("UPDATE_CURRENT_SESSION", {});
       if (this.$route.name != "friend") {
         this.$router.push({
-          name: "friend"
+          name: "friend",
         });
       }
     },
     setting() {
       window.open(Config.operateurl);
-    }
+    },
   },
   created() {
     let obj = this.$route.name;
@@ -170,10 +207,10 @@ export default {
     }
     this.getlist();
     // 同事列表 - 用于获取同事昵称
-    this.$api.getdepartmentuser().then(res => {
+    this.$api.getdepartmentuser().then((res) => {
       this.$store.commit("SET_DEPARTMENTUSERS", res.data);
     });
-  }
+  },
 };
 </script>
 
@@ -212,8 +249,10 @@ export default {
       }
     }
 
-    .colleague {
+    .colleague,
+    .dashboard {
       cursor: pointer;
+      margin-bottom: 28px;
     }
   }
 
@@ -237,6 +276,7 @@ export default {
 
     .message,
     .colleague,
+    .dashboard,
     .setting {
       .text {
         color: #667088;

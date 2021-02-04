@@ -20,7 +20,13 @@ module.exports = {
       download: "点击下载",
       imageOutDate: "图片已过期",
       videoOutDate: "视频已过期",
-      noData: "该分类下暂无数据"
+      noData: "该分类下暂无数据",
+    },
+    evaluate: {
+      sendEvaluate: "发出评价",
+      evaluationEnd: "评价已结束",
+      evaluated: "已经评价过了，不能重复评价",
+      evaluatedFirst: "您还未回复访客，请先回复"
     },
     menu: {
       Pmessage: "请输入留言..."

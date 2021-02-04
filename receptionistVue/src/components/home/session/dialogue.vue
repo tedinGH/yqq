@@ -4,30 +4,64 @@
     <!-- <div class="left" @drop="dropArea($event)"> -->
     <div class="left">
       <!-- 下载二维码 -->
-      <div class="qr-code" v-show="qrCode.show" :style="{ top: qrCode.top - 160 + 'px', left: qrCode.left - 75 + 'px' }" id="qrcode">
+      <div
+        class="qr-code"
+        v-show="qrCode.show"
+        :style="{ top: qrCode.top - 160 + 'px', left: qrCode.left - 75 + 'px' }"
+        id="qrcode"
+      >
         <canvas id="qrcodeCanvas"></canvas>
       </div>
       <div>
         <div class="head">
           <div style="position: relative;">
-            <span class="head-text"> #{{ currentSession.chatId | name }}</span>
+            <span class="head-text">#{{ currentSession.chatId | name }}</span>
           </div>
           <div style="align-self:center">
-            <img src="../../../assets/img/chat/switch.png" style="margin-right:35px;cursor: pointer;" @click.stop="switchs()" />
-            <img src="../../../assets/img/chat/close.png" style="cursor: pointer;margin-right:18px" @click.stop="close()" />
+            <img
+              src="../../../assets/img/chat/switch.png"
+              style="margin-right:35px;cursor: pointer;"
+              @click.stop="switchs()"
+            />
+            <img
+              src="../../../assets/img/chat/close.png"
+              style="cursor: pointer;margin-right:18px"
+              @click.stop="close()"
+            />
           </div>
         </div>
-        <div class="message-box" id="message-box" ref="list" v-scrollBar @drop="drop" @dragover.prevent @ps-y-reach-start="loadMore">
-          <div v-if="lookId" @click="getlook(lookId)" class="lookLast"><span></span>View last conversation<span></span></div>
+        <div
+          class="message-box"
+          id="message-box"
+          ref="list"
+          v-scrollBar
+          @drop="drop"
+          @dragover.prevent
+          @ps-y-reach-start="loadMore"
+        >
+          <div v-if="lookId" @click="getlook(lookId)" class="lookLast">
+            <span></span>View last conversation
+            <span></span>
+          </div>
           <msgList :chatlist="chatlist" :userInfo="userInfo" :currentSession="currentSession"></msgList>
         </div>
       </div>
-      <sessionInput ref="sessionInput" :layout="layout" @selectAll="selectAll" @send="send"></sessionInput>
+      <sessionInput
+        ref="sessionInput"
+        :layout="layout"
+        :chatlist="chatlist"
+        @selectAll="selectAll"
+        @send="send"
+      ></sessionInput>
     </div>
     <file-popup ref="sendFile" :fileInfo="dropFileInfo"></file-popup>
     <picture-popup ref="sendPicture" :imgInfo="pasteImage"></picture-popup>
     <reply class="right"></reply>
-    <Popup :hideClose="false" v-if="layout.module == 'session' && layout.child == 'close'" :radius="10">
+    <Popup
+      :hideClose="false"
+      v-if="layout.module == 'session' && layout.child == 'close'"
+      :radius="10"
+    >
       <div class="seal" slot="body">
         <div class="content">{{ $t("msg.chatPanel.close") }}</div>
         <div class="btn" @click="confirm">{{ $t("msg.common.confirm") }}</div>
@@ -51,6 +85,18 @@
         <div class="btn" @click="confirmTips">{{ $t("msg.common.confirm") }}</div>
       </div>
     </Popup>
+    <Popup :hideClose="false" v-if="layout.module == 'evaluatedFirst'" :radius="10">
+      <div class="seal" slot="body">
+        <div class="content">{{ $t("msg.evaluate.evaluatedFirst") }}</div>
+        <div class="btn" @click="confirmTips">{{ $t("msg.common.confirm") }}</div>
+      </div>
+    </Popup>
+    <Popup :hideClose="false" v-if="layout.module == 'evaluated'" :radius="10">
+      <div class="seal" slot="body">
+        <div class="content">{{ $t("msg.evaluate.evaluated") }}</div>
+        <div class="btn" @click="confirmTips">{{ $t("msg.common.confirm") }}</div>
+      </div>
+    </Popup>
   </div>
 </template>
 <script>
@@ -59,7 +105,7 @@ import reply from "@/components/home/session/reply";
 import msgList from "@/components/home/msgList";
 import sessionInput from "@/components/home/sessionInput";
 import UplaodFiles from "@/components/common/uploadFile";
-import { msgEnumTypes, sessionEnumTypes } from "@/common/enum";
+import { msgEnum, sessionEnum, evaluateCSEnum } from "@/common/enum";
 import { Util, sessionItemPool } from "@/tools/utils";
 import { timeUtil } from "@/tools/timeUtil";
 import { msgUtil } from "@/tools/msgUtil";
@@ -72,7 +118,8 @@ export default {
   name: "dialogue",
   data() {
     return {
-      msgEnumTypes,
+      msgEnum,
+      evaluateCSEnum,
       chatlist: [],
       sortJson: {}, //用于消息排序：date:[]
       showinfo: false,
@@ -80,13 +127,13 @@ export default {
       pageNum: 1,
       lastsessionId: null,
       more: false,
-      lookId: null
+      lookId: null,
     };
   },
   components: {
     reply,
     msgList,
-    sessionInput
+    sessionInput,
   },
   mixins: [UplaodFiles],
   computed: {
@@ -103,7 +150,7 @@ export default {
 
       this.$api
         .getAndSetReadedSessionList({ sessionType: item.chatType, sessionId: item.chatId, maxId: item.newMsgId, time: this.$store.state.sessionTime })
-        .then(data => {
+        .then((data) => {
           let time = data.data.time; //记录时间戳
           // console.log(item, data, 2)
           // this.$store.commit("UPDATE_SESSION_PREVIEW", data);
@@ -116,14 +163,14 @@ export default {
         this.$refs.list.scrollTop = this.$refs.list?.scrollHeight;
       }, 100);
       this.lookId = this.currentSession.preSessionId;
-    }
+    },
   },
   methods: {
     confirmTips() {
       this.$store.dispatch("setLayout", ["", "", false]);
     },
     cancelUploadMsg(id) {
-      let mediaIndex = this.chatlist.findIndex(item => item.id == id);
+      let mediaIndex = this.chatlist.findIndex((item) => item.id == id);
       console.log(mediaIndex);
       this.chatlist.splice(mediaIndex, 1);
     },
@@ -132,15 +179,15 @@ export default {
       let obj = {
         pageSize: this.pageSize,
         pageNum: this.pageNum,
-        sessionId: item.item.sessionId
+        sessionId: item.item.sessionId,
       };
       this.lastsessionId = item.item.sessionId;
       this.$set(item, "get", true);
-      this.$api.getCSChatRecord(obj).then(res => {
+      this.$api.getCSChatRecord(obj).then((res) => {
         if (res.data.list) {
           res.data.list.sort((a, b) => b.id - a.id); //排序
         }
-        res.data.list.forEach(e => {
+        res.data.list.forEach((e) => {
           let content = {
             timeStamp: e.createTime,
             type: e.msgType,
@@ -150,12 +197,12 @@ export default {
             isSender: e.fromId > 0 ? true : false,
             chatType: this.currentSession.chatType,
             userId: this.currentSession.chatId,
-            fromName: e.fromName
+            fromName: e.fromName,
           };
-          msgFormatTemplate.formatMsg(content).then(data => {
+          msgFormatTemplate.formatMsg(content).then((data) => {
             this.chatlist.splice(idx, 0, {
               ...data,
-              item: data.viewShow
+              item: data.viewShow,
             });
           });
         });
@@ -177,7 +224,7 @@ export default {
       let htmlValue = obj || this.$refs.sessionInput.$refs.editMsg.innerHTML;
       // let txtValue = face.htmlToString(htmlValue) //表情解析
       let txtValue = ""; //移除无用html标签
-      let msgtype = msgEnumTypes.text;
+      let msgtype = msgEnum.text;
       if (obj && obj.type) {
         msgtype = obj.type;
         txtValue = JSON.stringify(obj);
@@ -187,7 +234,7 @@ export default {
         let regExp = new RegExp("(&nbsp*)|(<br>*)|( )", "g");
         let reg = /((https|http|ftp|rtsp|mms)?:\/\/)?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?(([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9a-z_!~*'()-]+\.)*([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\.[a-z]{2,6})(:[0-9]{1,5})?((\/?)(\/?[0-9a-z_!~*^'().;?/:@&=+$,%#-]+)+)?/gi;
         if (reg.test(htmlValue) == true) {
-          msgtype = msgEnumTypes.textHyperLink;
+          msgtype = msgEnum.textHyperLink;
         }
 
         if (txtValue.replace(regExp, "").length == 0) {
@@ -206,9 +253,9 @@ export default {
         userId: this.currentSession.chatId,
         chatType: this.currentSession.chatType,
         body: txtValue,
-        fromName: this.userInfo.nickName
+        fromName: this.userInfo.nickName,
       };
-      msgFormatTemplate.formatMsgNew(cacheMsg).then(data => {
+      msgFormatTemplate.formatMsgNew(cacheMsg).then((data) => {
         arrayIndex = this.pushMsg(data);
         console.log(arrayIndex);
         this.scrollTo(data.id);
@@ -222,9 +269,9 @@ export default {
           msgType: msgtype,
           toId: this.currentSession.chatId,
           msg: txtValue,
-          chatType: this.currentSession.chatType
+          chatType: this.currentSession.chatType,
         })
-        .then(req => {
+        .then((req) => {
           console.log(req, "发送消息");
           //发送成功
           msgFormatTemplate
@@ -238,25 +285,22 @@ export default {
               body: txtValue,
               chatType: this.currentSession.chatType,
               userId: this.currentSession.chatId,
-              fromName: this.userInfo.nickName
+              fromName: this.userInfo.nickName,
             })
-            .then(data => {
+            .then((data) => {
               let that = this;
+              let viewShow = typeof data.viewShow == "string" ? data.viewShow : { ...data.viewShow };
               const chatItem = {
-                ...data.viewShow,
+                viewShow,
                 id: data.id,
                 item: data.viewShow,
                 type: data.type,
                 time: data.time,
-                isSender: true
+                isSender: true,
               };
-              if (
-                data.type == msgEnumTypes.img ||
-                data.type == msgEnumTypes.video ||
-                data.type == msgEnumTypes.files ||
-                data.type == msgEnumTypes.audio
-              ) {
-                let mediaIndex = this.chatlist.findIndex(item => item.item.mediaIndex == data.viewShow.mediaIndex);
+
+              if (data.type == msgEnum.img || data.type == msgEnum.video || data.type == msgEnum.files || data.type == msgEnum.audio) {
+                let mediaIndex = this.chatlist.findIndex((item) => item.item.mediaIndex == data.viewShow.mediaIndex);
                 this.$set(that.chatlist, mediaIndex, chatItem);
                 that.chatlist[mediaIndex] = chatItem;
               } else {
@@ -288,12 +332,12 @@ export default {
 
         this.chatlist.unshift({
           id: -100,
-          item: dateTemp
+          item: dateTemp,
         });
 
         this.sortJson[data.date] = [data.viewShow];
       } else {
-        if(mode == "getHistory") {
+        if (mode == "getHistory") {
           this.sortJson[data.date].push(data.viewShow);
         } else {
           this.sortJson[data.date].unshift(data.viewShow);
@@ -302,16 +346,16 @@ export default {
       this.scrollTo(data.id);
       const chatItem = {
         ...data,
-        item: data.viewShow
+        item: data.viewShow,
       };
 
       // 判断上传资源是否上传成功，并回写本地数据。
       if (
         data.viewShow.uploadStatus == true &&
         mode != "getHistory" &&
-        (data.type == msgEnumTypes.img || data.type == msgEnumTypes.video || data.type == msgEnumTypes.files || data.type == msgEnumTypes.audio)
+        (data.type == msgEnum.img || data.type == msgEnum.video || data.type == msgEnum.files || data.type == msgEnum.audio)
       ) {
-        let mediaIndex = this.chatlist.findIndex(item => item.item.mediaIndex == data.viewShow.mediaIndex);
+        let mediaIndex = this.chatlist.findIndex((item) => item.item.mediaIndex == data.viewShow.mediaIndex);
 
         if (mediaIndex < 0) {
           return this.chatlist.push(chatItem);
@@ -321,7 +365,7 @@ export default {
         }
       }
 
-      if(mode == "getHistory") {
+      if (mode == "getHistory") {
         return this.chatlist.unshift(chatItem);
       } else {
         return this.chatlist.push(chatItem);
@@ -335,7 +379,7 @@ export default {
       let b = document.getElementById(mId + "_state_span");
       if (b) b.className = "sendsuccess";
       if (bList) {
-        bList.forEach(item => {
+        bList.forEach((item) => {
           item.className = "sendsuccess";
         });
       }
@@ -344,7 +388,7 @@ export default {
      * 接入下一位
      */
     switch() {
-      this.$api.getVisitorList({ type: 1, currentPage: 1, pageSize: 20 }).then(res => {
+      this.$api.getVisitorList({ type: 1, currentPage: 1, pageSize: 20 }).then((res) => {
         this.$store.commit("SET_WAITLISTS", res.data.list);
         this.$store.commit("SET_WAITNUM", res.data.total);
         if (res.data.total == 0) return;
@@ -361,9 +405,9 @@ export default {
                 msgId: 0,
                 unread: 0,
                 preSessionId,
-                chatType: sessionEnumTypes.visitor
+                chatType: sessionEnum.visitor,
               });
-              this.$api.connectManager(sessionId).then(data => {});
+              this.$api.connectManager(sessionId).then((data) => {});
               this.$store.commit("SET_WAITNUM", res.data.total - 1);
             }
           }
@@ -380,7 +424,8 @@ export default {
       if (this.currentSession.online == 0) {
         this.$store.commit("REMVOE_SESSIONLISTS", this.currentSession.chatId);
       } else {
-        this.$api.closemanager(this.currentSession.sessionId).then(res => {
+        this.$refs.sessionInput.pushEvaluate(evaluateCSEnum.invitationType.closeSessionOverPush);
+        this.$api.closemanager(this.currentSession.sessionId).then((res) => {
           this.$store.commit("REMVOE_SESSIONLISTS", this.currentSession.chatId);
         });
         this.switch();
@@ -412,15 +457,15 @@ export default {
       let obj = {
         pageSize: this.pageSize,
         pageNum: this.pageNum,
-        sessionId: this.currentSession.sessionId
+        sessionId: this.currentSession.sessionId,
       };
       this.lastsessionId = this.currentSession.sessionId;
-      this.$api.getCSChatRecord(obj).then(res => {
+      this.$api.getCSChatRecord(obj).then((res) => {
         if (res.data.list) {
           res.data.list = res.data.list.reverse();
         }
-        
-        res.data.list.forEach(e => {
+
+        res.data.list.forEach((e) => {
           let content = {
             timeStamp: e.createTime,
             type: e.msgType,
@@ -430,15 +475,15 @@ export default {
             isSender: e.fromId > 0 ? true : false,
             chatType: this.currentSession.chatType,
             userId: this.currentSession.chatId,
-            fromName: e.fromName
+            fromName: e.fromName,
           };
-          msgFormatTemplate.formatMsg(content).then(data => {
+          msgFormatTemplate.formatMsg(content).then((data) => {
             // console.log(data);
             this.pushMsg({
               ...data,
               mediaIndex: data.viewShow.mediaIndex,
-              item: data.viewShow
-            })
+              item: data.viewShow,
+            });
           });
         });
         this.$refs.list.scrollTop = this.$refs.list.scrollHeight;
@@ -452,21 +497,21 @@ export default {
     },
     //获取第一页
     getlook(item) {
-      this.$api.getbysessionid(this.lookId).then(res => {
+      this.$api.getbysessionid(this.lookId).then((res) => {
         this.lookId = res.data.preSessionId;
       });
       this.pageNum = 1;
       let obj = {
         pageSize: this.pageSize,
         pageNum: this.pageNum,
-        sessionId: item
+        sessionId: item,
       };
       this.lastsessionId = item;
-      this.$api.getCSChatRecord(obj).then(res => {
+      this.$api.getCSChatRecord(obj).then((res) => {
         if (res.data.list) {
           res.data.list.sort((a, b) => b.id - a.id); //排序
         }
-        res.data.list.forEach(e => {
+        res.data.list.forEach((e) => {
           let content = {
             timeStamp: e.createTime,
             type: e.msgType,
@@ -476,15 +521,18 @@ export default {
             isSender: e.fromId > 0 ? true : false,
             chatType: this.currentSession.chatType,
             userId: this.currentSession.chatId,
-            fromName: e.fromName
+            fromName: e.fromName,
           };
-          msgFormatTemplate.formatMsg(content).then(data => {
+          msgFormatTemplate.formatMsg(content).then((data) => {
             // console.log(data);
-            this.pushMsg({
-              ...data,
-              mediaIndex: data.viewShow.mediaIndex,
-              item: data.viewShow
-            }, 'getHistory')
+            this.pushMsg(
+              {
+                ...data,
+                mediaIndex: data.viewShow.mediaIndex,
+                item: data.viewShow,
+              },
+              "getHistory"
+            );
           });
         });
         this.scrollTo(res.data.list[0].msgId);
@@ -502,14 +550,14 @@ export default {
         let obj = {
           pageSize: this.pageSize,
           pageNum: this.pageNum,
-          sessionId: this.lastsessionId
+          sessionId: this.lastsessionId,
         };
         this.more = false;
-        this.$api.getCSChatRecord(obj).then(res => {
+        this.$api.getCSChatRecord(obj).then((res) => {
           if (res.data.list) {
             res.data.list.sort((a, b) => b.id - a.id); //排序
           }
-          res.data.list.forEach(e => {
+          res.data.list.forEach((e) => {
             let content = {
               timeStamp: e.createTime,
               type: e.msgType,
@@ -519,14 +567,17 @@ export default {
               isSender: e.fromId > 0 ? true : false,
               chatType: this.currentSession.chatType,
               userId: this.currentSession.chatId,
-              fromName: e.fromName
+              fromName: e.fromName,
             };
-            msgFormatTemplate.formatMsg(content).then(data => {
-              this.pushMsg({
-                ...data,
-                mediaIndex: data.viewShow.mediaIndex,
-                item: data.viewShow
-              }, 'getHistory')
+            msgFormatTemplate.formatMsg(content).then((data) => {
+              this.pushMsg(
+                {
+                  ...data,
+                  mediaIndex: data.viewShow.mediaIndex,
+                  item: data.viewShow,
+                },
+                "getHistory"
+              );
             });
           });
           setTimeout(() => {
@@ -537,7 +588,7 @@ export default {
           }, 100);
         });
       }
-    }
+    },
   },
   created() {
     console.log(this.$options.name + " 被加载");
@@ -546,15 +597,15 @@ export default {
   mounted() {
     console.log(this.global);
     console.log(this.$refs.sessionInput.$refs.editMsg);
-    document.addEventListener("dragleave", function(e) {
+    document.addEventListener("dragleave", function (e) {
       e.stopPropagation();
       e.preventDefault();
     });
-    document.addEventListener("dragenter", function(e) {
+    document.addEventListener("dragenter", function (e) {
       e.stopPropagation();
       e.preventDefault();
     });
-    document.addEventListener("dragover", function(e) {
+    document.addEventListener("dragover", function (e) {
       e.stopPropagation();
       e.preventDefault();
     });
@@ -564,9 +615,9 @@ export default {
         sessionType: this.currentSession.chatType,
         sessionId: this.currentSession.chatId,
         maxId: this.currentSession.newMsgId,
-        time: this.$store.state.sessionTime
+        time: this.$store.state.sessionTime,
       })
-      .then(data => {
+      .then((data) => {
         let time = data.data.time; //记录时间戳
         this.$store.commit("SET_SESSION_TIME", time);
       });
@@ -576,11 +627,22 @@ export default {
     setTimeout(() => {
       this.$refs.list.scrollTop = this.$refs.list.scrollHeight;
     }, 100);
+
+    actionApi
+      .getEvaluateConf({
+        userId: this.userInfo.id,
+        companyId: this.userInfo.companyId,
+      })
+      .then((res) => {
+        if (res && res.code == 0) {
+          this.$store.commit("SET_EVALUATE_CONF", res.data);
+        }
+      });
   },
   destroyed() {
     console.log(this.$options.name + " 被销毁");
     delete this.$store.state.activityComponents[this.$options.name]; //销毁
-  }
+  },
 };
 </script>
 

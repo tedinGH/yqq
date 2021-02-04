@@ -69,3 +69,5 @@ export const progress = state => state.progress;
 export const filesize = state => state.filesize;
 
 export const bubbles = state => state.bubbles;
+
+export const evaluateConf = state => state.evaluateConf;

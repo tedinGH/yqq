@@ -1,6 +1,6 @@
 import store from "@/store";
 import filter from "@/common/filters";
-import { msgEnumTypes, sessionEnumTypes } from "@/common/enum";
+import { msgEnum, sessionEnum } from "@/common/enum";
 import { timeUtil } from "@/tools/timeUtil";
 import { msgManager } from "@/session/msgManager";
 import { Config } from "@/common/config";
@@ -36,40 +36,43 @@ export const msgFormatTemplate = {
       try {
         lang = store.state.translate;
         switch (content.type) {
-          case msgEnumTypes.text: //普通文本
+          case msgEnum.text: //普通文本
             this.textTemp(resolve, content);
             break;
-          case msgEnumTypes.img: //图片
+          case msgEnum.img: //图片
             this.imgTemp(resolve, content);
             break;
-          case msgEnumTypes.video: //离线视频
+          case msgEnum.video: //离线视频
             this.offlineVideoTemp(resolve, content);
             break;
-          case msgEnumTypes.audio: //离线音频
+          case msgEnum.audio: //离线音频
             this.offlineAudioTemp(resolve, content);
             break;
           case 18: //历史记录文件类型，新增至18时，会影响历史记录文件
             this.fileTemp(resolve, content);
             break;
-          case msgEnumTypes.files: //文件
+          case msgEnum.files: //文件
             this.fileTemp(resolve, content);
             break;
-          case msgEnumTypes.inout: //进入/离开协议
+          case msgEnum.inout: //进入/离开协议
             this.inOrOutTemp(resolve, content);
             break;
-          case msgEnumTypes.sessionOver: //会话结束协议
+          case msgEnum.sessionOver: //会话结束协议
             this.sessionCloseTemp(resolve, content);
             break;
-          case msgEnumTypes.msgTyping: //输入中
+          case msgEnum.msgTyping: //输入中
             break;
-          case msgEnumTypes.msgReaded: //消息已读
+          case msgEnum.msgReaded: //消息已读
             this.msgRead(resolve, content);
             break;
-          case msgEnumTypes.textHyperLink: //链接
+          case msgEnum.textHyperLink: //链接
             this.textTemp(resolve, content);
             break;
-          case msgEnumTypes.newTransferEntry: //转接协议
+          case msgEnum.newTransferEntry: //转接协议
             this.swichTemp(resolve, content);
+            break;
+          case msgEnum.evaluateCustomerService: //客服评价
+            this.evaluateTemp(resolve, content);
             break;
           default:
             throw "Not currently supported";
@@ -108,17 +111,26 @@ export const msgFormatTemplate = {
     let cacheJson = {};
     lang = store.state.translate;
     switch (content.type) {
-      case msgEnumTypes.inout:
+      case msgEnum.inout:
         return `#${filter.name(content.chatId)} Enter`;
-      case msgEnumTypes.files:
+      case msgEnum.evaluateCustomerService:
+        const { isEvaluate = 0} = content;
+        if (isEvaluate == 0) {
+          //发起评价
+          return `[${lang.evaluate.sendEvaluate}]`;
+        } else {
+          //评价结束
+          return `[${lang.evaluate.evaluationEnd}]` ;
+        }
+      case msgEnum.files:
         return `[${lang.common.file}]`;
-      case msgEnumTypes.video:
+      case msgEnum.video:
         return `[${lang.common.video}]`;
-      case msgEnumTypes.audio:
+      case msgEnum.audio:
         return `[${lang.common.audio}]`;
-      case msgEnumTypes.img:
+      case msgEnum.img:
         return `[${lang.common.image}]`;
-      case msgEnumTypes.newTransferEntry:
+      case msgEnum.newTransferEntry:
         cacheJson = JSON.parse(content.newMsg);
         return `${cacheJson.fromUserName} transfer conversation to ${cacheJson.toUserName}`;
       default:
@@ -254,6 +266,23 @@ export const msgFormatTemplate = {
     content.preview = cacheJson.name + msgTxt;
     resolve(content);
   },
+  // 客服评价
+  evaluateTemp(resolve, content) {
+    // debugger
+    let cacheJson = JSON.parse(content.body);
+    let msgTxt = lang.evaluate.sendEvaluate;
+    const { isEvaluate = 0} = cacheJson;
+    if (isEvaluate == 0) {
+      //发起评价
+      msgTxt = lang.evaluate.sendEvaluate;
+    } else {
+      //评价结束
+      msgTxt = lang.evaluate.evaluationEnd;
+    }
+    content.viewShow = `<div class="no-chat"> <span class="text">${filter.timeFilter3(content.timeStamp)} ${msgTxt}</span> </div> `;
+    content.preview = msgTxt;
+    resolve(content);
+  },
   sessionCloseTemp(resolve, content) {
     content.viewShow = `<div class="no-chat"> <span>${lang.common.sessionClose}</span> </div>`;
     content.preview = lang.common.sessionClose;
@@ -281,9 +310,9 @@ export const msgFormatTemplate = {
       let currentSession = store.state.currentSession;
       if (currentSession.chatId == content.userId && currentSession.chatType == content.chatType) {
         let componentName = null;
-        if (content.chatType == sessionEnumTypes.visitor) {
+        if (content.chatType == sessionEnum.visitor) {
           componentName = "dialogue";
-        } else if (content.chatType == sessionEnumTypes.friend) {
+        } else if (content.chatType == sessionEnum.friend) {
           componentName = "friendbox";
         }
         //发送消息已读

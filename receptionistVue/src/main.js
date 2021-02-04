@@ -12,6 +12,7 @@ import Contextmenu from "vue-contextmenujs";
 Vue.use(Contextmenu);
 import VueDND from "awe-dnd";
 Vue.use(VueDND);
+// Vue.use(VCharts)
 import {
   Button,
   Dropdown,
@@ -29,8 +30,40 @@ import {
   Select,
   Option,
   OptionGroup,
-  DatePicker
+  DatePicker,
+  Container,
+  Header,
+  Aside,
+  Main,
+  Footer,
+  Menu,
+  Table,
+  Submenu,
+  MenuItem,
+  MenuItemGroup,
+  TableColumn,
+  Form,
+  FormItem,
+  Row,
+  Col,
+  Card
 } from "element-ui";
+Vue.use(Container);
+Vue.use(Card);
+Vue.use(Row);
+Vue.use(Col);
+Vue.use(Submenu);
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(MenuItemGroup);
+Vue.use(TableColumn);
+Vue.use(MenuItem);
+Vue.use(Menu);
+Vue.use(Table);
+Vue.use(Header);
+Vue.use(Aside);
+Vue.use(Main);
+Vue.use(Footer);
 Vue.use(Badge);
 Vue.use(Radio);
 Vue.use(RadioGroup);

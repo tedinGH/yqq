@@ -1,26 +1,46 @@
 <template>
-  <div class="searchHistory" @click.stop="">
+  <div class="searchHistory" @click.stop>
     <div class="genre">
       <div class="id">
         <p class="title">Visitor ID</p>
-        <input type="text" onkeyup="value=value.replace(/[^\d]/g,'')" placeholder="Please enter" v-model="visID" />
+        <input
+          type="text"
+          onkeyup="value=value.replace(/[^\d]/g,'')"
+          placeholder="Please enter"
+          v-model="visID"
+        />
       </div>
       <div style="margin-right:38px">
         <p class="title">Platform</p>
         <el-select v-model="value1" clearable placeholder="please choose" class="selects">
-          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
         </el-select>
       </div>
       <div style="margin-right:38px">
         <p class="title">Service</p>
         <el-select v-model="id" clearable placeholder="please choose" class="selects">
-          <el-option v-for="item in listcustomer" :key="item.id" :label="item.name" :value="item.id"> </el-option>
+          <el-option
+            v-for="item in listcustomer"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          ></el-option>
         </el-select>
       </div>
       <div>
         <p class="title">Evaluation type</p>
         <el-select v-model="Evaluation" clearable placeholder="please choose" class="selects">
-          <el-option v-for="item in luation" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+          <el-option
+            v-for="item in luation"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
         </el-select>
       </div>
     </div>
@@ -31,13 +51,13 @@
         v-model="time"
         type="datetimerange"
         :picker-options="pickerOptions"
+        popper-class="search-history-info-date-picker"
         range-separator="to"
         value-format="timestamp"
         start-placeholder="Start date"
         end-placeholder="Ending date"
         align="right"
-      >
-      </el-date-picker>
+      ></el-date-picker>
     </div>
     <!-- <span>{{time}}</span> -->
     <div class="condition">
@@ -48,7 +68,8 @@
           <el-radio :label="2" @click.native.prevent="radioChange1(2)">Equal</el-radio>
           <el-radio :label="3" @click.native.prevent="radioChange1(3)">More than</el-radio>
         </el-radio-group>
-        <input type="text" onkeyup="value=value.replace(/[^\d]/g,'')" v-model="durationTime" /><span>s</span>
+        <input type="text" onkeyup="value=value.replace(/[^\d]/g,'')" v-model="durationTime" />
+        <span>s</span>
       </div>
     </div>
     <div class="condition">
@@ -85,7 +106,7 @@ export default {
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
               picker.$emit("pick", [start, end]);
-            }
+            },
           },
           {
             text: "Last month",
@@ -94,7 +115,7 @@ export default {
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
               picker.$emit("pick", [start, end]);
-            }
+            },
           },
           {
             text: "Last three months",
@@ -103,7 +124,7 @@ export default {
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
               picker.$emit("pick", [start, end]);
-            }
+            },
           },
           {
             text: "Last half of years",
@@ -112,37 +133,37 @@ export default {
               const start = new Date();
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 180);
               picker.$emit("pick", [start, end]);
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
       options: [
         {
           value: "1",
-          label: "PC"
+          label: "PC",
         },
         {
           value: "2",
-          label: "Phone"
-        }
+          label: "Phone",
+        },
       ],
       luation: [
         {
           value: "1",
-          label: "Praise"
+          label: "Praise",
         },
         {
           value: "2",
-          label: "Average"
+          label: "Average",
         },
         {
           value: "3",
-          label: "Negative Ratings"
+          label: "Negative Ratings",
         },
         {
           value: "-1",
-          label: "Not evaluated"
-        }
+          label: "Not evaluated",
+        },
       ],
       value1: null,
       id: null,
@@ -152,7 +173,7 @@ export default {
       radio1: null,
       radio2: null,
       durationTime: "",
-      messagesNum: ""
+      messagesNum: "",
     };
   },
   watch: {},
@@ -188,7 +209,7 @@ export default {
       } else if ((this.durationTime != "" && this.radio1 == null) || (this.messagesNum != "" && this.radio2 == null)) {
         this.$message({
           message: "Please select at least one restriction",
-          type: "error"
+          type: "error",
         });
         return;
       } else {
@@ -204,7 +225,7 @@ export default {
           sessionTime: this.durationTime == "" ? null : this.durationTime,
           msgAmount: this.messagesNum == "" ? null : this.messagesNum,
           currentPage: 1,
-          pageSize: 20
+          pageSize: 20,
         };
         window.sessionStorage.setItem("condition", JSON.stringify(condition));
       }
@@ -223,14 +244,14 @@ export default {
       this.radio2 = null;
       this.durationTime = "";
       this.messagesNum = "";
-    }
+    },
   },
   created() {
-    this.$api.getlistcustomer().then(res => {
+    this.$api.getlistcustomer().then((res) => {
       this.listcustomer = res.data;
       let all = {
         name: "All",
-        id: -1
+        id: -1,
       };
       this.listcustomer.push(all);
     });
@@ -252,7 +273,7 @@ export default {
       this.durationTime = content.sessionTime ? content.sessionTime : "";
       this.messagesNum = content.msgAmount ? content.msgAmount : "";
     }
-  }
+  },
 };
 </script>
 ·

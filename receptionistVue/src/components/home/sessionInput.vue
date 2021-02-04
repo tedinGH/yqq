@@ -7,24 +7,32 @@
         style="cursor: pointer;margin-left:27px;margin-right:15px"
         v-if="layout.module == 's' && layout.child == 'emoji'"
       />
-      <img @click.stop="showemoji" src="../../assets/img/chat/emoji.png" style="cursor: pointer;margin-left:27px;margin-right:15px" v-else />
-      <a class="icon icon-image">
+      <img
+        @click.stop="showemoji"
+        src="../../assets/img/chat/emoji.png"
+        style="cursor: pointer;margin-left:27px;margin-right:15px"
+        v-else
+      />
+      <a class="icon icon-image" style="margin-right:15px">
         <label class="lable" for="upAll"></label>
         <input
           type="file"
           hidden="true"
           id="upAll"
           @change="$emit('selectAll', $event)"
-          accept=".doc,.docx,.pdf,.ppt,.xlsx,.xls,.csv,.txt,.mp4,.aac,.mp3,.png,.jpg,.jpeg,.gif"
+          accept=".doc, .docx, .pdf, .ppt, .xlsx, .xls, .csv, .txt, .mp4, .aac, .mp3, .png, .jpg, .jpeg, .gif"
         />
       </a>
+      <a
+        v-if="currentSession.chatType == sessionEnum.visitor && evaluateConf.invitatStatus"
+        class="icon icon-evaluate"
+        @click.stop="pushEvaluate(evaluateCSEnum.invitationType.csPush)"
+      ></a>
       <emoji v-if="layout.module == 's' && layout.child == 'emoji'"></emoji>
     </div>
     <div class="content">
       <div class="input-send">
-        <div class="input-placeholder" v-if="editFocus">
-          {{ $t("msg.chatPanel.say") }}
-        </div>
+        <div class="input-placeholder" v-if="editFocus">{{ $t("msg.chatPanel.say") }}</div>
         <pre
           class="input-msg"
           contenteditable="true"
@@ -43,24 +51,33 @@
   </div>
 </template>
 <script>
-import { msgEnumTypes, sessionEnumTypes } from "@/common/enum";
+import { mapGetters } from "vuex";
+import { actionApi } from "@/api";
+import { msgEnum, sessionEnum, evaluateCSEnum } from "@/common/enum";
 import emoji from "@/components/home/session/emoji";
+import filter from "@/common/filters";
 import { Util } from "@/tools/utils";
 
 export default {
   name: "sessionInput",
   data() {
     return {
-      msgEnumTypes,
-      editFocus: true
+      msgEnum,
+      sessionEnum,
+      evaluateCSEnum,
+      editFocus: true,
     };
   },
   components: {
     emoji,
   },
+  computed: {
+    ...mapGetters(["currentSession", "evaluateConf", "userInfo"]),
+  },
   props: {
     layout: Object,
-    moreThan: Boolean
+    moreThan: Boolean,
+    chatlist: Array,
   },
   methods: {
     focus(value) {
@@ -69,7 +86,7 @@ export default {
     saveDraft() {
       //失去焦点 保存草稿
       let draft = this.$refs.editMsg.innerHTML;
-      let regExp = new RegExp("(&nbsp*)|(<br>*)|(\s*)", "g");
+      let regExp = new RegExp("(&nbsp*)|(<br>*)|(s*)", "g");
       if (!draft || draft.replace(regExp, "").length == 0) {
         this.editFocus = true;
       }
@@ -136,10 +153,64 @@ export default {
       this.focus(false);
       Util.insert(this.$refs.editMsg, value, false);
     },
+    pushEvaluate(mode = 0) {
+      //mock message
+      // 1、获取评价类型
+      // 2、是否已进行回复 - evaluatedFirst
+      let replyIndex = this.chatlist.findIndex((item) => item.type == msgEnum.text);
+      console.log(replyIndex);
+      if (replyIndex < 1) {
+        this.$store.commit("SET_LAYOUT", ["evaluatedFirst", "", false]);
+        return;
+      }
+
+      if (!this.evaluateConf.invitatStatus && mode == evaluateCSEnum.invitationType.csPush) {
+        return;
+      }
+
+      if (this.evaluateConf.closeStatus && mode == evaluateCSEnum.invitationType.closeSessionOverPush) {
+        return;
+      }
+      // 3、checkIsEvaluate
+      this.$store
+        .dispatch("checkIsEvaluate", {
+          visitorId: this.currentSession.chatId,
+          companyId: this.userInfo.companyId,
+          customerServiceId: this.userInfo.id,
+        })
+        .then((res) => {
+          if (res && res.code == 0) {
+            if (res.data == 0) {
+              this.$parent.send({
+                type: msgEnum.evaluateCustomerService,
+                invitationType: evaluateCSEnum.invitationType.csPush,
+                isEvaluate: evaluateCSEnum.evaluateStatus.evaluate,
+              });
+
+              const payload = {
+                channelId: this.currentSession.visitorUuid,
+                companyId: this.userInfo.companyId,
+                customerServiceId: this.userInfo.id,
+                type: evaluateCSEnum.invitationType.csPush,
+                visitorId: this.currentSession.chatId,
+              };
+
+              actionApi.setEvaluateInvitionRecord(payload).then((data) => {
+                console.log(data);
+              });
+            } else {
+              // 判断是否重复评价
+              this.$store.commit("SET_LAYOUT", ["evaluated", "", false]);
+            }
+          } else {
+            //
+          }
+        });
+    },
   },
   mounted() {
     // console.log(this.$el)
-  }
+  },
 };
 </script>
 
@@ -183,6 +254,13 @@ export default {
         width: 34px;
         height: 34px;
       }
+    }
+    .icon-evaluate {
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+      background: url(../../assets/img/chat/evaluate.png) center top no-repeat;
     }
     .emoji {
       width: 440px;

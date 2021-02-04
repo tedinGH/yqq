@@ -1,5 +1,5 @@
 import { EchatDB } from "@/session/indexedDB";
-import { msgEnumTypes } from "@/common/enum";
+import { msgEnum } from "@/common/enum";
 export const baseSession = {
   /**
    * 分页获取消息

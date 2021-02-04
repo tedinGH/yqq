@@ -10,7 +10,14 @@
             <span class="head-text">{{ currentSession.name }}</span>
           </div>
         </div>
-        <div class="message-box" id="message-box" ref="list" @ps-y-reach-start="loadMore" @ps-y-reach-end="scrollY" v-scrollBar>
+        <div
+          class="message-box"
+          id="message-box"
+          ref="list"
+          @ps-y-reach-start="loadMore"
+          @ps-y-reach-end="scrollY"
+          v-scrollBar
+        >
           <msgList :chatlist="chatlist" :userInfo="userInfo" :currentSession="currentSession"></msgList>
         </div>
       </div>
@@ -45,7 +52,7 @@ import reply from "@/components/home/session/reply";
 import UplaodFiles from "@/components/common/uploadFile";
 import msgList from "@/components/home/msgList";
 import sessionInput from "@/components/home/sessionInput";
-import { msgEnumTypes, sessionEnumTypes } from "@/common/enum";
+import { msgEnum, sessionEnum } from "@/common/enum";
 import Rtc from "@/tools/rtc-message";
 import { Util } from "@/tools/utils";
 import { timeUtil } from "@/tools/timeUtil";
@@ -57,7 +64,7 @@ export default {
   name: "friendbox",
   data() {
     return {
-      msgEnumTypes,
+      msgEnum,
       chatlist: [],
       sortJson: {},
       editFocus: true,
@@ -67,8 +74,8 @@ export default {
       chatScrollTop: 0, // 滚动高度
       pagination: {
         pageSize: 20,
-        currentPage: 1
-      }
+        currentPage: 1,
+      },
     };
   },
   computed: {
@@ -76,7 +83,7 @@ export default {
   },
   components: {
     msgList,
-    sessionInput
+    sessionInput,
   },
   mixins: [UplaodFiles],
   watch: {
@@ -85,14 +92,14 @@ export default {
       this.sortJson.length = 0;
       if (item.chatId) {
         let maxMsgId = item.msgId ? item.msgId : 10000;
-        msgManager.getMsg(item.chatType, item.chatId, maxMsgId, 1, false, 30, this.pagination.currentPage).then(array => {
-          array.forEach(element => {
+        msgManager.getMsg(item.chatType, item.chatId, maxMsgId, 1, false, 30, this.pagination.currentPage).then((array) => {
+          array.forEach((element) => {
             if (
               element.id <= item.msgId &&
-              element.type != msgEnumTypes.video &&
-              element.type != msgEnumTypes.files &&
-              element.type != msgEnumTypes.audio &&
-              element.type != msgEnumTypes.img
+              element.type != msgEnum.video &&
+              element.type != msgEnum.files &&
+              element.type != msgEnum.audio &&
+              element.type != msgEnum.img
             ) {
               if (typeof element.viewShow == "string") {
                 element.viewShow = element.viewShow.replace('class="wait"', 'class="sendsuccess"').replace('class="senging"', 'class="sendsuccess"');
@@ -112,10 +119,10 @@ export default {
       // 设置已读会话
       this.$api
         .getAndSetReadedSessionList({ sessionType: item.chatType, sessionId: item.chatId, maxId: item.msgId, time: this.$store.state.sessionTime })
-        .then(data => {
+        .then((data) => {
           let time = data.data.time; //记录时间戳
           let cacheData = data.data.list;
-          cacheSessionList.forEach(v => {
+          cacheSessionList.forEach((v) => {
             for (var i = 0; i < v.listUser.length; i++) {
               let cU = v.listUser[i];
               for (let key in cacheData) {
@@ -137,14 +144,14 @@ export default {
         this.$refs.sessionInput.$refs.editMsg.innerHTML = "";
         this.$refs.list.scrollTop = this.$refs.list.scrollHeight;
       }, 100);
-    }
+    },
   },
   methods: {
     confirmTips() {
       this.$store.dispatch("setLayout", ["", "", false]);
     },
     cancelUploadMsg(id) {
-      let mediaIndex = this.chatlist.findIndex(item => item.id == id);
+      let mediaIndex = this.chatlist.findIndex((item) => item.id == id);
       console.log(mediaIndex);
       this.chatlist.splice(mediaIndex, 1);
     },
@@ -176,18 +183,18 @@ export default {
           break;
         }
       }
-      msgManager.getMsg(chatType, chatId, maxMsgId, 1, true, this.pagination.pageSize, this.pagination.currentPage).then(data => {
+      msgManager.getMsg(chatType, chatId, maxMsgId, 1, true, this.pagination.pageSize, this.pagination.currentPage).then((data) => {
         if (data.length == 0) {
           this.scrollFlag = 2;
           this.chatlist.unshift({
             id: -100,
-            item: this.lastMsgDateItem
+            item: this.lastMsgDateItem,
           });
           return;
         }
         // 倒序
         data = data.reverse();
-        data.forEach(element => {
+        data.forEach((element) => {
           if (element.id <= msgId) {
             if (typeof element.viewShow == "string") {
               element.viewShow = element.viewShow.replace('class="wait"', 'class="sendsuccess"').replace('class="senging"', 'class="sendsuccess"');
@@ -213,7 +220,7 @@ export default {
       let htmlValue = obj || this.$refs.sessionInput.$refs.editMsg.innerHTML;
       // let txtValue = face.htmlToString(htmlValue) //表情解析
       let txtValue = ""; //移除无用html标签
-      let msgtype = msgEnumTypes.text;
+      let msgtype = msgEnum.text;
       if (obj && obj.type) {
         msgtype = obj.type;
         txtValue = JSON.stringify(obj);
@@ -223,7 +230,7 @@ export default {
         let regExp = new RegExp("(&nbsp*)|(<br>*)|( )", "g");
         let reg = /((https|http|ftp|rtsp|mms)?:\/\/)?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?(([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9a-z_!~*'()-]+\.)*([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\.[a-z]{2,6})(:[0-9]{1,5})?((\/?)(\/?[0-9a-z_!~*^'().;?/:@&=+$,%#-]+)+)?/gi;
         if (reg.test(htmlValue) == true) {
-          msgtype = msgEnumTypes.textHyperLink;
+          msgtype = msgEnum.textHyperLink;
         }
 
         if (txtValue.replace(regExp, "").length == 0) {
@@ -241,9 +248,9 @@ export default {
         type: msgtype,
         userId: this.currentSession.chatId,
         chatType: this.currentSession.chatType,
-        body: txtValue
+        body: txtValue,
       };
-      msgFormatTemplate.formatMsgNew(cacheMsg).then(data => {
+      msgFormatTemplate.formatMsgNew(cacheMsg).then((data) => {
         arrayIndex = this.pushMsg(data);
         this.scrollTo(data.id);
       });
@@ -256,9 +263,9 @@ export default {
           msgType: msgtype,
           toId: this.currentSession.chatId,
           msg: txtValue,
-          chatType: this.currentSession.chatType
+          chatType: this.currentSession.chatType,
         })
-        .then(data => {
+        .then((data) => {
           //发送成功
           msgFormatTemplate
             .formatMsgNew({
@@ -269,24 +276,19 @@ export default {
               type: msgtype,
               body: txtValue,
               chatType: this.currentSession.chatType,
-              userId: this.currentSession.chatId
+              userId: this.currentSession.chatId,
             })
-            .then(data => {
+            .then((data) => {
               let that = this;
               const chatItem = {
                 id: data.id,
                 item: data.viewShow,
                 type: data.type,
                 time: data.time,
-                isSender: true
+                isSender: true,
               };
-              if (
-                data.type == msgEnumTypes.img ||
-                data.type == msgEnumTypes.video ||
-                data.type == msgEnumTypes.files ||
-                data.type == msgEnumTypes.audio
-              ) {
-                let mediaIndex = this.chatlist.findIndex(item => item.item.mediaIndex == data.viewShow.mediaIndex);
+              if (data.type == msgEnum.img || data.type == msgEnum.video || data.type == msgEnum.files || data.type == msgEnum.audio) {
+                let mediaIndex = this.chatlist.findIndex((item) => item.item.mediaIndex == data.viewShow.mediaIndex);
                 if (this.chatlist[this.chatlist.length - 1].id < 0) {
                   mediaIndex -= 1;
                 }
@@ -321,7 +323,7 @@ export default {
         }
         this.chatlist.push({
           id: -100,
-          item: dateTemp
+          item: dateTemp,
         });
         this.sortJson[data.date] = [data.viewShow];
       } else {
@@ -348,7 +350,7 @@ export default {
         }
         this.chatlist.push({
           id: -100,
-          item: dateTemp
+          item: dateTemp,
         });
         this.sortJson[data.date] = [data.viewShow];
       } else {
@@ -358,16 +360,16 @@ export default {
 
       const chatItem = {
         item: data.viewShow,
-        ...data
+        ...data,
       };
 
       // 判断上传资源是否上传成功，并回写本地数据。
       if (
         data.viewShow.uploadStatus == true &&
         mode != "init" &&
-        (data.type == msgEnumTypes.img || data.type == msgEnumTypes.video || data.type == msgEnumTypes.files || data.type == msgEnumTypes.audio)
+        (data.type == msgEnum.img || data.type == msgEnum.video || data.type == msgEnum.files || data.type == msgEnum.audio)
       ) {
-        let mediaIndex = this.chatlist.findIndex(item => item.item.mediaIndex == data.viewShow.mediaIndex);
+        let mediaIndex = this.chatlist.findIndex((item) => item.item.mediaIndex == data.viewShow.mediaIndex);
         this.chatlist[mediaIndex] = chatItem;
         if (mediaIndex < 0) {
           return this.chatlist.push(chatItem);
@@ -390,7 +392,7 @@ export default {
       let b = document.getElementById(mId + "_state_span");
       if (b) b.className = "sendsuccess";
       if (bList) {
-        bList.forEach(item => {
+        bList.forEach((item) => {
           item.className = "sendsuccess";
         });
       }
@@ -424,7 +426,7 @@ export default {
       pastedData = pastedData.replace(/ /g, "&nbsp;");
       pastedData = pastedData.replace(/\n/g, "<br/>");
       Util.insert(this.$refs.sessionInput.$refs.editMsg, pastedData, false);
-    }
+    },
   },
   created() {
     console.log(this.$options.name + " 被加载");
@@ -433,7 +435,7 @@ export default {
   destroyed() {
     console.log(this.$options.name + " 被销毁");
     delete this.$store.state.activityComponents[this.$options.name]; //销毁
-  }
+  },
 };
 </script>
 

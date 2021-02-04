@@ -20,7 +20,13 @@ module.exports = {
       file: "File",
       imageOutDate: "Photo has expired",
       videoOutDate: "Video has expired",
-      noData: "No Data"
+      noData: "No Data",
+    },
+    evaluate: {
+      sendEvaluate: "Send out evaluation",
+      evaluationEnd: "Evaluation end",
+      evaluated: "It has been evaluated and cannot be repeated",
+      evaluatedFirst: "You haven't replied to the visitors, please reply first"
     },
     menu: {
       Pmessage: "Please enter a message..."

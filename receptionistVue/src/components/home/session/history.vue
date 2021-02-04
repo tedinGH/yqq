@@ -6,11 +6,18 @@
           <span class="head-text">#{{ currentSession.chatId | name }}</span>
         </div>
         <div style="align-self:center">
-          <img src="../../../assets/img/chat/time.png" style="cursor: pointer;margin-right:18px" @click.stop="open" />
+          <img
+            src="../../../assets/img/chat/time.png"
+            style="cursor: pointer;margin-right:18px"
+            @click.stop="open"
+          />
         </div>
       </div>
       <div class="message-box" id="message-box" ref="list" v-scrollBar @ps-y-reach-start="loadMore">
-        <div v-if="lookId" @click="getlook(lookId)" class="lookLast"><span></span>View last conversation<span></span></div>
+        <div v-if="lookId" @click="getlook(lookId)" class="lookLast">
+          <span></span>View last conversation
+          <span></span>
+        </div>
         <msgList :chatlist="chatlist" :userInfo="userInfo" :currentSession="currentSession"></msgList>
       </div>
       <div class="end">{{ $t("msg.sessionlist.end") }}</div>
@@ -24,14 +31,14 @@ import { msgFormatTemplate } from "@/tools/msgFormatTemplate";
 import msgList from "@/components/home/msgList";
 import UplaodFiles from "@/components/common/uploadFile";
 import { timeUtil } from "@/tools/timeUtil";
-import { msgEnumTypes, sessionEnumTypes } from "@/common/enum";
+import { msgEnum, sessionEnum } from "@/common/enum";
 import tracks from "@/components/home/session/track";
 export default {
   name: "history",
   data() {
     return {
       consent: false,
-      msgEnumTypes,
+      msgEnum,
       pageNum: 1,
       pageSize: 40,
       chatlist: [],
@@ -39,12 +46,12 @@ export default {
       timer: "",
       lastsessionId: null,
       more: false,
-      lookId: null
+      lookId: null,
     };
   },
   components: {
     tracks,
-    msgList
+    msgList,
   },
   mixins: [UplaodFiles],
   computed: {
@@ -61,7 +68,7 @@ export default {
         this.$refs.list.scrollTop = this.$refs.list.scrollHeight;
       }, 100);
       this.lookId = this.currentSession.preSessionId;
-    }
+    },
   },
   methods: {
     /**
@@ -77,21 +84,21 @@ export default {
     },
     //获取第一页
     getlook(item) {
-      this.$api.getbysessionid(this.lookId).then(res => {
+      this.$api.getbysessionid(this.lookId).then((res) => {
         this.lookId = res.data.preSessionId;
       });
       this.pageNum = 1;
       let obj = {
         pageSize: this.pageSize,
         pageNum: this.pageNum,
-        sessionId: item
+        sessionId: item,
       };
       this.lastsessionId = item;
-      this.$api.getCSChatRecord(obj).then(res => {
+      this.$api.getCSChatRecord(obj).then((res) => {
         if (res.data.list) {
           res.data.list.sort((a, b) => b.id - a.id); //排序
         }
-        res.data.list.forEach(e => {
+        res.data.list.forEach((e) => {
           let content = {
             timeStamp: e.createTime,
             type: e.msgType,
@@ -101,14 +108,17 @@ export default {
             isSender: e.fromId > 0 ? true : false,
             chatType: this.currentSession.chatType,
             userId: this.currentSession.chatId,
-            fromName: e.fromName
+            fromName: e.fromName,
           };
-          msgFormatTemplate.formatMsg(content).then(data => {
-            this.pushMsg({
-              ...data,
-              mediaIndex: data.viewShow.mediaIndex,
-              item: data.viewShow
-            }, 'getHistory')
+          msgFormatTemplate.formatMsg(content).then((data) => {
+            this.pushMsg(
+              {
+                ...data,
+                mediaIndex: data.viewShow.mediaIndex,
+                item: data.viewShow,
+              },
+              "getHistory"
+            );
           });
         });
         this.scrollTo(res.data.list[0].msgId);
@@ -124,15 +134,15 @@ export default {
       let obj = {
         pageSize: this.pageSize,
         pageNum: this.pageNum,
-        sessionId: this.currentSession.sessionId
+        sessionId: this.currentSession.sessionId,
       };
       this.lastsessionId = this.currentSession.sessionId;
-      this.$api.getCSChatRecord(obj).then(res => {
+      this.$api.getCSChatRecord(obj).then((res) => {
         if (res.data.list) {
           // res.data.list.sort((a, b) => b.id - a.id); //排序
           res.data.list = res.data.list.reverse();
         }
-        res.data.list.forEach(e => {
+        res.data.list.forEach((e) => {
           let content = {
             timeStamp: e.createTime,
             type: e.msgType,
@@ -142,14 +152,14 @@ export default {
             isSender: e.fromId > 0 ? true : false,
             chatType: this.currentSession.chatType,
             userId: this.currentSession.chatId,
-            fromName: e.fromName
+            fromName: e.fromName,
           };
-          msgFormatTemplate.formatMsg(content).then(data => {
+          msgFormatTemplate.formatMsg(content).then((data) => {
             this.pushMsg({
               ...data,
               mediaIndex: data.viewShow.mediaIndex,
-              item: data.viewShow
-            })
+              item: data.viewShow,
+            });
           });
         });
         this.$refs.list.scrollTop = this.$refs.list.scrollHeight;
@@ -167,15 +177,15 @@ export default {
       let obj = {
         pageSize: this.pageSize,
         pageNum: this.pageNum,
-        sessionId: item.item.sessionId
+        sessionId: item.item.sessionId,
       };
       this.lastsessionId = item.item.sessionId;
       this.$set(item, "get", true);
-      this.$api.getCSChatRecord(obj).then(res => {
+      this.$api.getCSChatRecord(obj).then((res) => {
         if (res.data.list) {
           res.data.list.sort((a, b) => b.id - a.id); //排序
         }
-        res.data.list.forEach(e => {
+        res.data.list.forEach((e) => {
           let content = {
             timeStamp: e.createTime,
             type: e.msgType,
@@ -185,14 +195,17 @@ export default {
             isSender: e.fromId > 0 ? true : false,
             chatType: this.currentSession.chatType,
             userId: this.currentSession.chatId,
-            fromName: e.fromName
+            fromName: e.fromName,
           };
-          msgFormatTemplate.formatMsg(content).then(data => {
-            this.pushMsg({
-              ...data,
-              mediaIndex: data.viewShow.mediaIndex,
-              item: data.viewShow
-            }, 'getHistory')
+          msgFormatTemplate.formatMsg(content).then((data) => {
+            this.pushMsg(
+              {
+                ...data,
+                mediaIndex: data.viewShow.mediaIndex,
+                item: data.viewShow,
+              },
+              "getHistory"
+            );
           });
         });
         setTimeout(() => {
@@ -208,14 +221,14 @@ export default {
         let obj = {
           pageSize: this.pageSize,
           pageNum: this.pageNum,
-          sessionId: this.lastsessionId
+          sessionId: this.lastsessionId,
         };
         this.more = false;
-        this.$api.getCSChatRecord(obj).then(res => {
+        this.$api.getCSChatRecord(obj).then((res) => {
           if (res.data.list) {
             res.data.list.sort((a, b) => b.id - a.id); //排序
           }
-          res.data.list.forEach(e => {
+          res.data.list.forEach((e) => {
             let content = {
               timeStamp: e.createTime,
               type: e.msgType,
@@ -225,14 +238,17 @@ export default {
               isSender: e.fromId > 0 ? true : false,
               chatType: this.currentSession.chatType,
               userId: this.currentSession.chatId,
-              fromName: e.fromName
+              fromName: e.fromName,
             };
-            msgFormatTemplate.formatMsg(content).then(data => {
-              this.pushMsg({
-                ...data,
-                mediaIndex: data.viewShow.mediaIndex,
-                item: data.viewShow
-              }, 'getHistory')
+            msgFormatTemplate.formatMsg(content).then((data) => {
+              this.pushMsg(
+                {
+                  ...data,
+                  mediaIndex: data.viewShow.mediaIndex,
+                  item: data.viewShow,
+                },
+                "getHistory"
+              );
             });
           });
           this.scrollTo(res.data.list[0].msgId);
@@ -258,11 +274,11 @@ export default {
         }
         this.chatlist.unshift({
           id: -100,
-          item: dateTemp
+          item: dateTemp,
         });
         this.sortJson[data.date] = [data.viewShow];
       } else {
-        if(mode == "getHistory") {
+        if (mode == "getHistory") {
           this.sortJson[data.date].push(data.viewShow);
         } else {
           this.sortJson[data.date].unshift(data.viewShow);
@@ -271,16 +287,16 @@ export default {
       this.scrollTo(data.id);
       const chatItem = {
         ...data,
-        item: data.viewShow
+        item: data.viewShow,
       };
 
       // 判断上传资源是否上传成功，并回写本地数据。
       if (
         data.viewShow.uploadStatus == true &&
         mode != "getHistory" &&
-        (data.type == msgEnumTypes.img || data.type == msgEnumTypes.video || data.type == msgEnumTypes.files || data.type == msgEnumTypes.audio)
+        (data.type == msgEnum.img || data.type == msgEnum.video || data.type == msgEnum.files || data.type == msgEnum.audio)
       ) {
-        let mediaIndex = this.chatlist.findIndex(item => item.item.mediaIndex == data.viewShow.mediaIndex);
+        let mediaIndex = this.chatlist.findIndex((item) => item.item.mediaIndex == data.viewShow.mediaIndex);
 
         if (mediaIndex < 0) {
           return this.chatlist.push(chatItem);
@@ -290,7 +306,7 @@ export default {
         }
       }
 
-      if(mode == "getHistory") {
+      if (mode == "getHistory") {
         return this.chatlist.unshift(chatItem);
       } else {
         return this.chatlist.push(chatItem);
@@ -298,7 +314,7 @@ export default {
     },
     open() {
       this.$store.dispatch("setLayout", ["home", "hf", true]);
-    }
+    },
   },
   created() {},
   mounted() {
@@ -307,7 +323,7 @@ export default {
     setTimeout(() => {
       this.$refs.list.scrollTop = this.$refs.list.scrollHeight;
     }, 100);
-  }
+  },
 };
 </script>
 

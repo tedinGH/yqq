@@ -2,28 +2,45 @@
   <div class="my-popup send-picture" v-show="pasteImage.show">
     <div :class="pasteImage.info.length > 1 ? 'my-popup-content small' : 'my-popup-content'">
       <span class="my-popup-close" @click="close"></span>
-      <div class="text" v-if="pasteImage.info.length > 1 && lang == 'zh_CN'">
-        {{ $t("msg.chatPanel.imgselected") }}{{ pasteImage.info.length }}张图片
-      </div>
-      <div class="text" v-else-if="pasteImage.info.length > 1 && lang != 'zh_CN'">
-        {{ pasteImage.info.length }}{{ $t("msg.chatPanel.imgselected") }}
-      </div>
+      <div
+        class="text"
+        v-if="pasteImage.info.length > 1 && lang == 'zh_CN'"
+      >{{ $t("msg.chatPanel.imgselected") }}{{ pasteImage.info.length }}张图片</div>
+      <div
+        class="text"
+        v-else-if="pasteImage.info.length > 1 && lang != 'zh_CN'"
+      >{{ pasteImage.info.length }}{{ $t("msg.chatPanel.imgselected") }}</div>
       <div v-else class="paste-img-container">
         <img :src="pasteImage.imgUrl" />
       </div>
       <div :class="pasteImage.info.length > 1 ? 'explain small' : 'explain'">
-        <input type="text" v-model="explain" :placeholder="$t('msg.menu.Pmessage')" :class="pasteImage.info.length > '1' ? '' : 'big'" />
+        <input
+          type="text"
+          v-model="explain"
+          :placeholder="$t('msg.menu.Pmessage')"
+          :class="pasteImage.info.length > '1' ? '' : 'big'"
+        />
       </div>
       <p class="popup-btn">
-        <button :class="pasteImage.info.length > '1' ? 'btn btn-white' : 'btn btn-white big'" type="button" @click="dropImgAction(false)">
-          {{ $t("msg.common.cancel") }}
-        </button>
-        <button class="btn btn-active" type="button" @click="dropImgAction(true, explain)">
-          {{ $t("msg.common.send") }}
-        </button>
+        <button
+          :class="pasteImage.info.length > '1' ? 'btn btn-white' : 'btn btn-white big'"
+          type="button"
+          @click="dropImgAction(false)"
+        >{{ $t("msg.common.cancel") }}</button>
+        <button
+          class="btn btn-active"
+          type="button"
+          @click="dropImgAction(true, explain)"
+        >{{ $t("msg.common.send") }}</button>
       </p>
     </div>
-    <input type="file" hidden="true" id="uploadImg" @change="selectImg($event)" accept=".jpg,.png,.git,.jpeg,.gif,.ico,.bmp" />
+    <input
+      type="file"
+      hidden="true"
+      id="uploadImg"
+      @change="selectImg($event)"
+      accept=".jpg, .png, .git, .jpeg, .gif, .ico, .bmp"
+    />
   </div>
 </template>
 
@@ -31,7 +48,7 @@
 import { Util } from "@/tools/utils";
 import { timeUtil } from "@/tools/timeUtil";
 import { mapGetters } from "vuex";
-import { msgEnumTypes } from "@/common/enum";
+import { msgEnum } from "@/common/enum";
 import { msgFormatTemplate } from "@/tools/msgFormatTemplate";
 import { actionApi } from "@/api";
 import Vue from "vue";
@@ -42,7 +59,7 @@ export default {
     return {
       time: "",
       explain: "",
-      lang: Vue.config.lang
+      lang: Vue.config.lang,
     };
   },
   computed: {
@@ -54,13 +71,13 @@ export default {
         window.removeEventListener("keyup", this.sendEvent);
       }
       return this.imgInfo;
-    }
+    },
   },
   props: {
     imgInfo: {
       type: Object,
-      default: {}
-    }
+      default: {},
+    },
   },
   methods: {
     close() {
@@ -107,7 +124,7 @@ export default {
             chatType: this.currentSession.fromType,
             toId: this.currentSession.paramId,
             time,
-            userId: this.userInfo.id
+            userId: this.userInfo.id,
           };
           this.$store.dispatch("sendMsg", obj).then(() => {});
           this.explain = "";
@@ -131,7 +148,7 @@ export default {
       sendInfo.time = new Date().getTime();
       sendInfo.mediaIndex = `abc${sendInfo.time}`;
       reader.readAsDataURL(file);
-      reader.onload = function() {
+      reader.onload = function () {
         let img = new Image();
         img.src = this.result;
         img.onload = () => {
@@ -146,17 +163,17 @@ export default {
       };
 
       Util.getFileUrl(file, 1).then(
-        data => {
+        (data) => {
           sendInfo = {
             ...data,
             ...sendInfo,
             fileUrl: data.fileUrl,
             progress: 100,
-            uploadStatus: true
+            uploadStatus: true,
           };
           this.sendImg(sendInfo, sessionInfo);
         },
-        err => {
+        (err) => {
           this.$store.dispatch("setLayout", ["error", "close", true]);
         }
       );
@@ -165,7 +182,7 @@ export default {
     sendImg(sendInfo, sessionInfo) {
       // let obj = {
       //   msg: JSON.stringify(sendInfo),
-      //   msgType: msgEnumTypes.img,
+      //   msgType: msgEnum.img,
       //   chatType: sessionInfo.chatType,
       //   toId: sessionInfo.chatId,
       //   time: sendInfo.time,
@@ -174,18 +191,18 @@ export default {
       // console.log(obj);
 
       // 发送消息
-      console.log(sendInfo)
+      console.log(sendInfo);
       if (sessionInfo.chatId == this.currentSession.chatId) {
-        const {imgWidth, imgHeigh, time, uploadStatus, mediaIndex} = sendInfo;
+        const { imgWidth, imgHeigh, time, uploadStatus, mediaIndex } = sendInfo;
         this.$parent.send({
-            imgUrl: sendInfo.fileUrl,
-            imgWidth,
-            imgHeigh,
-            time,
-            type: msgEnumTypes.img,
-            mediaIndex,
-            progress: sendInfo.progress,
-            uploadStatus
+          imgUrl: sendInfo.fileUrl,
+          imgWidth,
+          imgHeigh,
+          time,
+          type: msgEnum.img,
+          mediaIndex,
+          progress: sendInfo.progress,
+          uploadStatus,
         });
       }
     },
@@ -193,8 +210,8 @@ export default {
       if (event.keyCode === 13) {
         this.dropImgAction(true, this.explain);
       }
-    }
+    },
   },
-  mounted() {}
+  mounted() {},
 };
 </script>
